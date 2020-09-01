@@ -1,0 +1,589 @@
+\ProvidesPackage{mystyle}
+
+% NOTE:
+%
+% При работе в beamer-е нужно отключать \pagestyle{plain}, \usepackage{hyperref}, \usepackage{tocloft}
+% Может быть несовместимость \usepackage[utf8]{inputenc} с \usepackage{listings}
+%
+% Обновление некой базы шрифтов после установки их из MiKTeX (в случае ошибок при сборке pdf)
+% updmap --admin
+% initexmf --mkmaps
+%   https://tex.stackexchange.com/questions/280631/new-font-file-not-found-with-miktex-installation
+%   https://tex.stackexchange.com/questions/152721/problems-with-fonts
+%
+% Cyrillic in LaTeX
+%   https://tex.stackexchange.com/questions/816/cyrillic-in-latex
+%   https://tex.stackexchange.com/questions/46809/using-both-unicode-and-russian-in-tex-source
+% Fonts supporting Cyrillic
+%   https://tex.stackexchange.com/questions/114587/what-fonts-are-compatible-with-t2a-cyrillic-encoding
+%
+% Biber
+% "C:\Program Files\MiKTeX 2.9\miktex\bin\x64\biber.exe" "D:\Document & Files\Documents\Dropbox\Study\workspace\IS\coherence\Alekseev2017Coherence"
+%
+% Math in sections
+% {... \texorpdfstring{$\beta$}{TEXT} ...}
+% or
+% \section[for table of contents (without maths)]{with maths}
+
+\usepackage{amsmath,amssymb,amsfonts,amsbsy,amstext,amscd,amsxtra}
+
+\usepackage{ifxetex}
+
+\ifxetex % xelatex
+  % https://ru.wikibooks.org/wiki/LaTeX/polyglossia
+  \usepackage{polyglossia}                       % Пакет многоязыковой вёрстки
+  \setdefaultlanguage[spelling=modern]{russian}  % Главный язык документа
+  \setotherlanguage{english}                     % Второй язык документа
+  \defaultfontfeatures{Ligatures={TeX}}          % Свойства шрифтов по умолчанию  ("`"', ---, и др.)
+  \setkeys{russian}{babelshorthands=true}
+
+  % Подготавливает загрузку шрифтов Open Type, True Type и др.
+  %\usepackage[no-math]{fontspec}
+  %\usepackage{mathspec}
+  
+  % https://tex.stackexchange.com/questions/12565/load-fonts-that-are-in-a-fonts-directory
+  
+  % \newfontfamily\russianfont[Script=Cyrillic]{Linux Libertine}
+  
+  \iffalse
+  \newfontfamily{\cyrillicfont}[Path = ...]{PT-Serif-regular.ttf}
+  \fi
+  
+  \newfontfamily{\cyrillicfonttt}[Script=Cyrillic]{Courier New}
+
+  \setromanfont[
+    Path = ./fonts/roman/PT/,
+    % UprightFont    = PT-Serif-regular.ttf,
+    BoldFont       = PT-Serif-700.ttf,
+    ItalicFont     = PT-Serif-italic.ttf,
+    BoldItalicFont = PT-Serif-700italic.ttf
+  ]{PT-Serif-regular.ttf}
+
+  \setsansfont[
+    Path = ./fonts/sans/PT/,
+    % UprightFont    = PT-Sans-regular.ttf,
+    BoldFont       = PT-Sans-700.ttf,
+    ItalicFont     = PT-Sans-italic.ttf,
+    BoldItalicFont = PT-Sans-700italic.ttf
+  ]{PT-Sans-regular.ttf}
+
+  \setmonofont[
+    Path = ./fonts/mono/Roboto-Mono/,
+    Scale = 0.90,
+    % UprightFont    = Roboto-Mono-regular.ttf,
+    BoldFont       = Roboto-Mono-700.ttf,
+    ItalicFont     = Roboto-Mono-italic.ttf,
+    BoldItalicFont = Roboto-Mono-700italic.ttf
+    %Color={black}
+  ]{Roboto-Mono-regular.ttf}
+  
+  % Про разницу между mathspec и unicode-math
+  % https://tex.stackexchange.com/questions/118244/what-is-the-difference-between-unicode-math-and-mathspec
+  %\usepackage{mathspec}
+  \usepackage{unicode-math}
+
+  \setmathfont{XITS Math}
+  % Asana Math % nice, like TeX Gyre Pagella, but bolder
+  % TeX Gyre Pagella Math % nice
+  % TeX Gyre Termes Math % bold
+  % TeX Gyre Bonum Math % kinda monospaced, a bit rude
+  % TeX Gyre Schola Math % not bad, but excessively bold
+  % TeX Gyre DejaVu Math % a bit rude
+  % Latin Modern Math % ?
+  % STIX Math % nice
+  % XITS Math % nice, bolder than STIX
+
+  %\setmathfont[math-style=ISO,bold-style=ISO]{Latin Modern Math} % vargreek-shape=TeX
+  %\setmainfont[Ligatures=TeX]{TeX Gyre Pagella}
+  %\setmathfont[version=asana]{Asana Math}
+
+  %\setmainfont{CMU Serif}
+  %\setsansfont{CMU Sans Serif}
+  %\setmonofont{CMU Typewriter Text}
+
+  \newcommand*{\myfont}{\fontfamily{lmr}\selectfont}
+  \DeclareTextFontCommand{\textmyfont}{\myfont}
+  \newcommand{\h}{\textmyfont{\#}} % Красивая решётка
+
+  % Переносимые способы выделения текста: разреживание, подчёркивание, зачёркивание, цвет
+  % http://texdoc.net/texmf-dist/doc/latex/soul/soul.pdf
+  % see also
+  % https://tex.stackexchange.com/questions/5959/cool-text-highlighting-in-latex
+  \usepackage{soul}
+  % Потратил день на то, чтобы понять, как заставить soul работать с Кириллицей в XeTeX, но так и не вышло, пришлось использовать pdflatex
+
+  \iffalse
+    \makeatletter
+    \font\SOUL@tt=ectt0800 % Чтобы устранить проблемы с Кириллицей (секция про internal font)
+    % \newfontfamily\SOUL@tt{cmuntt.otf}
+    \makeatother
+  \fi
+
+  \iffalse
+    \makeatletter
+    \let\SOUL@tt\relax
+    \newfontfamily{\SOUL@tt}[Path=D:/Document & Files/Documents/Dropbox/Study/tools/latex/fonts/mono/Roboto-Mono/]{Roboto-Mono-regular.ttf}
+    \makeatother
+  \fi
+
+  \iffalse
+    \makeatletter
+    \let\SOUL@tt\relax
+    \newfontface{\SOUL@tt}{TeX Gyre Cursor}
+    \makeatother
+  \fi
+\else % pdflatex
+  % Внутренняя кодировка шрифта TeX
+  % https://tex.stackexchange.com/questions/46809/using-both-unicode-and-russian-in-tex-source
+  \usepackage[T2A]{fontenc}
+  % \usepackage{PTSerif}
+  
+  % Кодировка исходного текста
+  % При необходимости, вместо utf8 можно указать cp1251, cp866 (Alt-кодировка DOS) или koi8-r
+  \usepackage[utf8]{inputenc}
+
+  % Включение русификации, русских и английских стилей и переносов
+  \usepackage[main=russian,english]{babel}
+  
+  % Шрифты
+  %
+  % Каталог шрифтов, с примерами
+  % http://www.tug.dk/FontCatalogue/
+
+  % Если не указывать package, то будет cm-super (при условии, что пакет установлен): обычный, как Times New Roman
+
+  \usepackage{paratype}
+  % как cm-super, но лучше
+
+  %\usepackage{gentium} % \usepackage[scaled=0.9]{gentium}
+  % аккуратные, nitty буквы, и как будто уже, чем в других шрифтах
+
+  %\usepackage[osf]{heuristica} % \usepackage[osf,scaled=.92]{heuristica}
+  % похож на paratype
+
+  %\usepackage{erewhon}
+  % похож на gentium, но более bold, обычный шрифт
+
+  % \usepackage{tempora}
+  % как gentium, но не такой nitty (более приземлённый) и более bold
+
+  %\usepackage{XCharter}
+  % обычный шрифт, чем-то смахивает на monospace
+
+  \usepackage{cmap} % Поиск русских слов в pdf
+
+  \usepackage{soulutf8}
+  \DeclareRobustCommand{\mycolorbox}[2]{{\sethlcolor{#1}\hl{#2}}} % RobustCommand ??
+\fi
+
+% Номера страниц ставятся внизу в середине строки, колонтитулов нет
+\pagestyle{plain}
+
+% Чтобы не отличались промежутки между словами и предложениями
+\frenchspacing
+
+% Дублирование знака при переносе на другую строку
+\newcommand*{\hm}[1]{#1\nobreak\discretionary{}{\hbox{$\mathsurround=0pt #1$}}{}}
+
+% Горизонтальная линия, можно отделять условие задачи от решения
+\newcommand{\myhrule}{\rule{0.5\linewidth}{0.1mm}}
+
+%\usepackage{caption} % Подписи для фигур, таблиц и др.
+\usepackage{subcaption}
+\usepackage[rightcaption]{sidecap} % NEW
+
+\usepackage[stable,bottom]{footmisc} % Сноски, \usepackage[perpage]{footmisc} -- нумерация сносок на каждой странице с 1
+\usepackage[space]{grffile} % Для пробелов в путях (path=..., \includegraphics{C:/Documents and Settings/some.jpg})
+%\usepackage{indentfirst} % Русский стиль: абзацный отступ у первой строки раздела
+%\usepackage{misccorr} % Точка в номерах заголовков
+
+% Перенос слов
+% https://en.wikibooks.org/wiki/LaTeX/Text_Formatting
+\usepackage[shortcuts]{extdash}
+
+\usepackage{todonotes}
+
+% TODO
+%\usepackage[backend=biber,style=numeric,sorting=ynt]{biblatex}
+%\usepackage{csquotes}
+%\addbibresource{somebib.bib}
+
+% Таблица с содержанием. Пробелы
+% https://tex.stackexchange.com/questions/56546/how-to-change-spaces-between-items-in-table-of-contents
+\usepackage{tocloft}
+%\renewcommand\cftchapafterpnum{\vskip10pt}
+\renewcommand\cftsecafterpnum{\vskip10pt}
+\renewcommand\cftsubsecafterpnum{\vskip5pt}
+
+% Математика
+\usepackage{amsmath,amssymb,amsfonts,amsthm,amsbsy,amstext,amscd,amsxtra}
+
+\usepackage{algorithm} %[ruled]
+\usepackage{algorithmicx}
+\usepackage[noend]{algpseudocode} %[noend]
+\renewcommand{\thealgorithm}{\arabic{algorithm}.}% Algorithm # is <chapter>.<algorithm>
+
+\usepackage{fancybox}
+\newsavebox{\algbox} % http://tex.stackexchange.com/questions/356427/add-equation-number-beside-algorithm/356458
+
+\usepackage{xcolor} % Цвета
+% \usepackage{color} %[usenames, dvipsnames]
+
+% Цвета
+\definecolor{grey}{RGB}{190, 173, 161}
+\definecolor{greyL}{RGB}{179, 179, 179}
+\definecolor{greyM}{RGB}{215, 215, 215}
+\definecolor{greyLL}{RGB}{230, 230, 230}
+\definecolor{redL}{RGB}{176, 0, 0}
+\definecolor{redD}{RGB}{103, 10, 10}
+\definecolor{bitter}{RGB}{253, 124, 110}
+\definecolor{pink}{RGB}{255, 116, 253}
+\definecolor{pinkL}{RGB}{255, 209, 220}
+\definecolor{purpleL}{RGB}{126, 0, 89}
+\definecolor{purpleLL}{RGB}{238, 190, 241}
+\definecolor{purpleD}{RGB}{66, 0, 66}
+\definecolor{magenta}{RGB}{148, 0, 211}
+\definecolor{blue}{RGB}{0, 0, 139}
+\definecolor{blueL}{RGB}{0, 140, 240}
+\definecolor{blueLL}{RGB}{171, 205, 239}
+\definecolor{malva}{RGB}{145, 95, 109}
+\definecolor{greenIrland}{RGB}{76.0, 187, 23}
+\definecolor{greenD}{RGB}{10.0, 69, 0}
+\definecolor{maple}{RGB}{80, 125, 42}
+\definecolor{gommegoutte}{RGB}{228, 155, 15}
+\definecolor{yellowL}{RGB}{247, 246, 26}
+\definecolor{amber}{RGB}{255, 191, 0}
+\definecolor{lemon}{RGB}{255, 216, 0}
+\definecolor{carrotL}{RGB}{255, 163, 67}
+\definecolor{cyanL}{RGB}{0, 204, 204} % 32 178 170
+\definecolor{thrush}{RGB}{31, 206, 203} % 32 178 170
+\definecolor{cyanD}{RGB}{1, 121, 111}
+
+\definecolor{codegreen}{RGB}{43,181,43}
+\definecolor{codegray}{RGB}{153,153,153}
+\definecolor{codepurple}{RGB}{153,51,255}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% Раскрашивание ячеек таблицы
+% https://tex.stackexchange.com/questions/50349/color-only-a-cell-of-a-table
+% https://tex.stackexchange.com/questions/94799/how-do-i-color-table-columns
+\usepackage{colortbl}
+
+\usepackage[unicode]{hyperref} %http://tex.stackexchange.com/questions/50747/options-for-appearance-of-links-in-hyperref
+
+% Выбор шрифта для URL ссылок
+% https://tex.stackexchange.com/questions/53962/why-are-urls-typeset-with-monospace-fonts-by-default
+\urlstyle{same}
+%\urlstyle{tt} % По умолчанию
+%\urlstyle{rm}
+%\urlstyle{sf}
+
+%\renewcommand{\url}[1]{\href{#1}{#1}}
+
+% Устанавливает координаты документа и увеличение при просмотре
+% Manual http://mirror.switch.ch/ftp/mirror/tex/macros/latex/contrib/hyperref/doc/manual.html#TBL-7-40-1
+\hypersetup{
+  pdfstartview={FitH} % XYZ null null 1.00, Fit, FitH, FitB
+}
+
+\hypersetup{
+  colorlinks=true, % true - раскрашивает текст, false - обводит в рамки
+  %
+  urlcolor=cyanD,
+  urlbordercolor=cyanD,
+  %
+  linkcolor=cyanD,%red,
+  linkbordercolor=cyanD,%red,
+  %
+  citecolor=purple,
+  citebordercolor=purple,
+  %
+  filecolor=cyanD,
+  filebordercolor=cyanD,
+  %
+  menucolor=red,
+  menubordercolor=red
+}
+
+% Способы выделения текста:
+% длинное подчёркивание, волнистое подчёркивание, перечёркивание
+% без \normalem перестаёт работать \emph{}
+\usepackage{ulem}\normalem 
+
+% Рисование автоматов (и не только)
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+
+\usepackage{graphicx} % Включение файлов с изображениями, работа с графикой, \includegraphics{}
+
+% https://stackoverflow.com/questions/2739159/inserting-a-pdf-file-in-latex
+\usepackage{pdfpages}
+% \includepdf[pages={1,3,5}]{myfile.pdf}
+% \includepdf[pages=-,scale=.8,pagecommand={}]{file}
+
+%\usepackage{verbatim} % Длинные окружения verbatim: (буквальное воспроизведение) + файлы
+\usepackage{listings} % Более продвинутая, чем verbatim, вставка кода, begin{lstlisting}
+
+\usepackage{array} % Доп. возможности для таблиц
+\usepackage{multirow}
+\usepackage{multicol} % Несколько колонок
+\usepackage{hhline} % Двойная hline
+
+\usepackage{makecell} % http://tex.stackexchange.com/questions/2441/how-to-add-a-forced-line-break-inside-a-table-cell
+\renewcommand\cellalign{cl}
+\renewcommand\theadalign{cl}
+
+% http://tex.stackexchange.com/questions/17745/diagonal-lines-in-table-cell
+\iffalse
+\let\diag\relax
+\newcolumntype{x}[1]{>{\centering\arraybackslash}p{#1}}
+\newcommand\diag[4]{%
+  \multicolumn{1}{p{#2}|}{\hskip-\tabcolsep
+  $\vcenter{\begin{tikzpicture}[baseline=0,anchor=south west,inner sep=#1]
+  \path[use as bounding box] (0,0) rectangle (#2+2\tabcolsep,\baselineskip);
+  \node[minimum width={#2+2\tabcolsep},minimum height=\baselineskip+\extrarowheight] (box) {};
+  \draw (box.north west) -- (box.south east);
+  \node[anchor=south west] at (box.south west) {#3};
+  \node[anchor=north east] at (box.north east) {#4};
+ \end{tikzpicture}}$\hskip-\tabcolsep}}
+\fi
+
+\usepackage{float}
+
+% customization of a list environment, such as itemize, enumerate etc.
+\usepackage{enumitem}
+% https://tex.stackexchange.com/questions/53061/insert-image-and-list-inside-a-table?newreg=afea8fc2a8dd46da8baeef4e9db5f43e
+% https://tex.stackexchange.com/questions/91124/itemize-removing-natural-indent
+
+\usepackage{booktabs} % "Продвинутая" табличка, "только горизонтальные линии"
+
+%\usepackage[nomarkers,figuresonly]{endfloat} % Place figure environments at the end of the document
+
+% \input vs. \include
+% https://tex.stackexchange.com/questions/246/when-should-i-use-input-vs-include
+%\includeonly{task02}
+
+
+% Отступы
+
+%https://ru.sharelatex.com/learn/Page_size_and_margins
+\usepackage{geometry}
+\geometry{
+ textwidth=175mm,
+ textheight=255mm,
+ right=5cm
+}
+
+%\setlength{\textwidth}{175mm}
+%\setlength{\textheight}{255mm}
+\setlength{\oddsidemargin}{-5mm}
+\setlength{\evensidemargin}{-5mm}
+%\setlength{\topmargin}{-15mm}
+\setlength{\columnsep}{1cm}
+
+% Нумерация формул, картинок и таблиц по секциям
+% \numberwithin{equation}{section}
+% \numberwithin{table}{section}
+% \numberwithin{figure}{section}
+
+% Стиль для \usepackage{listings}
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour}, 
+  commentstyle=\color{codegray},
+  %keywordstyle=\color{red},%\color{codepurple},
+  %numberstyle=\tiny\color{red},%\color{codegray},
+  stringstyle=\color{codegreen},
+  %basicstyle=\footnotesize\small,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2,
+  language=[LaTeX]TeX, % further are new
+  columns=fullflexible,
+  breaklines=true,
+  %texcsstyle=*\color{red},
+  %texcs={mid},
+  keywordstyle=\bfseries\color{black}, 
+  basicstyle=\ttfamily\color{black},
+  numberstyle=\color{purple}
+}
+\lstset{style=mystyle}
+
+%\DeclareMathOperator{\tg}{tg} = \newcommand{\tg}{\mathop{\mathrm{tg}}\nolimits}
+
+%\DeclareMathOperator{\Spr}{Sp} % Что это?
+
+\newcommand{\A}{\mathcal A}
+\newcommand{\B}{\mathcal B}
+
+\newcommand{\Om}{\Omega}
+\newcommand{\Th}{\Theta}
+\renewcommand{\phi}{\varphi}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\w}{\omega}
+\renewcommand{\u}{\nu}
+\renewcommand{\v}{\upsilon}
+\newcommand{\ld}{\lambda}
+\newcommand{\Dt}{\Delta}
+
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\preceq}{\precurlyeq}
+\renewcommand{\succeq}{\succcurlyeq}
+
+\newcommand{\noth}{\varnothing}
+\newcommand{\ov}{\overline}
+\newcommand{\td}{\tilde}
+\newcommand{\mbf}{\mathbf}
+\newcommand{\bds}{\boldsymbol} % Похож на \mathbf + ещё с греческими работает
+
+\let\bsym\relax
+\DeclareMathOperator{\bsym}{\boldsymbol}
+
+\renewcommand{\Re}{\mathop{\mathrm{Re}}\nolimits}
+\renewcommand{\Im}{\mathop{\mathrm{Im}}\nolimits}
+
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\QQ}{\mathbb Q}
+
+\let\RR\relax
+\DeclareMathOperator{\RR}{\mathbb R}
+
+\let\SS\relax
+\DeclareMathOperator{\SS}{\mathbb S}
+
+\let\CC\relax
+\DeclareMathOperator{\CC}{\mathbb C}
+
+% ТФС
+%\newcommand{\NP}{\mathop{\mathrm{NP}}\nolimits}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\ax}{ax}
+\DeclareMathOperator{\lem}{lem}
+\DeclareMathOperator{\Rg}{Rg}
+
+\DeclareMathOperator{\sgn}{sgn}
+
+\let\diag\relax
+\DeclareMathOperator{\diag}{diag}
+
+% Опты
+\DeclareMathOperator{\Aff}{Aff}
+\DeclareMathOperator{\Cone}{Cone}
+\DeclareMathOperator{\Conv}{Conv}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\convex}{convex}
+\DeclareMathOperator{\extr}{extr}
+\DeclareMathOperator{\internal}{int}
+\DeclareMathOperator{\cl}{cl}
+\DeclareMathOperator{\ri}{ri}
+
+\newcommand{\minimize}{\mathop{\mathrm{minimize}}\nolimits}
+\newcommand{\maximize}{\mathop{\mathrm{maximize}}\nolimits}
+\newcommand{\subjto}{\mathop{\mathrm{subject\ to}}\nolimits}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% Теорвер
+\DeclareMathOperator{\I}{\mathbb I} % Индикатор
+\DeclareMathOperator{\E}{\mathbb E} % Матожидание
+\DeclareMathOperator{\D}{\mathbb D} % Дисперсия
+\DeclareMathOperator{\as}{\ a.s.}
+\DeclareMathOperator{\OK}{OK} % ОК
+\renewcommand{\P}{\mathop{\mathbb{P}}\nolimits} % Вероятность. Пересекается со знаком абзаца
+%
+\DeclareMathOperator{\Ud}{\mathcal U}
+\DeclareMathOperator{\Nd}{\mathcal N}
+\DeclareMathOperator{\Bed}{Be}
+\DeclareMathOperator{\Expd}{\mathcal{E}\textit{xp}}
+\DeclareMathOperator{\Poissd}{Poiss}
+\DeclareMathOperator{\Geomd}{Geom}
+\DeclareMathOperator{\Binomd}{Binom}
+\DeclareMathOperator{\Dird}{Dir}
+
+\DeclareMathOperator{\idxmax}{idxmax}
+\DeclareMathOperator{\mean}{mean}
+\DeclareMathOperator{\median}{median}
+\DeclareMathOperator{\prs}{prs}
+\DeclareMathOperator{\spr}{spr}
+
+% TODO: already defined?
+% \DeclareMathOperator{\dim}{dim}
+
+\DeclareMathOperator{\?}{?}
+%\renewcommand{\div}{\mathop{\raisebox{-2pt}{\vdots}}}
+\newcommand{\quotient}[1]{\mathop{\mathrm{\backslash\negthickspace{#1}}}\nolimits}
+%\newcommand{\lege}[2]{\left( \frac{#1}{#2} \right)}
+%\newcommand{\dlege}[2]{\left( \dfrac{#1}{#2} \right)}
+
+% Отступы и интервалы между формулами при внутритекстовом режиме
+\newcommand{\noi}{\noindent}
+\newcommand{\lit}{\vspace{0.1cm}}
+\newcommand{\med}{\vspace{0.4cm}}
+\newcommand{\lar}{\vspace{1.0cm}}
+\renewcommand{\sp}{\par\lit\noi} % step
+\newcommand{\jp}{\par\med\noi} % jump
+\newcommand{\lp}{\par\lar} % leap
+% Пример:
+%
+% Some text...
+% \lp
+%
+% $1+1=2$\sp
+% $2+2=4$\sp
+% $3+3=6$\sp
+% \jp
+% $1*1=1$\sp
+% $9*2=18$
+% \lp
+% 
+% Some text...
+
+% Пример титульной страницы для курсовой работы (взят из работы по вычматам, где был найден на overleaf)
+\iffalse
+\begin{document}
+  \begin{titlepage}
+    \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+    \center % Center everything on the page
+
+    \textsc{\LARGE МФТИ}\\[0.5cm]
+    \textsc{\Large ФУПМ, 474}\\[0.5cm] % Major heading such as course name
+    \textsc{\large Вычислительная математика}\\[1.5cm] % Minor heading such as course title
+
+    \vspace{3cm}
+
+    \HRule \\[0.4cm]
+    {\huge \bfseries Курсовая работа}\\[0.3cm] % Title of your document
+    \HRule \\[1.5cm]
+
+    \Large %\emph{Автор:}\\
+    \textsc{Алексеев} Василий\\[3cm]
+
+    \vspace{\fill}
+
+    {\large 22 Мая 2017}\\[0.2cm] % Date, change the \today to a set date if you want to be precise
+
+    %\vfill
+  \end{titlepage}
+
+  %\thispagestyle{empty}
+  %\newpage
+  
+  \pagenumbering{arabic}
+  
+  {
+    \hypersetup{linkcolor=black}
+    \tableofcontents
+  }
+  
+...
+\end{document}
+\fi
