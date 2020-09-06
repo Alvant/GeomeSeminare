@@ -18,6 +18,10 @@
 \theoremstyle{remark}
 \newtheorem*{remark}{Замечание}
 
+\theoremstyle{remark}
+\newtheorem*{solution}{Решение}
+\AtEndEnvironment{solution}{\qed}
+
 
 \DeclareMathOperator{\Sp}{Sp}
 \DeclareMathOperator{\Tr}{Tr}
@@ -28,8 +32,8 @@
 }
 
 
-\definecolor{cyanL}{RGB}{0, 204, 204}
-\definecolor{purpleL}{RGB}{138, 43, 226}
+\definecolor{light-cyan}{RGB}{0, 204, 204}
+\definecolor{light-purple}{RGB}{138, 43, 226}
 
 
 \author{Алексеев Василий}
@@ -39,17 +43,14 @@
 
 \begin{document}
   \maketitle
+  
   \tableofcontents
+
   \thispagestyle{empty}
   
   \newpage
   
   \pagenumbering{arabic}
-
-  % This line should be omitted when using XeLaTeX (only \section{...} etc. will be enough)
-  %\addcontentsline{toc}{section}{Пролог}
-
-  %\include{prologue}
 
 
   \section{Матрицы и определители $2$-го и $3$-го порядков}
@@ -133,56 +134,56 @@
     \]
   \end{problem}
   
-  \emph{Решение.}
-  \[
-    \begin{pmatrix}
-      3 & 1\\
-      2 & 1\\
-      1 & 0
-    \end{pmatrix}
-    \begin{pmatrix}
-      1 & 1\\
-      1 & 1
-    \end{pmatrix}
-    = \begin{pmatrix}
-      3 \cdot 1 + 1 \cdot 1 & 3 \cdot 1 + 1 \cdot 1\\
-      2 \cdot 1 + 1 \cdot 1 & 2 \cdot 1 + 1 \cdot 1\\
-      1 \cdot 1 + 0 \cdot 1 & 1 \cdot 1 + 0 \cdot 1
-    \end{pmatrix}
-    = \begin{pmatrix}
-      4 & 4\\
-      3 & 3\\
-      1 & 1
-    \end{pmatrix}
-  \]
-  \qed
+  \begin{solution}
+    \[
+      \begin{pmatrix}
+        3 & 1\\
+        2 & 1\\
+        1 & 0
+      \end{pmatrix}
+      \begin{pmatrix}
+        1 & 1\\
+        1 & 1
+      \end{pmatrix}
+      = \begin{pmatrix}
+        3 \cdot 1 + 1 \cdot 1 & 3 \cdot 1 + 1 \cdot 1\\
+        2 \cdot 1 + 1 \cdot 1 & 2 \cdot 1 + 1 \cdot 1\\
+        1 \cdot 1 + 0 \cdot 1 & 1 \cdot 1 + 0 \cdot 1
+      \end{pmatrix}
+      = \begin{pmatrix}
+        4 & 4\\
+        3 & 3\\
+        1 & 1
+      \end{pmatrix}
+    \]
+  \end{solution}
   
   \begin{problem}[Т1$^*$]
     Для матриц $A, B, C$ определены произведения $AB, AC, BC$.
     Всегда ли определено произведение $BB \hm= B^2$?
   \end{problem}
   
-  \emph{Решение.}
-  Обозначим размерности (число строк и число столбцов) в матрицах $A, B, C$ за
-  $(m_a, n_a),\ (m_b, n_b),\ (m_c, n_c)$ соответственно.
-  Тогда условие задачи (возможность умножения матриц) можно переписать так:
-  \[
-    \left\{
-      \begin{aligned}
-        &m_a = n_b\\
-        &m_a = n_c\\
-        &m_b = n_c
-      \end{aligned}
-    \right.
-  \]
-  
-  И получаем
-  \[
-    m_b = n_c = m_a = n_b \Rightarrow m_b = n_b
-  \]
-  
-  Поэтому произведение $B^2$ также определено.
-  \qed
+  \begin{solution}
+    Обозначим размерности (число строк и число столбцов) в матрицах $A, B, C$ за
+    $(m_a, n_a),\ (m_b, n_b),\ (m_c, n_c)$ соответственно.
+    Тогда условие задачи (возможность умножения матриц) можно переписать так:
+    \[
+      \left\{
+        \begin{aligned}
+          &m_a = n_b\\
+          &m_a = n_c\\
+          &m_b = n_c
+        \end{aligned}
+      \right.
+    \]
+    
+    И получаем
+    \[
+      m_b = n_c = m_a = n_b \Rightarrow m_b = n_b
+    \]
+    
+    Поэтому произведение $B^2$ также определено.
+  \end{solution}
   
   \begin{problem}[15.11(9)]
     Вычислить матрицу в степени (произведение нескольких одинаковых матриц)
@@ -197,79 +198,88 @@
     \]
   \end{problem}
   
-  \emph{Решение.}
-  Начинаем умножать и видим закономерность:
-  \begin{equation*}
-  \begin{split}
-    \begin{pmatrix}
-      0 & 1 & 0 & \ldots & 0\\
-      0 & 0 & 1 & \ldots & 0\\
-      \hdotsfor{5}\\
-      0 & 0 & 0 & \ldots & 1\\
-      1 & 0 & 0 & \ldots & 0
-    \end{pmatrix}^n
-    = &\begin{pmatrix}
-      0 & 1 & 0 & \ldots & 0\\
-      0 & 0 & 1 & \ldots & 0\\
-      \hdotsfor{5}\\
-      0 & 0 & 0 & \ldots & 1\\
-      \textcolor{purpleL}{1} & 0 & 0 & \ldots & 0
-      \end{pmatrix}
-      \cdot \begin{pmatrix}
-      0 & 1 & 0 & \ldots & 0\\
-      0 & 0 & 1 & \ldots & 0\\
-      \hdotsfor{5}\\
-      0 & 0 & 0 & \ldots & 1\\
-      1 & 0 & 0 & \ldots & 0
-      \end{pmatrix}
-      \cdot \begin{pmatrix}
+  \begin{solution}
+    Начинаем умножать и видим закономерность:
+    \begin{equation*}
+    \begin{split}
+      \begin{pmatrix}
         0 & 1 & 0 & \ldots & 0\\
         0 & 0 & 1 & \ldots & 0\\
         \hdotsfor{5}\\
         0 & 0 & 0 & \ldots & 1\\
         1 & 0 & 0 & \ldots & 0
-      \end{pmatrix}^{n-2}\\
-    = &\begin{pmatrix}
-        0 & 0 & 1 & 0 & \ldots & 0\\
-        0 & 0 & 0 & 1 & \ldots & 0\\
-        \hdotsfor{6}\\
-        0 & 0 & 0 & 0 & \ldots & 1\\
-        \textcolor{purpleL}{1} & 0 & 0 & 0 & \ldots & 0\\
-        0 & \textcolor{purpleL}{1} & 0 & 0 & \ldots & 0
-      \end{pmatrix}
-      \cdot \begin{pmatrix}
+      \end{pmatrix}^n
+      = &\begin{pmatrix}
+        0 & 1 & 0 & \ldots & 0\\
+        0 & 0 & 1 & \ldots & 0\\
+        \hdotsfor{5}\\
+        0 & 0 & 0 & \ldots & 1\\
+        \textcolor{light-purple}{1} & 0 & 0 & \ldots & 0
+        \end{pmatrix}
+        \cdot \begin{pmatrix}
         0 & 1 & 0 & \ldots & 0\\
         0 & 0 & 1 & \ldots & 0\\
         \hdotsfor{5}\\
         0 & 0 & 0 & \ldots & 1\\
         1 & 0 & 0 & \ldots & 0
-      \end{pmatrix}^{n-2}\\
-    = &\begin{pmatrix}
-        0 & 0 & 0 & 1 & \ldots & 0\\
-        0 & 0 & 0 & 0 & \ldots & 0\\
-        \hdotsfor{6}\\
-        \textcolor{purpleL}{1} & 0 & 0 & 0 & \ldots & 0\\
-        0 & \textcolor{purpleL}{1} & 0 & 0 & \ldots & 0\\
-        0 & 0 & \textcolor{purpleL}{1} & 0 & \ldots & 0
-      \end{pmatrix}
-      \cdot \begin{pmatrix}
-        0 & 1 & 0 & \ldots & 0\\
-        0 & 0 & 1 & \ldots & 0\\
-        \hdotsfor{5}\\
-        0 & 0 & 0 & \ldots & 1\\
-        1 & 0 & 0 & \ldots & 0
-      \end{pmatrix}^{n-3}\\
-    = &\begin{pmatrix}
-        \textcolor{purpleL}{1} & 0 & \ldots & 0 & 0\\
-        0 & \textcolor{purpleL}{1} & \ldots & 0 & 0\\
-        \hdotsfor{5}\\
-        0 & 0 & \ldots & \textcolor{purpleL}{1} & 0\\
-        0 & 0 & \ldots & 0 & \textcolor{purpleL}{1}
-      \end{pmatrix}
-    = E_{n \times n}
-  \end{split}
-  \end{equation*}
-  \qed
+        \end{pmatrix}
+        \cdot \begin{pmatrix}
+          0 & 1 & 0 & \ldots & 0\\
+          0 & 0 & 1 & \ldots & 0\\
+          \hdotsfor{5}\\
+          0 & 0 & 0 & \ldots & 1\\
+          1 & 0 & 0 & \ldots & 0
+        \end{pmatrix}^{n-2}\\
+      = &\begin{pmatrix}
+          0 & 0 & 1 & 0 & \ldots & 0\\
+          0 & 0 & 0 & 1 & \ldots & 0\\
+          \hdotsfor{6}\\
+          0 & 0 & 0 & 0 & \ldots & 1\\
+          \textcolor{light-purple}{1} & 0 & 0 & 0 & \ldots & 0\\
+          0 & \textcolor{light-purple}{1} & 0 & 0 & \ldots & 0
+        \end{pmatrix}
+        \cdot \begin{pmatrix}
+          0 & 1 & 0 & \ldots & 0\\
+          0 & 0 & 1 & \ldots & 0\\
+          \hdotsfor{5}\\
+          0 & 0 & 0 & \ldots & 1\\
+          1 & 0 & 0 & \ldots & 0
+        \end{pmatrix}^{n-2}\\
+      = &\begin{pmatrix}
+          0 & 0 & 0 & 1 & \ldots & 0\\
+          0 & 0 & 0 & 0 & \ldots & 0\\
+          \hdotsfor{6}\\
+          \textcolor{light-purple}{1} & 0 & 0 & 0 & \ldots & 0\\
+          0 & \textcolor{light-purple}{1} & 0 & 0 & \ldots & 0\\
+          0 & 0 & \textcolor{light-purple}{1} & 0 & \ldots & 0
+        \end{pmatrix}
+        \cdot \begin{pmatrix}
+          0 & 1 & 0 & \ldots & 0\\
+          0 & 0 & 1 & \ldots & 0\\
+          \hdotsfor{5}\\
+          0 & 0 & 0 & \ldots & 1\\
+          1 & 0 & 0 & \ldots & 0
+        \end{pmatrix}^{n-3}\\
+      = &\begin{pmatrix}
+          \textcolor{light-purple}{1} & 0 & 0 & \ldots & 0 & 0\\
+          0 & \textcolor{light-purple}{1} & 0 & \ldots & 0 & 0\\
+          0 & 0 & \textcolor{light-purple}{1} & \ldots & 0 & 0\\
+          \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+          \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+          0 & 0 & 0 & \ldots & \textcolor{light-purple}{1} & 0\\
+          0 & 0 & 0 & \ldots & 0 & \textcolor{light-purple}{1}
+        \end{pmatrix}
+        \cdot \begin{pmatrix}
+          0 & 1 & 0 & \ldots & 0\\
+          0 & 0 & 1 & \ldots & 0\\
+          \hdotsfor{5}\\
+          0 & 0 & 0 & \ldots & 1\\
+          1 & 0 & 0 & \ldots & 0
+        \end{pmatrix}^{n-n}
+      = E_{n \times n}
+    \end{split}
+    \end{equation*}
+  \end{solution}
   
   И ещё пара небесполезных концепций из мира матриц.
   
@@ -345,20 +355,20 @@
     \]
   \end{problem}
   
-  \emph{Решение.}
-  \[
-    \begin{pmatrix}
-      1 & 2 & 2\\
-      2 & 1 & -2\\
-      2 & -2 & 1
-    \end{pmatrix}
-    = 1 \cdot \Bigl(1 \cdot 1 - (-2) \cdot (-2)\Bigr)
-      \textcolor{cyanL}{-} 2 \cdot \Bigl(2 \cdot 1 - 2 \cdot (-2)\Bigr)
-      + 2 \cdot \Bigl(2 \cdot (-2) - 2 \cdot 1\Bigr)
-    = -3 - 12 - 12
-    = -27
-  \]
-  \qed
+  \begin{solution}
+    \[
+      \begin{pmatrix}
+        1 & 2 & 2\\
+        2 & 1 & -2\\
+        2 & -2 & 1
+      \end{pmatrix}
+      = 1 \cdot \Bigl(1 \cdot 1 - (-2) \cdot (-2)\Bigr)
+        \textcolor{light-cyan}{-} 2 \cdot \Bigl(2 \cdot 1 - 2 \cdot (-2)\Bigr)
+        + 2 \cdot \Bigl(2 \cdot (-2) - 2 \cdot 1\Bigr)
+      = -3 - 12 - 12
+      = -27
+    \]
+  \end{solution}
   
   \begin{example}
     Определитель единичной матрицы:
@@ -445,8 +455,8 @@
         \]
       \item При перестановке двух столбцов (строк) матрицы её определитель меняет знак:
         \[
-          \det (\bds a_1, \ldots, \bds a_{\textcolor{cyanL}{i}}, \ldots, \bds a_{\textcolor{purpleL}{j}}, \ldots, \bds a_n)
-          = -\det (\bds a_1, \ldots, \bds a_{\textcolor{purpleL}{j}}, \ldots, \bds a_{\textcolor{cyanL}{i}}, \ldots, \bds a_n)
+          \det (\bds a_1, \ldots, \bds a_{\textcolor{light-cyan}{i}}, \ldots, \bds a_{\textcolor{light-purple}{j}}, \ldots, \bds a_n)
+          = -\det (\bds a_1, \ldots, \bds a_{\textcolor{light-purple}{j}}, \ldots, \bds a_{\textcolor{light-cyan}{i}}, \ldots, \bds a_n)
         \]
       \item Если два столбца (две строки) матрицы совпадают, то её определитель равен нулю:
         \[
@@ -490,26 +500,10 @@
     \]
   \end{problem}
   
-  \emph{Решение.}
-  Раскладываем определитель по первому столбцу:
-  \[
-    \begin{vmatrix}
-      1 & 1 & 1 & \ldots & 1 & 1 & 1\\
-      1 & 1 & 0 & \ldots & 0 & 0 & 0\\
-      0 & 1 & 1 & \ldots & 0 & 0 & 0\\
-      \hdotsfor{7}\\
-      0 & 0 & 0 & \ldots & 1 & 1 & 0\\
-      0 & 0 & 0 & \ldots & 0 & 1 & 1
-    \end{vmatrix}
-    = 1 \cdot \begin{vmatrix}
-        1 & 0 & 0 & \ldots & 0 & 0 & 0\\
-        1 & 1 & 0 & \ldots & 0 & 0 & 0\\
-        0 & 1 & 1 & \ldots & 0 & 0 & 0\\
-        \hdotsfor{7}\\
-        0 & 0 & 0 & \ldots & 1 & 1 & 0\\
-        0 & 0 & 0 & \ldots & 0 & 1 & 1
-      \end{vmatrix}
-      - 1 \cdot \begin{vmatrix}
+  \begin{solution}
+    Раскладываем определитель по первому столбцу:
+    \[
+      \begin{vmatrix}
         1 & 1 & 1 & \ldots & 1 & 1 & 1\\
         1 & 1 & 0 & \ldots & 0 & 0 & 0\\
         0 & 1 & 1 & \ldots & 0 & 0 & 0\\
@@ -517,79 +511,95 @@
         0 & 0 & 0 & \ldots & 1 & 1 & 0\\
         0 & 0 & 0 & \ldots & 0 & 1 & 1
       \end{vmatrix}
-  \]
-  
-  Рассмотрим первый из определителей во второй части равенства выше.
-  Пользуясь свойствами определителя, его можно посчитать так:
-  \begin{equation*}
-  \begin{split}
-    \begin{vmatrix}
-      1 & 0 & 0 & \ldots & 0 & 0 & 0\\
-      1 & 1 & 0 & \ldots & 0 & 0 & 0\\
-      0 & 1 & 1 & \ldots & 0 & 0 & 0\\
-      \hdotsfor{7}\\
-      0 & 0 & 0 & \ldots & 1 & 1 & 0\\
-      0 & 0 & 0 & \ldots & 0 & 1 & 1
-    \end{vmatrix}
-    = &\begin{vmatrix}
+      = 1 \cdot \begin{vmatrix}
+          1 & 0 & 0 & \ldots & 0 & 0 & 0\\
+          1 & 1 & 0 & \ldots & 0 & 0 & 0\\
+          0 & 1 & 1 & \ldots & 0 & 0 & 0\\
+          \hdotsfor{7}\\
+          0 & 0 & 0 & \ldots & 1 & 1 & 0\\
+          0 & 0 & 0 & \ldots & 0 & 1 & 1
+        \end{vmatrix}
+        - 1 \cdot \begin{vmatrix}
+          1 & 1 & 1 & \ldots & 1 & 1 & 1\\
+          1 & 1 & 0 & \ldots & 0 & 0 & 0\\
+          0 & 1 & 1 & \ldots & 0 & 0 & 0\\
+          \hdotsfor{7}\\
+          0 & 0 & 0 & \ldots & 1 & 1 & 0\\
+          0 & 0 & 0 & \ldots & 0 & 1 & 1
+        \end{vmatrix}
+    \]
+    
+    Рассмотрим первый из определителей во второй части равенства выше.
+    Пользуясь свойствами определителя, его можно посчитать так:
+    \begin{equation*}
+    \begin{split}
+      \begin{vmatrix}
         1 & 0 & 0 & \ldots & 0 & 0 & 0\\
-        \textcolor{cyanL}{0} & 1 & 0 & \ldots & 0 & 0 & 0\\
+        1 & 1 & 0 & \ldots & 0 & 0 & 0\\
         0 & 1 & 1 & \ldots & 0 & 0 & 0\\
         \hdotsfor{7}\\
         0 & 0 & 0 & \ldots & 1 & 1 & 0\\
         0 & 0 & 0 & \ldots & 0 & 1 & 1
-      \end{vmatrix}\\
-    = &\begin{vmatrix}
-        1 & 0 & 0 & \ldots & 0 & 0 & 0\\
-        0 & 1 & 0 & \ldots & 0 & 0 & 0\\
-        0 & \textcolor{cyanL}{0} & 1 & \ldots & 0 & 0 & 0\\
-        \hdotsfor{7}\\
-        0 & 0 & 0 & \ldots & 1 & 1 & 0\\
-        0 & 0 & 0 & \ldots & 0 & 1 & 1
       \end{vmatrix}
-    = \ldots
-    = \begin{vmatrix}
-        1 & 0 & 0 & \ldots & 0 & 0 & 0\\
-        0 & 1 & 0 & \ldots & 0 & 0 & 0\\
-        0 & 0 & 1 & \ldots & 0 & 0 & 0\\
-        \hdotsfor{7}\\
-        0 & 0 & 0 & \ldots & 0 & 1 & 0\\
-        0 & 0 & 0 & \ldots & 0 & 0 & 1
-      \end{vmatrix}
-    = 1^{n - 1}
-    = 1
-  \end{split}
-  \end{equation*}
-  
-  Если обозначит искомый определитель как $\Delta_n$, то второй из определителей в первой формуле есть просто $\Delta_{n-1}$.
-  Итого,
-  \[
-    \Delta_n = 1 - \Delta_{n-1}
-  \]
-  
-  Посмотрим на $\Delta_n$ при $n \hm= 1, 2, \ldots$:
-  \[
-    \begin{aligned}
-      &\Delta_1 = 1\\
-      &\Delta_2 = 1 - 1 = 0\\
-      &\Delta_3 = 1 - 0 = 1\\
-      &\Delta_4 = 1 - 1 = 0\\
-      &\Delta_5 = 1 - 0 = 1\\
-      &\ldots
-    \end{aligned}
-  \]
-  
-  Очевидно\footnote{$a \divby p \equiv p \mid a$},
-  \[
-    \Delta_n = \left\{
+      = &\begin{vmatrix}
+          1 & 0 & 0 & \ldots & 0 & 0 & 0\\
+          \textcolor{light-cyan}{0} & 1 & 0 & \ldots & 0 & 0 & 0\\
+          0 & 1 & 1 & \ldots & 0 & 0 & 0\\
+          \hdotsfor{7}\\
+          0 & 0 & 0 & \ldots & 1 & 1 & 0\\
+          0 & 0 & 0 & \ldots & 0 & 1 & 1
+        \end{vmatrix}\\
+      = &\begin{vmatrix}
+          1 & 0 & 0 & \ldots & 0 & 0 & 0\\
+          0 & 1 & 0 & \ldots & 0 & 0 & 0\\
+          0 & \textcolor{light-cyan}{0} & 1 & \ldots & 0 & 0 & 0\\
+          \hdotsfor{7}\\
+          0 & 0 & 0 & \ldots & 1 & 1 & 0\\
+          0 & 0 & 0 & \ldots & 0 & 1 & 1
+        \end{vmatrix}
+      = \ldots
+      = \begin{vmatrix}
+          1 & 0 & 0 & \ldots & 0 & 0 & 0\\
+          0 & 1 & 0 & \ldots & 0 & 0 & 0\\
+          0 & 0 & 1 & \ldots & 0 & 0 & 0\\
+          \hdotsfor{7}\\
+          0 & 0 & 0 & \ldots & 0 & 1 & 0\\
+          0 & 0 & 0 & \ldots & 0 & 0 & 1
+        \end{vmatrix}
+      = 1^{n - 1}
+      = 1
+    \end{split}
+    \end{equation*}
+    
+    Если обозначит искомый определитель как $\Delta_n$, то второй из определителей в первой формуле есть просто $\Delta_{n-1}$.
+    Итого,
+    \[
+      \Delta_n = 1 - \Delta_{n-1}
+    \]
+    
+    Посмотрим на $\Delta_n$ при $n \hm= 1, 2, \ldots$:
+    \[
       \begin{aligned}
-        &1, 2 \not\mid n\\
-        &0, 2 \mid n
+        &\Delta_1 = 1\\
+        &\Delta_2 = 1 - 1 = 0\\
+        &\Delta_3 = 1 - 0 = 1\\
+        &\Delta_4 = 1 - 1 = 0\\
+        &\Delta_5 = 1 - 0 = 1\\
+        &\ldots
       \end{aligned}
-    \right.
-    \equiv [2 \not\mid n]\footnote{Встречаются такие более короткие записи выражения индикатора (либо $0$, либо $1$ в зависимости от некоторого условия): $[\cdot]$, $I[\cdot]$. Например, ``$b$ равно $3$, если $a$ равно $2$; иначе $b$ равно $17.5$'' можно записать так: $b \hm= 3 \hm\cdot [a \hm= 2] + 17.5 \cdot [a \hm{\not=} 2]$.}
-  \]
-  \qed
+    \]
+    
+    Очевидно\footnote{$a \divby p \equiv p \mid a$},
+    \[
+      \Delta_n = \left\{
+        \begin{aligned}
+          &1, 2 \not\mid n\\
+          &0, 2 \mid n
+        \end{aligned}
+      \right.
+      \equiv [2 \not\mid n]\footnote{Встречаются такие более короткие записи выражения индикатора (либо $0$, либо $1$ в зависимости от некоторого условия): $[\cdot]$, $I[\cdot]$. Например, ``$b$ равно $3$, если $a$ равно $2$; иначе $b$ равно $17.5$'' можно записать так: $b \hm= 3 \hm\cdot [a \hm= 2] + 17.5 \cdot [a \hm{\not=} 2]$.}
+    \]
+  \end{solution}
   
 
   \section{Системы линейныx уравнений. Правило Крамера}
@@ -691,40 +701,40 @@
     \]
   \end{problem}
   
-  \emph{Решение.}
-  \[
-    \Delta = \det \begin{pmatrix}
-      1 & -3 & -1\\
-      -2 & 7 & 2\\
-      3 & 2 & -4
-    \end{pmatrix} = -1
-  \]
-  \[
-    \Delta_1 = \det \begin{pmatrix}
-      -4 & -3 & -1\\
-      10 & 7 & 2\\
-      9 & 2 & -4
-    \end{pmatrix} = -3 \Rightarrow x_1 = \frac{\Delta_1}{\Delta} = \frac{-3}{-1} = 3
-  \]
-  \[
-    \Delta_2 = \det \begin{pmatrix}
-      1 & -4 & -1\\
-      -2 & 10 & 2\\
-      3 & 9 & -4
-    \end{pmatrix} = -2 \Rightarrow x_2 = \frac{\Delta_2}{\Delta} = \frac{-2}{-1} = 2
-  \]
-  \[
-    \Delta_3 = \det \begin{pmatrix}
-      1 & -3 & -4\\
-      -2 & 7 & 10\\
-      3 & 2 & 9
-    \end{pmatrix} = -1 \Rightarrow x_3 = \frac{\Delta_3}{\Delta} = \frac{-1}{-1} = 1
-  \]
-  \[
-    \bds x = \begin{pmatrix}
-      3\\ 2\\ 1
-    \end{pmatrix}
-  \]
-  \qed
+  \begin{solution}
+    \[
+      \Delta = \det \begin{pmatrix}
+        1 & -3 & -1\\
+        -2 & 7 & 2\\
+        3 & 2 & -4
+      \end{pmatrix} = -1
+    \]
+    \[
+      \Delta_1 = \det \begin{pmatrix}
+        -4 & -3 & -1\\
+        10 & 7 & 2\\
+        9 & 2 & -4
+      \end{pmatrix} = -3 \Rightarrow x_1 = \frac{\Delta_1}{\Delta} = \frac{-3}{-1} = 3
+    \]
+    \[
+      \Delta_2 = \det \begin{pmatrix}
+        1 & -4 & -1\\
+        -2 & 10 & 2\\
+        3 & 9 & -4
+      \end{pmatrix} = -2 \Rightarrow x_2 = \frac{\Delta_2}{\Delta} = \frac{-2}{-1} = 2
+    \]
+    \[
+      \Delta_3 = \det \begin{pmatrix}
+        1 & -3 & -4\\
+        -2 & 7 & 10\\
+        3 & 2 & 9
+      \end{pmatrix} = -1 \Rightarrow x_3 = \frac{\Delta_3}{\Delta} = \frac{-1}{-1} = 1
+    \]
+    \[
+      \bds x = \begin{pmatrix}
+        3\\ 2\\ 1
+      \end{pmatrix}
+    \]
+  \end{solution}
   
 \end{document}
