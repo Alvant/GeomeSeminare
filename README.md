@@ -4,7 +4,7 @@
 
 ## Ссылки
 
-* [Вопросы к лекциям по аналитической геометрии и линейной алгебре (Л.~А.~Беклемишева)](https://mipt.ru/upload/medialibrary/e8c/special.pdf)
+* [Вопросы к лекциям по аналитической геометрии и линейной алгебре (Л.&nbsp;А.&nbsp;Беклемишева)](https://mipt.ru/upload/medialibrary/e8c/special.pdf)
 
 ## P.S.
 
@@ -12,8 +12,8 @@
 
 Ссылки:
 
-* [Набор и вёрстка в системе LaTeX (С.~М.~Львовский)](https://www.mccme.ru/free-books/llang/newllang.pdf) — для понимания, что и как происходит и устроено, достаточно первых нескольких глав.
-* [LaTeX 2ε в примерах (К.~В.~Воронцов)](http://www.machinelearning.ru/wiki/images/0/06/Voron05latex.pdf) — много примеров.
+* [Набор и вёрстка в системе LaTeX (С.&nbsp;М.&nbsp;Львовский)](https://www.mccme.ru/free-books/llang/newllang.pdf) — для понимания, что и как происходит и устроено, достаточно первых нескольких глав.
+* [LaTeX 2ε в примерах (К.&nbsp;В.&nbsp;Воронцов)](http://www.machinelearning.ru/wiki/images/0/06/Voron05latex.pdf) — много примеров.
 * [Overleaf](https://www.overleaf.com/) — веб-редактор LaTeX, с возможностью совместного редактирования. Плюс статьи и примеры.
 * [LaTeX Wikibook](https://en.wikibooks.org/wiki/LaTeX)
 * Google + [TeX StackExchange](https://tex.stackexchange.com/)
