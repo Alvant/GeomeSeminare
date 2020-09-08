@@ -16,6 +16,6 @@
 * [LaTeX 2ε в примерах (К.&nbsp;В.&nbsp;Воронцов)](http://www.machinelearning.ru/wiki/images/0/06/Voron05latex.pdf) — много примеров.
 * [Overleaf](https://www.overleaf.com/) — веб-редактор LaTeX, с возможностью совместного редактирования. Плюс статьи и примеры.
 * [LaTeX Wikibook](https://en.wikibooks.org/wiki/LaTeX)
-* Google + [TeX StackExchange](https://tex.stackexchange.com/)
+* Google + [TeX StackExchange](https://tex.stackexchangeе.com/)
 
-Чтобы собрать какой-либо семинар, надо скопировать стилевые файлы ([mystyle.sty](./mystyle.sty), [mygeome.sty](./mygeome.sty)) и шрифты [fonts](./fonts) в папку с семинаром.
+Чтобы собрать какой-либо семинар, надо скопировать стилевой файл [mystyle.sty](./mystyle.sty) и шрифты [fonts](./fonts) в папку с семинаром.
