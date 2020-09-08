@@ -1,7 +1,6 @@
 \documentclass[a4paper,12pt]{article}
 
 \usepackage{mystyle}
-\usepackage{mygeome}
 
 \graphicspath{ {images/} }
 
@@ -18,7 +17,7 @@
 
 \author{Алексеев Василий}
 \title{Семинар 1}
-\date{1 сентября 2020}
+\date{1 + 7 сентября 2020}
 
 
 \begin{document}
@@ -327,21 +326,21 @@
   
   \begin{problem}[14.7(3)]
     \[
-      \begin{pmatrix}
+      \begin{vmatrix}
         1 & 2 & 2\\
         2 & 1 & -2\\
         2 & -2 & 1
-      \end{pmatrix} = \?
+      \end{vmatrix} = \?
     \]
   \end{problem}
   
   \begin{solution}
     \[
-      \begin{pmatrix}
+      \begin{vmatrix}
         1 & 2 & 2\\
         2 & 1 & -2\\
         2 & -2 & 1
-      \end{pmatrix}
+      \end{vmatrix}
       = 1 \cdot \Bigl(1 \cdot 1 - (-2) \cdot (-2)\Bigr)
         \textcolor{light-cyan}{-} 2 \cdot \Bigl(2 \cdot 1 - 2 \cdot (-2)\Bigr)
         + 2 \cdot \Bigl(2 \cdot (-2) - 2 \cdot 1\Bigr)
@@ -422,7 +421,7 @@
     Некоторые свойства определителя (матрицы в формулах ниже представляются столбцами $\bds a_i \hm\in \RR^n$):
     \begin{enumerate}
       \item Линейность по столбцу (строке)~---~полилинейность:
-        \[
+        \begin{equation}\label{eq:poly-linearity}
           \left\{
             \begin{aligned}
               &\det (\bds a_1, \ldots, \underbrace{\bds p + \bds q}_{\bds a_i}, \ldots, \bds a_n)
@@ -432,16 +431,16 @@
                 = \alpha \det (\bds a_1, \ldots, \bds p, \ldots, \bds a_n)
             \end{aligned}
           \right.
-        \]
-      \item При перестановке двух столбцов (строк) матрицы её определитель меняет знак:
-        \[
+        \end{equation}
+      \item При перестановке двух столбцов (строк) матрицы её определитель меняет знак (кососимметричность, антисимметричность по столбцам/строкам):
+        \begin{equation}\label{eq:row-swap}
           \det (\bds a_1, \ldots, \bds a_{\textcolor{light-cyan}{i}}, \ldots, \bds a_{\textcolor{light-purple}{j}}, \ldots, \bds a_n)
           = -\det (\bds a_1, \ldots, \bds a_{\textcolor{light-purple}{j}}, \ldots, \bds a_{\textcolor{light-cyan}{i}}, \ldots, \bds a_n)
-        \]
+        \end{equation}
       \item Если два столбца (две строки) матрицы совпадают, то её определитель равен нулю:
-        \[
+        \begin{equation}\label{eq:same-rows}
           \det (\bds a_1, \ldots, \bds p, \ldots, \bds p, \ldots, \bds a_n) = 0
-        \]
+        \end{equation}
     \end{enumerate}
     
   \end{theorem}
@@ -716,5 +715,129 @@
       \end{pmatrix}
     \]
   \end{solution}
+  
+  
+  \section{Дополнение}
+  
+  \subsection{Определения определителя}
+  
+  Как отмечалось выше, существует нескольно эквивалентных определений $\det$.
+  Один из способов~---~с помощью формулы (\ref{eq:complete-expansion}).
+  Приведём далее ещё пару.
+  
+  \begin{definition}[Через свойства\footnote{Беклемишев~Д.~В. <<Курс аналитической геометрии и линейной алгебры>>}]
+    Функция $f \colon \RR^{n \times n} \to \RR$ называется определителем (детерминантом) и обозначается $\det$, если
+    \begin{itemize}
+      \item Функция $f$ является линейным однородным многочленом от элементов любой строки:
+      \[
+        \left\{
+          \begin{aligned}
+            &f(A) = h_1 a_{i1} + \ldots + h_n a_{in}\\
+            &1 \leq i \leq n\\
+            &h_j = h_j(a_1, \ldots, a_{i-1}, a_{i+1}, \ldots, a_{n}),\ 1 \leq j \leq n
+          \end{aligned}
+        \right.
+      \]
+      то есть коэффициенты в разложении по элементам строки не зависят от этой самой строки.
+      
+      \item Значение $f$ на вырожденной матрице\footnote{У которой строки линейно зависимы} равно нулю $0$.
+      \item Значение $f$ на единичной матрице $E_{n \times n}$ равно единице $1$.
+    \end{itemize}
+  \end{definition}
+  
+  \begin{definition}[Через формулу, вариант $2$: рекурсивный]
+    Положим определитель матрицы из одного элемента равным этому самому элементу
+    \[
+      \det \begin{pmatrix}a\end{pmatrix} \equiv a
+    \]
+    Пусть $d_{ij}$~---~определитель подматрицы $D_{ij}$ матрицы $A \in \RR^{n \times n}$, которая получается при вычёркивании $i$-ой строки и $j$-го столбца.
+    Тогда
+    \[
+      \det(A) = \sum\limits_{j = 1}^n a_{ij} (-1)^{i + j} d_{ij}
+    \]
+    где $i$~---~любая строка матрицы $A$ (не важно, какая~---~значение функции $\det$ не изменится).
+  \end{definition}
+  
+  \begin{definition}[Через свойства, вариант $2$\footnote{\href{https://en.wikipedia.org/wiki/Determinant\#Definition}{https://en.wikipedia.org/wiki/Determinant}}]
+    Функция $f \colon \RR^{n \times n} \to \RR$ называется определителем (детерминантом) и обозначается $\det$, если
+    \begin{itemize}
+      \item Функция $f$ полилинейна по строкам матрицы $A \in \RR^{n \times n}$ (\ref{eq:poly-linearity}).
+      \item Функция $f$ кососимметрична по строкам матрицы $A$ (\ref{eq:row-swap}).
+      \item Значение $f$ на единичной матрице $E_{n \times n}$ равно единице $1$.
+    \end{itemize}
+  \end{definition}
+  
+  \begin{definition}[Через свойства, вариант $3$\footnote{Hans Schneider, George Phillip Barker. <<Matrices and Linear Algebra>>}]
+    Функция $f \colon \RR^{n \times n} \to \RR$ называется определителем (детерминантом) и обозначается $\det$, если
+    \begin{itemize}
+      \item Функция $f$ полилинейна по строкам матрицы $A \in \RR^{n \times n}$ (\ref{eq:poly-linearity}).
+      \item Значение $f$ на матрице с двумя одинаковыми строками равно нулю $0$ (\ref{eq:same-rows}).
+      \item Значение $f$ на единичной матрице $E_{n \times n}$ равно единице $1$.
+    \end{itemize}
+  \end{definition}
+  
+  
+  \subsection{Задача про определитель \texttt{np.arange}($n * n$)\texttt{.reshape}($n$, $-1$)}
+  
+  Посчитаем определитель матрицы
+  $\left(\begin{smallmatrix}1 & 2 & 3\\ 4 & 5 & 6\\ 7 & 8 & 9\end{smallmatrix}\right)$:
+  \[
+    \det \begin{pmatrix}
+      1 & 2 & 3\\
+      4 & 5 & 6\\
+      7 & 8 & 9
+    \end{pmatrix}
+    \stackrel{(3) = (3) - (2)}{=} \det \begin{pmatrix}
+      1 & 2 & 3\\
+      4 & 5 & 6\\
+      3 & 3 & 3
+    \end{pmatrix}
+    \stackrel{(2) = (2) - (1)}{=} \det \begin{pmatrix}
+      1 & 2 & 3\\
+      3 & 3 & 3\\
+      3 & 3 & 3
+    \end{pmatrix}
+    = 0
+  \]
+  так как определитель матрицы с двумя одинаковыми строками равен нулю (\ref{eq:same-rows}).
+  
+  Рассмотрим более общий случай (для матрицы произвольной размерности):
+  \begin{equation*}
+  \begin{split}
+    &\det \begin{pmatrix}
+      1                 & 2                 & 3                 & \ldots & n\\
+      n + 1             & n + 2             & n + 3             & \ldots & 2n\\
+      \vdots            & \vdots            & \vdots            & \ddots & \vdots\\
+      (n-2) \cdot n + 1 & (n-2) \cdot n + 2 & (n-2) \cdot n + 3 & \ldots & (n - 1) \cdot n\\
+      (n-1) \cdot n + 1 & (n-1) \cdot n + 2 & (n-1) \cdot n + 3 & \ldots & n \cdot n
+    \end{pmatrix}\\
+    \stackrel{(n) = (n) - (n - 1)}{=} &\det \begin{pmatrix}
+      1                 & 2                 & 3                 & \ldots & n\\
+      n + 1             & n + 2             & n + 3             & \ldots & 2n\\
+      \vdots            & \vdots            & \vdots            & \ddots & \vdots\\
+      (n-2) \cdot n + 1 & (n-2) \cdot n + 2 & (n-2) \cdot n + 3 & \ldots & (n - 1) \cdot n\\
+      n                 & n                 & n                 & \ldots & n
+    \end{pmatrix}\\
+    \stackrel{(2) = (2) - (1)}{=} &\det \begin{pmatrix}
+      1                 & 2                 & 3                 & \ldots & n\\
+      n                 & n                 & n                 & \ldots & n\\
+      \vdots            & \vdots            & \vdots            & \ddots & \vdots\\
+      (n-2) \cdot n + 1 & (n-2) \cdot n + 2 & (n-2) \cdot n + 3 & \ldots & (n - 1) \cdot n\\
+      n                 & n                 & n                 & \ldots & n
+    \end{pmatrix}\\
+    \stackrel{\hphantom{(3) = (3) - (2)}}{=} &0
+  \end{split}
+  \end{equation*}
+  
+  И в общем случае определитель равен нулю!
+  
+  При этом стоит отметить, что для $n \hm= 2$ и $n \hm= 1$ определитель всё-таки отличен от нуля:
+  \[
+    \det \begin{pmatrix} 1 \end{pmatrix} = 1
+  \]
+  \[
+    \det \begin{pmatrix} 1 & 2\\ 3 & 4 \end{pmatrix} = 1 \cdot 4 - 3 \cdot 2 = -2
+  \]
+  \qed
   
 \end{document}
