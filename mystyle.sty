@@ -474,66 +474,24 @@
 \DeclareMathOperator{\?}{?}
 \newcommand{\quotient}[1]{\mathop{\mathrm{\backslash\negthickspace{#1}}}\nolimits}
 
-% Отступы и интервалы между формулами при внутритекстовом режиме
-\newcommand{\noi}{\noindent}
-\newcommand{\lit}{\vspace{0.1cm}}
-\newcommand{\med}{\vspace{0.4cm}}
-\newcommand{\lar}{\vspace{1.0cm}}
-\renewcommand{\sp}{\par\lit\noi} % step
-\newcommand{\jp}{\par\med\noi} % jump
-\newcommand{\lp}{\par\lar} % leap
-% Пример:
-%
-% Some text...
-% \lp
-%
-% $1+1=2$\sp
-% $2+2=4$\sp
-% $3+3=6$\sp
-% \jp
-% $1*1=1$\sp
-% $9*2=18$
-% \lp
-% 
-% Some text...
 
-% Пример титульной страницы для курсовой работы (взят из работы по вычматам, где был найден на overleaf)
-\iffalse
-\begin{document}
-  \begin{titlepage}
-    \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
-    \center % Center everything on the page
+\newtheorem{theorem}{Теорема}[section]
 
-    \textsc{\LARGE МФТИ}\\[0.5cm]
-    \textsc{\Large ФУПМ, 474}\\[0.5cm] % Major heading such as course name
-    \textsc{\large Вычислительная математика}\\[1.5cm] % Minor heading such as course title
+\newtheorem*{problem}{Задача}
 
-    \vspace{3cm}
+\theoremstyle{definition}
+\newtheorem{definition}{Определение}[section]
 
-    \HRule \\[0.4cm]
-    {\huge \bfseries Курсовая работа}\\[0.3cm] % Title of your document
-    \HRule \\[1.5cm]
+\theoremstyle{remark}
+\newtheorem*{example}{Пример}
 
-    \Large %\emph{Автор:}\\
-    \textsc{Алексеев} Василий\\[3cm]
+\theoremstyle{remark}
+\newtheorem*{remark}{Замечание}
 
-    \vspace{\fill}
+\theoremstyle{remark}
+\newtheorem*{solution}{Решение}
+\AtEndEnvironment{solution}{\qed}
 
-    {\large 22 Мая 2017}\\[0.2cm] % Date, change the \today to a set date if you want to be precise
 
-    %\vfill
-  \end{titlepage}
-
-  %\thispagestyle{empty}
-  %\newpage
-  
-  \pagenumbering{arabic}
-  
-  {
-    \hypersetup{linkcolor=black}
-    \tableofcontents
-  }
-  
-...
-\end{document}
-\fi
+\DeclareMathOperator{\Sp}{Sp}
+\DeclareMathOperator{\Tr}{Tr}
