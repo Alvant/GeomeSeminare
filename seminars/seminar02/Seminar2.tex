@@ -1,0 +1,275 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{mystyle}
+
+\graphicspath{ {images/} }
+
+
+% https://tex.stackexchange.com/questions/5461/is-it-possible-to-change-the-size-of-an-arrowhead-in-tikz-pgf
+\usetikzlibrary{arrows.meta}
+
+% https://tex.stackexchange.com/questions/261591/arrow-above-text-like-widehat
+\usepackage{esvect}
+
+% https://tex.stackexchange.com/questions/32501/how-to-get-a-good-divisible-by-symbol
+\DeclareRobustCommand{\divby}{%
+  \mathrel{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}%
+}
+
+
+\definecolor{light-cyan}{RGB}{0, 204, 204}
+\definecolor{light-purple}{RGB}{138, 43, 226}
+
+
+\author{Алексеев Василий}
+\title{Семинар 2}
+\date{8 сентября 2020}
+
+
+\begin{document}
+  \maketitle
+  
+  \tableofcontents
+
+  \thispagestyle{empty}
+  
+  \newpage
+  
+  \pagenumbering{arabic}
+
+
+  \section{Вектора (-ы?)}
+  
+  Вектор~---~направленный отрезок (\ref{fig:vector}).
+  Вектор можно обозначать одной строчной буквой, например $\bds a$, или двумя: началом и концом, например $\vv{AB}$.
+  
+  \begin{figure}[h]
+    \centering
+    
+    \begin{tikzpicture}
+      \draw[-{Latex[length=5mm, width=2mm]}, thick] (0,0) -- (5,5);
+      \draw[ultra thick, fill] (0,0) circle[radius=0.05];
+    \end{tikzpicture}
+    
+    \caption{Вектор характеризуется направлением и величиной.}
+    \label{fig:vector}
+  \end{figure}
+  
+  \begin{definition}[Коллинеарность]  % TODO: pic
+    Два ненулевых вектора $\bds a$ и $\bds b$ называются \emph{коллинеарными}, если существует прямая, которой они параллельны.
+    Коллинеарность обозначается $\bds a \hm\parallel \bds b$.
+    Если при этом $\bds a$ и $\bds b$ направлены в одну сторону, то можно писать $\bds a \hm\upuparrows \bds b$,
+    если в разные стороны~---~$\bds a \hm\updownarrows \bds b$.
+    Нулевой вектор коллинеарен любому вектору.
+  \end{definition}
+  
+  \begin{definition}[Компланарность]  % TODO: pic
+    Три ненулевых вектора $\bds a$, $\bds b$ и $\bds c$ называются \emph{компланарными}, если существует плоскость, которой они параллельны.
+    Три вектора, два из которых ненулевые, а третий нулевой, всегда компланарны.
+  \end{definition}
+  
+  \begin{definition}[Равенство векторов]
+    Будем считать два вектора $\bds a$ и $\bds b$ равными, если они
+    \begin{itemize}
+      \item равны по длине $|\bds a| = |\bds b|$
+      \item коллинеарны $\bds a \parallel \bds b$
+      \item одинаково направлены $\bds a \upuparrows \bds b$
+    \end{itemize}
+    Точка приложения при равенстве не учитывается\footnote{То есть получается, что можно нарисовать несколько несовпадающих, но равных векторов. Хотя в зависимости от конкретной задачи может быть важным различать векторы с разной точкой приложения. Например, в физике, при действии сил на тело.}.
+  \end{definition}
+  
+  На множестве векторов определены следующие операции:
+  \begin{itemize}
+    \item Сложение векторов:
+      \[
+        \vv{AB} + \vv{BC} = \vv{AC}
+      \]
+    \item Умножение вектора $\bds a$ на число $\alpha \in \RR$.
+      Результирующий вектор обозначается как $\alpha \bds a$ и определяется свойствами:
+      \[
+        \left\{
+          \begin{aligned}
+            &|\alpha \bds a| = |\alpha| \cdot |\bds a|\\
+            &\alpha \bds a \parallel \bds a\\
+            &\left\{
+               \begin{aligned}
+                 &\alpha \bds a \upuparrows \bds a, \alpha > 0\\
+                 &\alpha \bds a \updownarrows \bds a, \alpha < 0
+               \end{aligned}
+             \right.
+          \end{aligned}
+        \right.
+      \]
+  \end{itemize}
+  
+  Множество векторов в $\RR^3$ с введёнными операциями сложения и умножения на число из $\RR$ образуют линейное пространство.
+  Но рассмотрим векторы на одной прямой: сложение и умножение на число не выводят с прямой.
+  То же самое с векторами на плоскости: сложение и умножение на число даёт вектор, также лежащий в той же плоскости.
+  Таким образом, не только векторы из всего $\RR^3$ образуют линейное пространство, но и векторы, параллельные одной прямой, и векторы, параллельные одной плоскости.
+  Множество векторов из одного нулевого вектора также образуют линейное пространство.
+  Таким образом,
+  \begin{itemize}
+    \item нульмерное векторное пространство~---~нулевой вектор
+    \item одномерное векторное пространство
+      \[
+        \{\bds v \in \RR^3 \mid \bds v \parallel l\}, \quad \mbox{$l$~---~прямая}
+      \]
+    \item двумерное векторное пространство
+      \[
+        \{\bds v \in \RR^3 \mid \bds v \parallel \alpha\}, \quad \mbox{$\alpha$~---~плоскость}
+      \]
+    \item трёхмерное векторное пространство~---~$\RR^3$
+  \end{itemize}
+  
+  \begin{definition}
+    Линейная комбинация векторов $\bds a_1, \ldots, \bds a_n$:
+    \[
+      \alpha_1 \bds a_1 + \ldots + \alpha_n \bds a_n, \quad \alpha_i \in \RR, 1 \leq i \leq n
+    \]
+    
+    Нетривиальная линейная комбинация~---~когда хотя бы один их коэффициентов $\alpha_i$ отличен от нуля:
+    $\sum\limits_{i=1}^n \alpha_i^2 \hm> 0$.
+  \end{definition}
+  
+  \begin{definition}[Линейно зависимая система векторов]
+    Система векторов $\bds a_1, \ldots, \bds a_n$ называется линейно зависимой, если существует их нетривиальная линейная комбинация, равная нулевому вектору:
+    \[
+      \left\{
+        \begin{aligned}
+          &\alpha_1 \bds a_1 + \ldots + \alpha_n \bds a_n = \bds 0\\
+          &\alpha_1^2 + \ldots + \alpha_n^2 > 0
+        \end{aligned}
+      \right.
+    \]
+  \end{definition}
+  
+  \begin{example}
+    Система из одного нулевого вектора линейно зависима.
+  \end{example}
+  
+  \begin{theorem}
+    Система из $k > 1$ вектора линейно зависима тогда и только тогда, когда один из векторов системы представим как линейная комбинация остальных.
+  \end{theorem}
+  
+  \begin{proof}
+    Пусть $\bds a_1, \ldots, \bds a_n$~---~линейно зависимы.
+    Это значит, что
+    \[
+      \alpha_1 \bds a_1 + \ldots + \alpha_n \bds a_n = \bds 0
+    \]
+    и некоторый $\alpha_j \hm{\not=} 0$.
+    Поэтому
+    \[
+      \alpha_j = \sum\limits_{\substack{1 \leq i \leq n\\i \not= j}} -\frac{\alpha_i}{\alpha_j} \bds a_i
+    \]
+    
+    И наоборот, пусть некоторый $\bds a_j$ представим как линейная комбинация остальных векторов из набора с коэффициентами $\alpha_i'$:
+    \[
+      \bds a_j = \sum\limits_{\substack{1 \leq i \leq n\\i \not= j}} \alpha_i' \bds a_i
+    \]
+    Тогда
+    \[
+      \alpha_1' \bds a_1 + \ldots + (-1) \cdot \bds a_j + \ldots + \alpha_n' \bds a_n = \bds 0
+    \]
+    и по крайней мере один коэффициент $-1$ в линейной комбинации векторов $\{\bds a_i\}_{i=1}^n$ не равен нулю.
+  \end{proof}
+  
+  \begin{theorem}\label{theo:linear-dependence-criteria}
+    Критерии линейно зависимости систем векторов:
+    \begin{itemize}
+      \item Один вектор линейно зависим $\Leftrightarrow$ это нулевой вектор.
+      \item Два вектора линейно зависимы $\Leftrightarrow$ эти векоры коллинеарны.
+      \item Три ветора линейно зависимы $\Leftrightarrow$ эти векторы компланарны.
+      \item Любые четыре вектора линейно зависимы\footnote{Мы в $\RR^3$.}.
+    \end{itemize}
+  \end{theorem}
+  
+  \begin{definition}[Базис]
+    Базисом в пространстве называется
+    \begin{itemize}
+      \item упорядоченная
+      \item линейно независимая
+      \item полная\footnote{Любой вектор пространства модет быть разложен по системе.}
+    \end{itemize}
+    система векторов.
+  \end{definition}
+  
+  Из теоремы (\ref{theo:linear-dependence-criteria}) следует, что
+  \begin{itemize}
+    \item В нулевом пространстве не существует базиса.
+    \item В одномерном пространстве ненулевой вектор образует базис.
+    \item В двумерном пространстве пара неколлинеарных векторов обращует базис.
+    \item В трёхмерном пространстве тройка некомпланарных векторов образует базис.
+  \end{itemize}
+  \begin{problem}[1.6]
+  
+  \end{problem}
+  
+  \begin{solution}
+  
+  \end{solution}
+  
+
+  \begin{problem}[1.11(1)]
+  
+  \end{problem}
+  
+  \begin{solution}
+  
+  \end{solution}
+  
+  
+  \begin{problem}[1.24(1)]
+  
+  \end{problem}
+  
+  \begin{solution}
+  
+  \end{solution}
+  
+  
+  \begin{problem}[1.51]
+  
+  \end{problem}
+  
+  \begin{solution}
+  
+  \end{solution}
+  
+  
+  \begin{problem}[1.39]
+  
+  \end{problem}
+  
+  \begin{solution}
+  
+  \end{solution}
+  
+  
+  
+  \begin{problem}[1.37]
+  
+  \end{problem}
+  
+  \begin{solution}
+  
+  \end{solution}
+  
+  
+  
+  \begin{problem}[1.36]
+  
+  \end{problem}
+  
+  \begin{solution}
+  
+  \end{solution}
+  
+  
+  
+  \section{Дополнение}
+  
+  \subsection{Про центр масс}
+  
+  
+\end{document}
