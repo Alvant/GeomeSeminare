@@ -11,4 +11,6 @@
 
 * Где может использоваться перевод координат из одной системы в другую?
 
-![](./docs/plane.png)
+<div align="center">
+    <img src="./docs/plane.png" width="50%" alt/>
+</div>
