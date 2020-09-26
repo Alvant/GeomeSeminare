@@ -12,5 +12,5 @@
 * Где может использоваться перевод координат из одной системы в другую?
 
 <div align="center">
-    <img src="./docs/plane.png" width="50%" alt/>
+    <img src="./docs/plane.png" width="50%" style="margin-top: 5em;" alt/>
 </div>
