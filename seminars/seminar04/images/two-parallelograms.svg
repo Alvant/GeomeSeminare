@@ -19,6 +19,30 @@
   <defs
      id="defs2">
     <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="marker4688"
+       style="overflow:visible;"
+       inkscape:isstock="true">
+      <path
+         id="path4686"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         transform="scale(0.8) rotate(180) translate(12.5,0)" />
+    </marker>
+    <inkscape:path-effect
+       effect="bspline"
+       id="path-effect4615"
+       is_visible="true"
+       weight="33.333333"
+       steps="2"
+       helper_size="0"
+       apply_no_weight="true"
+       apply_with_weight="true"
+       only_selected="false" />
+    <marker
        style="overflow:visible"
        id="DistanceStart"
        refX="0.0"
@@ -50,7 +74,8 @@
        refX="0.0"
        refY="0.0"
        orient="auto"
-       inkscape:stockid="Arrow1Lend">
+       inkscape:stockid="Arrow1Lend"
+       inkscape:collect="always">
       <path
          transform="scale(0.8) rotate(180) translate(12.5,0)"
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
@@ -180,9 +205,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.9899495"
-     inkscape:cx="567.04983"
-     inkscape:cy="297.07453"
+     inkscape:zoom="1.979899"
+     inkscape:cx="798.46738"
+     inkscape:cy="285.55001"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -214,7 +239,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -373,5 +398,26 @@
          x="172.58746"
          y="252.14941"
          style="stroke-width:0.26458332">S &lt; 0</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="241.2998"
+       y="219.4769"
+       id="text4603"><tspan
+         sodipodi:role="line"
+         id="tspan4601"
+         x="241.2998"
+         y="219.4769"
+         style="stroke-width:0.26458332">&quot;<tspan
+   style="font-weight:bold"
+   id="tspan4611">+</tspan>&quot;</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.26499999, 0.52999997;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker4688)"
+       d="m 261.65686,245.68425 c -4.6771,-2.22719 -9.35426,-4.45441 -11.51476,-7.99594 -2.1605,-3.54154 -1.80415,-8.39687 -1.44781,-13.25198"
+       id="path4613"
+       inkscape:connector-curvature="0"
+       inkscape:path-effect="#path-effect4615"
+       inkscape:original-d="m 261.65686,245.68425 c -4.67695,-2.22751 -9.35411,-4.45473 -14.03165,-6.68174 0.35663,-4.85572 0.71298,-9.71105 1.06908,-14.56618"
+       sodipodi:nodetypes="ccc" />
   </g>
 </svg>
