@@ -176,9 +176,6 @@
   \DeclareRobustCommand{\mycolorbox}[2]{{\sethlcolor{#1}\hl{#2}}} % RobustCommand ??
 \fi
 
-% Номера страниц ставятся внизу в середине строки, колонтитулов нет
-\pagestyle{plain}
-
 % Чтобы не отличались промежутки между словами и предложениями
 \frenchspacing
 
@@ -204,16 +201,15 @@
 \usepackage{todonotes}
 
 % TODO
-%\usepackage[backend=biber,style=numeric,sorting=ynt]{biblatex}
+%\usepackage[
+%    backend=biber,
+%    style=numeric,
+%    citestyle=authoryear,  % verbose
+%    sorting=ynt,
+%    % autocite=inline
+%]{biblatex} % style=numeric
 %\usepackage{csquotes}
-%\addbibresource{somebib.bib}
-
-% Таблица с содержанием. Пробелы
-% https://tex.stackexchange.com/questions/56546/how-to-change-spaces-between-items-in-table-of-contents
-\usepackage{tocloft}
-%\renewcommand\cftchapafterpnum{\vskip10pt}
-\renewcommand\cftsecafterpnum{\vskip10pt}
-\renewcommand\cftsubsecafterpnum{\vskip5pt}
+%\addbibresource{biblio.bib}
 
 % Математика
 \usepackage{amsmath,amssymb,amsfonts,amsthm,amsbsy,amstext,amscd,amsxtra}
@@ -269,8 +265,6 @@
 % https://tex.stackexchange.com/questions/94799/how-do-i-color-table-columns
 \usepackage{colortbl}
 
-\usepackage[unicode]{hyperref} %http://tex.stackexchange.com/questions/50747/options-for-appearance-of-links-in-hyperref
-
 % Выбор шрифта для URL ссылок
 % https://tex.stackexchange.com/questions/53962/why-are-urls-typeset-with-monospace-fonts-by-default
 \urlstyle{same}
@@ -279,31 +273,6 @@
 %\urlstyle{sf}
 
 %\renewcommand{\url}[1]{\href{#1}{#1}}
-
-% Устанавливает координаты документа и увеличение при просмотре
-% Manual http://mirror.switch.ch/ftp/mirror/tex/macros/latex/contrib/hyperref/doc/manual.html#TBL-7-40-1
-\hypersetup{
-  pdfstartview={FitH} % XYZ null null 1.00, Fit, FitH, FitB
-}
-
-\hypersetup{
-  colorlinks=true, % true - раскрашивает текст, false - обводит в рамки
-  %
-  urlcolor=cyanD,
-  urlbordercolor=cyanD,
-  %
-  linkcolor=cyanD,%red,
-  linkbordercolor=cyanD,%red,
-  %
-  citecolor=purple,
-  citebordercolor=purple,
-  %
-  filecolor=cyanD,
-  filebordercolor=cyanD,
-  %
-  menucolor=red,
-  menubordercolor=red
-}
 
 % Способы выделения текста:
 % длинное подчёркивание, волнистое подчёркивание, перечёркивание
@@ -350,11 +319,6 @@
 
 \usepackage{float}
 
-% customization of a list environment, such as itemize, enumerate etc.
-\usepackage{enumitem}
-% https://tex.stackexchange.com/questions/53061/insert-image-and-list-inside-a-table?newreg=afea8fc2a8dd46da8baeef4e9db5f43e
-% https://tex.stackexchange.com/questions/91124/itemize-removing-natural-indent
-
 \usepackage{booktabs} % "Продвинутая" табличка, "только горизонтальные линии"
 
 %\usepackage[nomarkers,figuresonly]{endfloat} % Place figure environments at the end of the document
@@ -363,23 +327,9 @@
 % https://tex.stackexchange.com/questions/246/when-should-i-use-input-vs-include
 %\includeonly{task02}
 
+% https://tex.stackexchange.com/questions/261591/arrow-above-text-like-widehat
+\usepackage{esvect}
 
-% Отступы
-
-%https://ru.sharelatex.com/learn/Page_size_and_margins
-\usepackage{geometry}
-\geometry{
- textwidth=175mm,
- textheight=255mm,
- right=5cm
-}
-
-%\setlength{\textwidth}{175mm}
-%\setlength{\textheight}{255mm}
-\setlength{\oddsidemargin}{-5mm}
-\setlength{\evensidemargin}{-5mm}
-%\setlength{\topmargin}{-15mm}
-\setlength{\columnsep}{1cm}
 
 % Нумерация формул, картинок и таблиц по секциям
 % \numberwithin{equation}{section}
@@ -417,8 +367,6 @@
 
 %\DeclareMathOperator{\tg}{tg} = \newcommand{\tg}{\mathop{\mathrm{tg}}\nolimits}
 
-%\DeclareMathOperator{\Spr}{Sp} % Что это?
-
 \newcommand{\A}{\mathcal A}
 \newcommand{\B}{\mathcal B}
 
@@ -440,11 +388,7 @@
 \newcommand{\noth}{\varnothing}
 \newcommand{\ov}{\overline}
 \newcommand{\td}{\tilde}
-\newcommand{\mbf}{\mathbf}
 \newcommand{\bds}{\boldsymbol} % Похож на \mathbf + ещё с греческими работает
-
-\let\bsym\relax
-\DeclareMathOperator{\bsym}{\boldsymbol}
 
 \renewcommand{\Re}{\mathop{\mathrm{Re}}\nolimits}
 \renewcommand{\Im}{\mathop{\mathrm{Im}}\nolimits}
@@ -462,28 +406,13 @@
 \let\CC\relax
 \DeclareMathOperator{\CC}{\mathbb C}
 
-% ТФС
-%\newcommand{\NP}{\mathop{\mathrm{NP}}\nolimits}
 \DeclareMathOperator{\Ker}{Ker}
-\DeclareMathOperator{\ax}{ax}
-\DeclareMathOperator{\lem}{lem}
 \DeclareMathOperator{\Rg}{Rg}
 
 \DeclareMathOperator{\sgn}{sgn}
 
 \let\diag\relax
 \DeclareMathOperator{\diag}{diag}
-
-% Опты
-\DeclareMathOperator{\Aff}{Aff}
-\DeclareMathOperator{\Cone}{Cone}
-\DeclareMathOperator{\Conv}{Conv}
-\DeclareMathOperator{\dom}{dom}
-\DeclareMathOperator{\convex}{convex}
-\DeclareMathOperator{\extr}{extr}
-\DeclareMathOperator{\internal}{int}
-\DeclareMathOperator{\cl}{cl}
-\DeclareMathOperator{\ri}{ri}
 
 \newcommand{\minimize}{\mathop{\mathrm{minimize}}\nolimits}
 \newcommand{\maximize}{\mathop{\mathrm{maximize}}\nolimits}
@@ -492,98 +421,125 @@
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 
-% Теорвер
-\DeclareMathOperator{\I}{\mathbb I} % Индикатор
-\DeclareMathOperator{\E}{\mathbb E} % Матожидание
-\DeclareMathOperator{\D}{\mathbb D} % Дисперсия
-\DeclareMathOperator{\as}{\ a.s.}
-\DeclareMathOperator{\OK}{OK} % ОК
-\renewcommand{\P}{\mathop{\mathbb{P}}\nolimits} % Вероятность. Пересекается со знаком абзаца
-%
-\DeclareMathOperator{\Ud}{\mathcal U}
-\DeclareMathOperator{\Nd}{\mathcal N}
-\DeclareMathOperator{\Bed}{Be}
-\DeclareMathOperator{\Expd}{\mathcal{E}\textit{xp}}
-\DeclareMathOperator{\Poissd}{Poiss}
-\DeclareMathOperator{\Geomd}{Geom}
-\DeclareMathOperator{\Binomd}{Binom}
-\DeclareMathOperator{\Dird}{Dir}
-
-\DeclareMathOperator{\idxmax}{idxmax}
-\DeclareMathOperator{\mean}{mean}
-\DeclareMathOperator{\median}{median}
-\DeclareMathOperator{\prs}{prs}
-\DeclareMathOperator{\spr}{spr}
-
-% TODO: already defined?
-% \DeclareMathOperator{\dim}{dim}
-
 \DeclareMathOperator{\?}{?}
-%\renewcommand{\div}{\mathop{\raisebox{-2pt}{\vdots}}}
 \newcommand{\quotient}[1]{\mathop{\mathrm{\backslash\negthickspace{#1}}}\nolimits}
-%\newcommand{\lege}[2]{\left( \frac{#1}{#2} \right)}
-%\newcommand{\dlege}[2]{\left( \dfrac{#1}{#2} \right)}
 
-% Отступы и интервалы между формулами при внутритекстовом режиме
-\newcommand{\noi}{\noindent}
-\newcommand{\lit}{\vspace{0.1cm}}
-\newcommand{\med}{\vspace{0.4cm}}
-\newcommand{\lar}{\vspace{1.0cm}}
-\renewcommand{\sp}{\par\lit\noi} % step
-\newcommand{\jp}{\par\med\noi} % jump
-\newcommand{\lp}{\par\lar} % leap
-% Пример:
-%
-% Some text...
-% \lp
-%
-% $1+1=2$\sp
-% $2+2=4$\sp
-% $3+3=6$\sp
-% \jp
-% $1*1=1$\sp
-% $9*2=18$
-% \lp
-% 
-% Some text...
 
-% Пример титульной страницы для курсовой работы (взят из работы по вычматам, где был найден на overleaf)
-\iffalse
-\begin{document}
-  \begin{titlepage}
-    \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
-    \center % Center everything on the page
+\DeclareMathOperator{\Sp}{Sp}
+\DeclareMathOperator{\Tr}{Tr}
 
-    \textsc{\LARGE МФТИ}\\[0.5cm]
-    \textsc{\Large ФУПМ, 474}\\[0.5cm] % Major heading such as course name
-    \textsc{\large Вычислительная математика}\\[1.5cm] % Minor heading such as course title
 
-    \vspace{3cm}
+\ifcsname beamer@author\endcsname % https://stackoverflow.com/questions/2524614/detect-latex-class-name
+  % https://tex.stackexchange.com/questions/170222/change-the-numbering-in-beamers-table-of-content
+  % \makeatletter
+  % \patchcmd{\beamer@sectionintoc}
+  %   {\ifnum\beamer@tempcount>0}
+  %   {\ifnum\beamer@tempcount>-1}
+  %   {}
+  %   {}
+  % \beamer@tocsectionnumber=-1
+  % \makeatother
 
-    \HRule \\[0.4cm]
-    {\huge \bfseries Курсовая работа}\\[0.3cm] % Title of your document
-    \HRule \\[1.5cm]
 
-    \Large %\emph{Автор:}\\
-    \textsc{Алексеев} Василий\\[3cm]
-
-    \vspace{\fill}
-
-    {\large 22 Мая 2017}\\[0.2cm] % Date, change the \today to a set date if you want to be precise
-
-    %\vfill
-  \end{titlepage}
-
-  %\thispagestyle{empty}
-  %\newpage
+  %\setbeamertemplate{footline}[frame number] % page numbering outside Navigation Bar
+  %\setbeamertemplate{navigation symbols}{} % switch off navigation bar
+  %\setbeamertemplate{caption}[numbered]
   
-  \pagenumbering{arabic}
+  % https://tex.stackexchange.com/questions/30720/footnote-without-a-marker
+  % \newcommand\blfootnote[1]{%
+  %   \begingroup
+  %   \renewcommand\thefootnote{}\footnote{#1}%
+  %   \addtocounter{footnote}{-1}%
+  %   \endgroup
+  % }
+  % Not working...
+  \newcommand\blfootnote[1]{%
+    \begingroup
+    \renewcommand\thefootnote{}\footnote[frame]{#1}%
+    \addtocounter{footnote}{-1}%
+    \endgroup
+  }
+  % https://latex.org/forum/viewtopic.php?t=30813
   
-  {
-    \hypersetup{linkcolor=black}
-    \tableofcontents
+  % https://tex.stackexchange.com/questions/149710/how-to-write-math-symbols-in-a-verbatim
+  % https://tex.stackexchange.com/questions/180222/how-to-change-font-size-for-specific-lstlisting
+  % \lstset{
+  %   mathescape,
+  %   basicstyle=\tiny, %or \small or \footnotesize etc.
+  % }
+\else
+  % Номера страниц ставятся внизу в середине строки, колонтитулов нет
+  \pagestyle{plain}
+  
+  \usepackage[unicode]{hyperref} %http://tex.stackexchange.com/questions/50747/options-for-appearance-of-links-in-hyperref
+  
+  % Устанавливает координаты документа и увеличение при просмотре
+  % Manual http://mirror.switch.ch/ftp/mirror/tex/macros/latex/contrib/hyperref/doc/manual.html#TBL-7-40-1
+  \hypersetup{
+    pdfstartview={FitH} % XYZ null null 1.00, Fit, FitH, FitB
+  }
+
+  \hypersetup{
+    colorlinks=true, % true - раскрашивает текст, false - обводит в рамки
+    %
+    urlcolor=cyanD,
+    urlbordercolor=cyanD,
+    %
+    linkcolor=cyanD,%red,
+    linkbordercolor=cyanD,%red,
+    %
+    citecolor=purple,
+    citebordercolor=purple,
+    %
+    filecolor=cyanD,
+    filebordercolor=cyanD,
+    %
+    menucolor=red,
+    menubordercolor=red
   }
   
-...
-\end{document}
+  % Таблица с содержанием. Пробелы
+  % https://tex.stackexchange.com/questions/56546/how-to-change-spaces-between-items-in-table-of-contents
+  \usepackage{tocloft}
+  %\renewcommand\cftchapafterpnum{\vskip10pt}
+  \renewcommand\cftsecafterpnum{\vskip10pt}
+  \renewcommand\cftsubsecafterpnum{\vskip5pt}
+  
+  % Отступы
+  % https://ru.sharelatex.com/learn/Page_size_and_margins
+  \usepackage{geometry}
+  \geometry{
+   textwidth=175mm,
+   textheight=255mm,
+   right=5cm
+  }
+
+  %\setlength{\textwidth}{175mm}
+  %\setlength{\textheight}{255mm}
+  \setlength{\oddsidemargin}{-5mm}
+  \setlength{\evensidemargin}{-5mm}
+  %\setlength{\topmargin}{-15mm}
+  \setlength{\columnsep}{1cm}
+
+  % Customization of a list environment, such as itemize, enumerate etc.
+  \usepackage{enumitem}
+  % https://tex.stackexchange.com/questions/53061/insert-image-and-list-inside-a-table?newreg=afea8fc2a8dd46da8baeef4e9db5f43e
+  % https://tex.stackexchange.com/questions/91124/itemize-removing-natural-indent
+
+  \newtheorem{theorem}{Теорема}[section]
+
+  \newtheorem*{problem}{Задача}
+
+  \theoremstyle{definition}
+  \newtheorem{definition}{Определение}[section]
+
+  \theoremstyle{remark}
+  \newtheorem*{example}{Пример}
+
+  \theoremstyle{remark}
+  \newtheorem*{remark}{Замечание}
+
+  \theoremstyle{remark}
+  \newtheorem*{solution}{Решение}
+  \AtEndEnvironment{solution}{\qed}
 \fi
