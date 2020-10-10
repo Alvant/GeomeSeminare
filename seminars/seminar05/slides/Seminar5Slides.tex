@@ -376,45 +376,41 @@
   \end{frame}
     
   \begin{frame}{\# 5.19}
-    \centerline{To be continued...}
+    % TODO: picture
+    \begin{block}{Решение}
+      \begin{enumerate}
+        \item Прямая $a$ параллельна $\bds{BC} \hm= (1 - 3, -1 - 7) \hm= (\textcolor{my-blue}{-2}, \textcolor{my-red}{-8})$:
+        \[
+          a: \textcolor{my-red}{-8} x - \textcolor{my-blue}{(-2)} y + C = 0
+        \]
+        \[
+          A \in a \Rightarrow -8 \cdot (-1) + 2 \cdot 5 + C = 0 \Rightarrow C = -18
+        \]
+        \[
+          \boxed{4x - y + 9 = 0}
+        \]
+        
+        \pause
+        
+        \item Прямая $a$ проходит между точками $B$ и $C$.
+        
+        Пусть $M$~---~середина $BC$:
+        $
+          M = \left(\frac{1 + 3}{2}, \frac{-1 + 7}{2}\right) = (2, 3)
+        $
+        
+        Прямая, проходящая через две точки $A(-1, 5)$ и $M(2, 3)$:
+        \[
+          \frac{x - x_M}{x_A - x_M} = \frac{y - y_M}{y_A - y_M}
+          \Rightarrow
+          \frac{x - 2}{-1 - 2} = \frac{y - 3}{5 - 3}
+        \]
+        \[
+          \boxed{2x + 3y - 13 = 0}
+        \]
+      \end{enumerate}
+    \end{block}
   \end{frame}
-  
-  %\begin{frame}{\# 5.19}
-    %% TODO: picture
-    %\begin{block}{Решение}
-      %\begin{enumerate}
-        %\item Прямая $a$ параллельна $\bds{BC} \hm= (1 - 3, -1 - 7) \hm= (\textcolor{my-blue}{-2}, \textcolor{my-red}{-8})$:
-        %\[
-          %a: \textcolor{my-red}{-8} x - \textcolor{my-blue}{(-2)} y + C = 0
-        %\]
-        %\[
-          %A \in a \Rightarrow -8 \cdot (-1) + 2 \cdot 5 + C = 0 \Rightarrow C = -18
-        %\]
-        %\[
-          %\boxed{4x - y + 9 = 0}
-        %\]
-        %
-        %\pause
-        %
-        %\item Прямая $a$ проходит между точками $B$ и $C$.
-        %
-        %Пусть $M$~---~середина $BC$:
-        %$
-          %M = \left(\frac{1 + 3}{2}, \frac{-1 + 7}{2}\right) = (2, 3)
-        %$
-        %
-        %Прямая, проходящая через две точки $A(-1, 5)$ и $M(2, 3)$:
-        %\[
-          %\frac{x - x_M}{x_A - x_M} = \frac{y - y_M}{y_A - y_M}
-          %\Rightarrow
-          %\frac{x - 2}{-1 - 2} = \frac{y - 3}{5 - 3}
-        %\]
-        %\[
-          %\boxed{2x + 3y - 13 = 0}
-        %\]
-      %\end{enumerate}
-    %\end{block}
-  %\end{frame}
     
     
   \section{5.34(2) (р)}
@@ -536,7 +532,7 @@
         
         \item Выберем направляющие векторы прямых $\bds{a_1}$, $\bds{a_2}$ так, чтобы они образовывали угол с точкой $A$ внутри.
         \[
-          [\bds{a_i}, \bds{XA}] = \left|
+          [\bds{a_i}, \vv{XA}] = \left|
             \begin{aligned}
               &\bds i & &\bds j & &\bds k\\
               &a_{ix} & &a_{iy} & &0\\
@@ -546,7 +542,7 @@
           = \bds k \cdot (a_{ix} \cdot XA_y - XA_x \cdot a_{iy})
         \]
         \[
-          \bds{XA} = (1, 1) - (-6, -1) = (7, 2)
+          \vv{XA} = (1, 1) - (-6, -1) = (7, 2)
         \]
         \[
           \bds{a_1} = (7, 1) \Rightarrow \sgn{(7 \cdot 2 - 7 \cdot 1)} = +
@@ -636,10 +632,10 @@
       \begin{enumerate}
          \setcounter{enumi}{2}
           
-          \item Проекция $\pi_{\bds{XA}}$ вектора $\bds{XA} \hm= (1, 3)$ на прямую $l$ с направляющим вектором $\bds l = (-1, 1)$:
+          \item Проекция $\pi_{\vv{XA}}$ вектора $\vv{XA} \hm= (1, 3)$ на прямую $l$ с направляющим вектором $\bds l = (-1, 1)$:
           \[
-            \pi_{\bds{XA}} = \bds{XA} \cdot \cos \angle(\bds{XA}, l)
-            = \frac{(\bds{XA}, \bds l)}{|\bds l|}
+            \pi_{\vv{XA}} = \vv{XA} \cdot \cos \angle(\vv{XA}, l)
+            = \frac{(\vv{XA}, \bds l)}{|\bds l|}
             = (1, 3) \cdot \frac{1}{\sqrt 2} (-1, 1)
             = \sqrt 2
           \]
@@ -648,7 +644,7 @@
           
           \item Проекция $\pi_A$ точки $A$ на $l$:
           \[
-            \pi_A = X + \frac{\bds l}{l} \cdot \pi_{\bds{XA}}
+            \pi_A = X + \frac{\bds l}{l} \cdot \pi_{\vv{XA}}
             = (-1, 2) + (-1, 1) = (-2, 3)
           \]
           
