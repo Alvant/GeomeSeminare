@@ -12,7 +12,7 @@
 
 \author{Алексеев Василий}
 \title{Семинар 5}
-\date{6 октября 2020}
+\date{6 + 12 октября 2020}
 
 
 \begin{document}
@@ -359,7 +359,7 @@
   \end{solution}
   
   
-  \subsection{\# 6.1(2, 3)}
+  \subsection{\# 6.1(2, 3, 5)}
   
   \begin{problem}
     Для прямой, заданной одним уравнением, записать её же уравнение, но в другой форме.
@@ -369,6 +369,15 @@
       \item $\bds r = \bds r_0 + \bds a t \xrightarrow{\?} [\bds r, \bds a] = \bds b$
       
       \item $[\bds r, \bds a] = \bds b \xrightarrow{\?} \bds r = \bds r_0 + \bds a t$
+      
+      \setcounter{enumi}{4}
+      
+      \item $\left\{
+        \begin{aligned}
+          &(\bds r, \bds n_i) = D_i\\
+          &i = 1, 2
+        \end{aligned}
+      \right. \xrightarrow{\?} \bds r = \bds r_0 + \bds a t$
     \end{enumerate}
   \end{problem}
   
@@ -397,6 +406,70 @@
           = \bds r_0 + \bds a t
         \]
         где $\bds r_0 \hm\equiv \dfrac{[\bds a, \bds b]}{|\bds a|^2}$ и $t \hm\equiv \left(\dfrac{\bds a}{|\bds a|^2} \cdot \bds r\right)$.
+      
+      \setcounter{enumi}{4}
+      
+      \item
+        Направляющий вектор прямой $\bds a$ можно найти как
+        \[
+          \bds a = [\bds n_1, \bds n_2]
+        \]
+        (при этом $\bds n_1$ и $\bds n_2$ не должны быть коллинеарны, иначе пара плоскостей не задаёт одну прямую).
+        Остаётся найти начальный вектор прямой $\bds r_0$.
+        Он удовлетворяет обоим уравнениям плоскостей
+        \[
+          \left\{
+          \begin{aligned}
+            &(\bds r_0, \bds n_1) = D_1\\
+            &(\bds r_0, \bds n_2) = D_2
+          \end{aligned}
+          \right.
+        \]
+        Скалярные произведения $\bds r_0$ на векторы нормали $\bds n_i$~---~первые две компоненты вектора $\bds r_0$ в базисе, взаимном к, например, $\bds n_1$, $\bds n_2$, $\bds a$.
+        Будем искать $\bds r_0$ такой, что он лежит в плоскости, перпендикулярной искомой прямой (то есть вектору $\bds a$).
+        Тогда третья компонента во взаимном базисе $(\bds r_0, \bds a) \hm= (\bds r_0, [\bds n_1, \bds n_2]) \hm= 0$.
+        
+        Выпишем вектора взаимного базиса:
+        \[
+          \left\{
+          \begin{aligned}
+            &\bds e_1^* = \frac{[\bds n_2, \bds a]}{(\bds n_1, \bds n_2, \bds a)} = \frac{|\bds n_2|^2}{|\bds n_1|^2 \cdot |\bds n_2|^2} \cdot \bds n_1\\
+            &\bds e_2^* = \frac{[\bds a, \bds n_1]}{(\bds n_1, \bds n_2, \bds a)} = \frac{|\bds n_1|^2}{|\bds n_1|^2 \cdot |\bds n_2|^2} \cdot \bds n_2\\
+            &\bds e_3^* = \frac{[\bds n_1, \bds n_2]}{(\bds n_1, \bds n_2, \bds a)} = \frac{1}{|\bds n_1|^2 \cdot |\bds n_2|^2} \cdot \bds a
+          \end{aligned}
+          \right.
+        \]
+        (смешанное произведение $(\bds n_1, \bds n_2, \bds a)$ можно посчитать через ``бац минус цаб''; а третий вектор $\bds e_3^*$ можно было и не выписывать).
+        
+        Поэтому для $\bds r_0$ получаем
+        \[
+          \bds r_0
+          = D_1 \cdot \frac{|\bds n_2|^2}{|\bds n_1|^2 \cdot |\bds n_2|^2} \bds n_1 + D_2 \cdot \frac{|\bds n_1|^2}{|\bds n_1|^2 \cdot |\bds n_2|^2} \bds n_2
+          = \frac{D_1}{|\bds n_1|^2} \bds n_1 + \frac{D_2}{|\bds n_2|^2} \bds n_2
+        \]
+        
+        И итоговое уравнение прямой
+        \[
+          \bds r = \left(\frac{D_1}{|\bds n_1|^2} \bds n_1 + \frac{D_2}{|\bds n_2|^2} \bds n_2\right) + [\bds n_1, \bds n_2] \cdot t
+        \]
+        
+        \bigskip
+        
+        \emph{Дополнение.}
+        
+        Автор конспекта точно не знает, можно ли из уравнения прямой на плоскости $(\bds r, \bds n) \hm= D$ получить векторное параметрическое уравнение $\bds r \hm= \bds r_0 \hm+ \bds a t$.
+        Скорее всего, нельзя, потому что нет возможности на плоскости с помощью рассмотренных операций получить из вектора $\bds n$ вектор, ему перпендикулярный.
+        Но начальную точку на прямой найти можно:
+        \[
+          (\bds r_0, \bds n) = D
+        \]
+        И, как и раньше, полагая $\bds r_0$ перпендикулярным прямой (то есть параллельным $\bds n$), получаем
+        \[
+          \bds r_0 = \alpha \bds n
+          \Rightarrow \alpha (\bds n, \bds n) = D
+          \Rightarrow \alpha = \frac{D}{(\bds n, \bds n)} = \frac{D}{|\bds n|^2} 
+          \Rightarrow \boxed{\bds r_0 = \frac{D}{|\bds n|^2} \bds n}
+        \]
     \end{enumerate}
   \end{solution}
   
