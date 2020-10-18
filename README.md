@@ -19,3 +19,8 @@
 * Google + [TeX StackExchange](https://tex.stackexchangeе.com/)
 
 Чтобы собрать какой-либо семинар, надо скопировать стилевой файл [mystyle.sty](./mystyle.sty) и шрифты [fonts](./fonts) в папку с семинаром.
+
+Пара семинаров сделаны с использованием пакетов
+
+* [Ti*k*Z](https://www.ctan.org/pkg/pgf) — создание графики не выходя из LaTeX. Пример создания картинок есть в [семинаре 2](./seminars/seminar02)
+* [Beamer](https://ctan.org/pkg/beamer) — создание презентаций. Пример презентации есть в [семинаре 5](./seminars/seminar05/slides)

@@ -176,9 +176,6 @@
   \DeclareRobustCommand{\mycolorbox}[2]{{\sethlcolor{#1}\hl{#2}}} % RobustCommand ??
 \fi
 
-% Номера страниц ставятся внизу в середине строки, колонтитулов нет
-\pagestyle{plain}
-
 % Чтобы не отличались промежутки между словами и предложениями
 \frenchspacing
 
@@ -204,16 +201,15 @@
 \usepackage{todonotes}
 
 % TODO
-%\usepackage[backend=biber,style=numeric,sorting=ynt]{biblatex}
+%\usepackage[
+%    backend=biber,
+%    style=numeric,
+%    citestyle=authoryear,  % verbose
+%    sorting=ynt,
+%    % autocite=inline
+%]{biblatex} % style=numeric
 %\usepackage{csquotes}
-%\addbibresource{somebib.bib}
-
-% Таблица с содержанием. Пробелы
-% https://tex.stackexchange.com/questions/56546/how-to-change-spaces-between-items-in-table-of-contents
-\usepackage{tocloft}
-%\renewcommand\cftchapafterpnum{\vskip10pt}
-\renewcommand\cftsecafterpnum{\vskip10pt}
-\renewcommand\cftsubsecafterpnum{\vskip5pt}
+%\addbibresource{biblio.bib}
 
 % Математика
 \usepackage{amsmath,amssymb,amsfonts,amsthm,amsbsy,amstext,amscd,amsxtra}
@@ -269,41 +265,7 @@
 % https://tex.stackexchange.com/questions/94799/how-do-i-color-table-columns
 \usepackage{colortbl}
 
-\usepackage[unicode]{hyperref} %http://tex.stackexchange.com/questions/50747/options-for-appearance-of-links-in-hyperref
-
-% Выбор шрифта для URL ссылок
-% https://tex.stackexchange.com/questions/53962/why-are-urls-typeset-with-monospace-fonts-by-default
-\urlstyle{same}
-%\urlstyle{tt} % По умолчанию
-%\urlstyle{rm}
-%\urlstyle{sf}
-
 %\renewcommand{\url}[1]{\href{#1}{#1}}
-
-% Устанавливает координаты документа и увеличение при просмотре
-% Manual http://mirror.switch.ch/ftp/mirror/tex/macros/latex/contrib/hyperref/doc/manual.html#TBL-7-40-1
-\hypersetup{
-  pdfstartview={FitH} % XYZ null null 1.00, Fit, FitH, FitB
-}
-
-\hypersetup{
-  colorlinks=true, % true - раскрашивает текст, false - обводит в рамки
-  %
-  urlcolor=cyanD,
-  urlbordercolor=cyanD,
-  %
-  linkcolor=cyanD,%red,
-  linkbordercolor=cyanD,%red,
-  %
-  citecolor=purple,
-  citebordercolor=purple,
-  %
-  filecolor=cyanD,
-  filebordercolor=cyanD,
-  %
-  menucolor=red,
-  menubordercolor=red
-}
 
 % Способы выделения текста:
 % длинное подчёркивание, волнистое подчёркивание, перечёркивание
@@ -350,11 +312,6 @@
 
 \usepackage{float}
 
-% customization of a list environment, such as itemize, enumerate etc.
-\usepackage{enumitem}
-% https://tex.stackexchange.com/questions/53061/insert-image-and-list-inside-a-table?newreg=afea8fc2a8dd46da8baeef4e9db5f43e
-% https://tex.stackexchange.com/questions/91124/itemize-removing-natural-indent
-
 \usepackage{booktabs} % "Продвинутая" табличка, "только горизонтальные линии"
 
 %\usepackage[nomarkers,figuresonly]{endfloat} % Place figure environments at the end of the document
@@ -365,24 +322,6 @@
 
 % https://tex.stackexchange.com/questions/261591/arrow-above-text-like-widehat
 \usepackage{esvect}
-
-
-% Отступы
-
-%https://ru.sharelatex.com/learn/Page_size_and_margins
-\usepackage{geometry}
-\geometry{
- textwidth=175mm,
- textheight=255mm,
- right=5cm
-}
-
-%\setlength{\textwidth}{175mm}
-%\setlength{\textheight}{255mm}
-\setlength{\oddsidemargin}{-5mm}
-\setlength{\evensidemargin}{-5mm}
-%\setlength{\topmargin}{-15mm}
-\setlength{\columnsep}{1cm}
 
 % Нумерация формул, картинок и таблиц по секциям
 % \numberwithin{equation}{section}
@@ -478,23 +417,128 @@
 \newcommand{\quotient}[1]{\mathop{\mathrm{\backslash\negthickspace{#1}}}\nolimits}
 
 
-\newtheorem{theorem}{Теорема}[section]
-
-\newtheorem*{problem}{Задача}
-
-\theoremstyle{definition}
-\newtheorem{definition}{Определение}[section]
-
-\theoremstyle{remark}
-\newtheorem*{example}{Пример}
-
-\theoremstyle{remark}
-\newtheorem*{remark}{Замечание}
-
-\theoremstyle{remark}
-\newtheorem*{solution}{Решение}
-\AtEndEnvironment{solution}{\qed}
-
-
 \DeclareMathOperator{\Sp}{Sp}
 \DeclareMathOperator{\Tr}{Tr}
+
+
+\ifcsname beamer@author\endcsname % https://stackoverflow.com/questions/2524614/detect-latex-class-name
+  % https://tex.stackexchange.com/questions/170222/change-the-numbering-in-beamers-table-of-content
+  % \makeatletter
+  % \patchcmd{\beamer@sectionintoc}
+  %   {\ifnum\beamer@tempcount>0}
+  %   {\ifnum\beamer@tempcount>-1}
+  %   {}
+  %   {}
+  % \beamer@tocsectionnumber=-1
+  % \makeatother
+
+
+  %\setbeamertemplate{footline}[frame number] % page numbering outside Navigation Bar
+  %\setbeamertemplate{navigation symbols}{} % switch off navigation bar
+  %\setbeamertemplate{caption}[numbered]
+  
+  % https://tex.stackexchange.com/questions/30720/footnote-without-a-marker
+  % \newcommand\blfootnote[1]{%
+  %   \begingroup
+  %   \renewcommand\thefootnote{}\footnote{#1}%
+  %   \addtocounter{footnote}{-1}%
+  %   \endgroup
+  % }
+  % Not working...
+  \newcommand\blfootnote[1]{%
+    \begingroup
+    \renewcommand\thefootnote{}\footnote[frame]{#1}%
+    \addtocounter{footnote}{-1}%
+    \endgroup
+  }
+  % https://latex.org/forum/viewtopic.php?t=30813
+  
+  % https://tex.stackexchange.com/questions/149710/how-to-write-math-symbols-in-a-verbatim
+  % https://tex.stackexchange.com/questions/180222/how-to-change-font-size-for-specific-lstlisting
+  % \lstset{
+  %   mathescape,
+  %   basicstyle=\tiny, %or \small or \footnotesize etc.
+  % }
+\else
+  % Номера страниц ставятся внизу в середине строки, колонтитулов нет
+  \pagestyle{plain}
+  
+  \usepackage[unicode]{hyperref} %http://tex.stackexchange.com/questions/50747/options-for-appearance-of-links-in-hyperref
+  
+  % Устанавливает координаты документа и увеличение при просмотре
+  % Manual http://mirror.switch.ch/ftp/mirror/tex/macros/latex/contrib/hyperref/doc/manual.html#TBL-7-40-1
+  \hypersetup{
+    pdfstartview={FitH} % XYZ null null 1.00, Fit, FitH, FitB
+  }
+
+  \hypersetup{
+    colorlinks=true, % true - раскрашивает текст, false - обводит в рамки
+    %
+    urlcolor=cyanD,
+    urlbordercolor=cyanD,
+    %
+    linkcolor=cyanD,%red,
+    linkbordercolor=cyanD,%red,
+    %
+    citecolor=purple,
+    citebordercolor=purple,
+    %
+    filecolor=cyanD,
+    filebordercolor=cyanD,
+    %
+    menucolor=red,
+    menubordercolor=red
+  }
+  
+  % Выбор шрифта для URL ссылок
+  % https://tex.stackexchange.com/questions/53962/why-are-urls-typeset-with-monospace-fonts-by-default
+  \urlstyle{same}
+  %\urlstyle{tt} % По умолчанию
+  %\urlstyle{rm}
+  %\urlstyle{sf}
+
+  % Таблица с содержанием. Пробелы
+  % https://tex.stackexchange.com/questions/56546/how-to-change-spaces-between-items-in-table-of-contents
+  \usepackage{tocloft}
+  %\renewcommand\cftchapafterpnum{\vskip10pt}
+  \renewcommand\cftsecafterpnum{\vskip10pt}
+  \renewcommand\cftsubsecafterpnum{\vskip5pt}
+  
+  % Отступы
+  % https://ru.sharelatex.com/learn/Page_size_and_margins
+  \usepackage{geometry}
+  \geometry{
+   textwidth=175mm,
+   textheight=255mm,
+   right=5cm
+  }
+
+  %\setlength{\textwidth}{175mm}
+  %\setlength{\textheight}{255mm}
+  \setlength{\oddsidemargin}{-5mm}
+  \setlength{\evensidemargin}{-5mm}
+  %\setlength{\topmargin}{-15mm}
+  \setlength{\columnsep}{1cm}
+
+  % Customization of a list environment, such as itemize, enumerate etc.
+  \usepackage{enumitem}
+  % https://tex.stackexchange.com/questions/53061/insert-image-and-list-inside-a-table?newreg=afea8fc2a8dd46da8baeef4e9db5f43e
+  % https://tex.stackexchange.com/questions/91124/itemize-removing-natural-indent
+
+  \newtheorem{theorem}{Теорема}[section]
+
+  \newtheorem*{problem}{Задача}
+
+  \theoremstyle{definition}
+  \newtheorem{definition}{Определение}[section]
+
+  \theoremstyle{remark}
+  \newtheorem*{example}{Пример}
+
+  \theoremstyle{remark}
+  \newtheorem*{remark}{Замечание}
+
+  \theoremstyle{remark}
+  \newtheorem*{solution}{Решение}
+  \AtEndEnvironment{solution}{\qed}
+\fi
