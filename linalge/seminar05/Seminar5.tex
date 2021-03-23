@@ -1,0 +1,328 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{mystyle}
+\usepackage{gensymb}
+
+
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+\graphicspath{ {images/} }
+
+
+\DeclareMathOperator{\Image}{Im}
+\definecolor{violet}{RGB}{148, 0, 211}
+
+
+% https://tex.stackexchange.com/a/101138/135045
+
+\newcommand\widesim[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{-.1\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5150\wd0}}{.6\ht0}%
+  }{O}{c}{F}{T}{S}%
+}}
+
+\newcommand{\BigMiddleThree}{\;\left|\vphantom{\begin{pmatrix} 0\\0\\0 \end{pmatrix}}\right.\;}
+\newcommand{\BigMiddleFour}{\;\left|\vphantom{\begin{pmatrix} 0\\0\\0\\0 \end{pmatrix}}\right.\;}
+
+
+\author{Алексеев Василий}
+
+
+\title{Семинар 5}
+\date{4 марта + 5 марта 2020}
+
+
+\begin{document}
+  \maketitle
+  
+  \tableofcontents
+
+  \thispagestyle{empty}
+  
+  \newpage
+  
+  \pagenumbering{arabic}
+
+
+  \section{Линейные отображения: ядро, образ, матрица}
+  
+  \section{Задачи}
+  
+  
+  \subsection{\# 21.7(7)}
+  
+  Найти размерность и базис суммы и пересечения линейных подпространств $\RR^4$, являющихся следующими линейными оболочками:
+  \[
+    \mathcal P = \mathcal L \{\bds p_1, \bds p_2, \bds p_3\} = \mathcal L \left\{
+      \begin{pmatrix} 1 \\ 2 \\ 1 \\ 3 \end{pmatrix},
+      \begin{pmatrix} -1 \\ 8 \\ -6 \\ 5 \end{pmatrix},
+      \begin{pmatrix} 0 \\ 10 \\ -5 \\ 8 \end{pmatrix}
+    \right\} \quad \mathcal Q = \mathcal L \{\bds q_1, \bds q_2, \bds q_3\} = \mathcal L \left\{
+      \begin{pmatrix} 1 \\ 4 \\ -1 \\ 5 \end{pmatrix},
+      \begin{pmatrix} 3 \\ -2 \\ 6 \\ 3 \end{pmatrix},
+      \begin{pmatrix} 4 \\ 2 \\ 5 \\ 8 \end{pmatrix}
+    \right\}
+  \]
+  
+  \begin{solution}
+    Для начала можно заметить, что $\bds p_1 \hm+ \bds p_2 \hm= \bds p_3$ и $\bds q_1 \hm+ \bds q_2 \hm= \bds q_3$.
+    В то же время $\bds p_1$ и $\bds p_2$ (как и $\bds q_1$ и $\bds q_2$), очевидно, не коллинеарны.
+    Поэтому размерности $\mathcal P$ и $\mathcal Q$ равны двум, и за базис в $\mathcal P$ можно взять, например, $(\bds p_1, \bds p_2)$, а за базис в $\mathcal Q$~---~$(\bds q_1, \bds q_2)$.
+    
+    Чтобы найти базис в сумме $\mathcal P \hm\oplus \mathcal Q$, можно просто объединить базисные вектора $\mathcal P$ и $\mathcal Q$ в одну систему и ``выкинуть'' лишние векторы, так чтобы система векторов, помимо того, что полная, была бы ещё и линейно независимой.
+    \begin{equation*}
+    \begin{split}
+      (\bds p_1, \bds p_2, \bds q_1, \bds q_2) = &\begin{pmatrix}
+        \textcolor{violet}{\bds 1} & -1 & 1 & 3\\
+        2 & 8 & 4 & -2\\
+        1 & -6 & -1 & 6\\
+        3 & 5 & 5 & 3
+      \end{pmatrix} \sim \begin{pmatrix}
+        1 & -1 & 1 & 3\\
+        0 & 10 & 2 & -8\\
+        0 & -5 & -2 & 3\\
+        0 & 8 & 2 & -6
+      \end{pmatrix}\\
+      \sim &\begin{pmatrix}
+        1 & -1 & 1 & 3\\
+        0 & \textcolor{violet}{\bds 5} & 1 & -4\\
+        0 & -5 & -2 & 3\\
+        0 & 4 & 1 & -3
+      \end{pmatrix} \sim \begin{pmatrix}
+        1 & -1 & 1 & 3\\
+        0 & 5 & 1 & -4\\
+        0 & 0 & -1 & -1\\
+        0 & 0 & 1 - 4/5 & -3 + (4 \cdot 4)/5
+      \end{pmatrix} \sim \begin{pmatrix}
+        1 & -1 & 1 & 3\\
+        0 & 5 & 1 & -4\\
+        0 & 0 & -1 & -1\\
+        0 & 0 & 1/5 & 1/5
+      \end{pmatrix}
+    \end{split}
+    \end{equation*}
+    
+    Таким образом, в сумме $\mathcal P$ и $\mathcal Q$ базис состоит из трёх линейно независимых векторов (например, $\bds p_1$, $\bds p_2$, $\bds q_1$).
+    И размерность суммы, очевидно, равна трём.
+    
+    Пересечение можно искать так: можно получить системы уравнений, задающих $\mathcal P$ и $\mathcal Q$ (получить условия на компоненты вектора $\bds x$, чтобы его можно было разложить по базису подпространства).
+    И далее пересечение $\mathcal P \hm\cap \mathcal Q$ задавалось бы системой уравнений, составленной из всех уравнений обеих систем для каждого из подпространств.
+    Потом эту ``объединённую'' систему надо бы было решить, чтобы понять, как выглядит произвольный вектор из пересечения (по каким базисным он раскладывается).
+    
+    Но можно пойти другим путём, который в данном случае будет быстрее.
+    Пусть $\bds x \hm\in \mathcal P \hm\cap \mathcal Q$.
+    Это значит, что, с одной стороны,  $\bds x \hm\in \mathcal P$, а с другой стороны, $\bds x \hm\in \mathcal Q$.
+    Принадлежность $\mathcal P$ равносильна тому, что вектор $\bds x$ раскладывается по базису $\mathcal P$.
+    Аналогично с $\mathcal Q$.
+    Поэтому
+    \[
+      \bds x = \alpha_1 \bds p_1 + \alpha_2 \bds p_2 = \beta_1 \bds q_1 + \beta_2 \bds q_2
+    \]
+    Или, если перенести всё в одну часть
+    \begin{equation}\label{p-21-7-combination}
+      \alpha_1 \bds p_1 + \alpha_2 \bds p_2 - \beta_1 \bds q_1 - \beta_2 \bds q_2 = 0
+    \end{equation}
+    
+    Но суть такой записи фактически в том, что мы пытаемся разложить нулевой вектор по системе векторов $(\bds p_1, \bds p_2, \bds q_1, \bds q_2)$!
+    Иными словами, чтобы найти коэффициенты разложения $(\alpha_1, \alpha_2, \beta_1, \beta_2)$, надо привести к упрощённому виду матрицу системы
+    \[
+      \begin{pmatrix}
+        1 & -1 & 1 & 3\\
+        2 & 8 & 4 & -2\\
+        1 & -6 & -1 & 6\\
+        3 & 5 & 5 & 3
+      \end{pmatrix}
+    \]
+    
+    Но большая часть преобразований уже была проведена в пункте ранее!
+    Поэтому можно просто продолжить упрощение:
+    \begin{equation*}
+    \begin{split}
+      \begin{pmatrix}
+        1 & -1 & 1 & 3\\
+        2 & 8 & 4 & -2\\
+        1 & -6 & -1 & 6\\
+        3 & 5 & 5 & 3
+      \end{pmatrix}
+      \sim \ldots \sim
+      &\begin{pmatrix}
+        1 & -1 & 1 & 3\\
+        0 & 5 & 1 & -4\\
+        0 & 0 & \textcolor{violet}{\bds{-1}} & -1\\
+        0 & 0 & 1/5 & 1/5
+      \end{pmatrix}\\ \sim
+      &\begin{pmatrix}
+        1 & -1 & 0 & 2\\
+        0 & 5 & 0 & -5\\
+        0 & 0 & -1 & -1\\
+        0 & 0 & 0 & 0
+      \end{pmatrix} \sim
+      \begin{pmatrix}
+        1 & -1 & 0 & 2\\
+        0 & \textcolor{violet}{\bds 1} & 0 & -1\\
+        0 & 0 & -1 & -1\\
+        0 & 0 & 0 & 0
+      \end{pmatrix} \sim
+      \begin{pmatrix}
+        1 & 0 & 0 & 1\\
+        0 & 1 & 0 & -1\\
+        0 & 0 & -1 & -1\\
+        0 & 0 & 0 & 0
+      \end{pmatrix}
+    \end{split}
+    \end{equation*}
+    
+    Поэтому коэффициенты в линейно комбинации (\ref{p-21-7-combination}) оказываются равными\footnote{Осторожно: у коэффициентов $\beta$ стоят минусы, потому что сначала они были в другой части уравнения.} (свободная $(-\beta_2) \hm\equiv t)$:
+    \[
+      \begin{pmatrix}
+        \alpha_1 \\ \alpha_2 \\ -\beta_1 \\ -\beta_2
+      \end{pmatrix} = \begin{pmatrix}
+        -t \\ t \\ -t \\ t
+      \end{pmatrix} = t \cdot \begin{pmatrix}
+        -1 \\ 1 \\ -1 \\ 1
+      \end{pmatrix}
+    \]
+    
+    Теперь, используя, например, найденные $\alpha_1$ и $\alpha_2$, можно задать произвольный вектор из пересечения $\mathcal P \hm\cap \mathcal Q$:
+    \[
+      \mathcal P \cap \mathcal Q \ni \bds x = \alpha_1 p_1 + \alpha_2 \bds p_2
+      = -t \cdot \begin{pmatrix}
+        1 \\ 2 \\ 1 \\ 3
+      \end{pmatrix} + t \cdot \begin{pmatrix}
+        -1 \\ 8 \\ -6 \\ 5
+      \end{pmatrix}
+      = t \cdot \begin{pmatrix}
+        -2 \\ 6 \\ -7 \\ 2
+      \end{pmatrix}
+    \]
+    
+    В ядре вектор и одного базиса~---~размерность пересечения равна одному.
+    Но размерность пересечения можно бы было указать и раньше, воспользовавшись формулой (верной для \emph{двух} подпространств $L_1$ и $L_2$):
+    \[
+      \dim(L_1 + L_2) = \dim L_1 + \dim L_2 - \dim(L_1 \cap L_2)
+    \]
+    
+    В нашем случае:
+    \[
+      3 = 2 + 2 - 1
+    \]
+  \end{solution}
+  
+  
+  \subsection{\# 23.8(2)}
+  
+  Пусть $\bds a$ и $\bds n$~---~ненулевые векторы геометрического векторного пространства $X$, причём $(\bds a, \bds n) \hm{\not=} 0$.
+  Пусть $\mathcal L_1$~---~прямая с направляющим вектором $\bds a$, а $\mathcal L_2$~---~плоскость с вектором нормали $\bds n$.
+  
+  Надо записать формулой преобразование $\phi\colon X \hm\to X$, проверить его линейность, найти ядро, множество значений и ранг, если $\phi$~---~ортогональное проектирование на $\mathcal L_1$.
+  
+  \begin{solution}
+  
+  % TODO: picture
+  
+  Из геометрических соображений,
+  \[
+    \phi(\bds x)
+    = |\bds x| \cos\angle(\bds x, \bds a) \cdot \frac{\bds a}{|\bds a|}
+    = \underbrace{\frac{(\bds x, \bds a)}{|\bds a|}}_{\tiny\mbox{скалярная проекция}} \cdot \underbrace{\frac{\bds a}{|\bds a|}}_{\tiny\mbox{единичный вектор}}
+  \]
+  
+  Поэтому линейность преобразования следует из линейности скалярного произведения.
+  Например, $\phi$ от суммы:
+  \[
+    \phi(\bds x_1 + \bds x_2) = \frac{\bds a}{|\bds a|^2} (\bds x_1 + \bds x_2, \bds a)
+    = \frac{\bds a}{|\bds a|^2} (\bds x_1, \bds a) + \frac{\bds a}{|\bds a|^2} (\bds x_2, \bds a)
+    = \phi(\bds x_1) + \phi(\bds x_2)
+  \]
+  
+  Аналогично $\phi(\alpha \bds x) \hm= \alpha \phi(\bds x)$.
+  
+  Ядро преобразования~---~все векторы, которые отображаются в ноль.
+  Очевидно, ядро ортогонального проектирования на прямую~---~плоскость, перпендикулярная этой прямой.
+  Но можно это и показать:
+  \[
+    \phi(\bds x) = 0 \Leftrightarrow \frac{\bds a}{|\bds a|^2} (\bds x, \bds a) = 0 \Leftrightarrow (\bds x, \bds a) = 0
+    \Leftrightarrow \left[\begin{aligned}
+      &\bds x = \bds 0\\
+      &\bds x \perp \bds a
+    \end{aligned}\right.
+  \]
+  
+  Из того, что ядро~---~плоскость, следует, что $\dim\Ker\phi = 2$.
+  
+  Множество значений ортогонального проектирования на прямую~---~это, очевидно, вся прямая (при проектировании получаем вектор на прямой, и обратно: любой вектор, параллельный прямой, можно получить проектированием некоторого вектора\footnote{Хотя бы его же самого.}).
+  Но можно это и показать:
+  \[
+    \phi(\bds x) = \bds y \Leftrightarrow \bds y = \bds a \cdot \frac{(\bds x, \bds a)}{|\bds a|^2} = t \bds a,\quad t \in \RR
+  \]
+  
+  Множество значений~---~прямая.
+  Поэтому размерность множества значений (она же ранг преобразования):
+  \[
+    \dim\Image\phi = \Rg\phi = 1
+  \]
+  
+  Также можно убедиться в выполнении тождества\footnote{Которое, фактически, про то, что число базисных переменных плюс число свободных переменных (количество столбцов в фундаментальной матрице) при решении однородной системы равно общему числу переменных.}:
+  \[
+    \Rg\phi + \dim\Ker\phi = 1 + 2 = 3 = \dim X
+  \]
+  \end{solution}
+  
+  
+  \subsection{\# 23.9(2)}
+  
+  Надо вычислить матрицу ортогонального проектирования преобразования как из предыдущего номера в некотором ортонормированном базисе $\bds e \hm= (\bds e_1, \bds e_2, \bds e_3)$.
+  Проектирование~---~на прямую $\{\bds x = (x_1, x_2, x_3) \mid x_1 \hm= x_2 \hm= x_3\}$.
+  
+  \begin{solution}
+    Направляющий вектор прямой:
+    \[
+      \bds a = (1, 1, 1)^T
+    \]
+    
+    Тогда преобразование $\phi$ выражается формулой
+    \[
+      \phi(\bds x) = \frac{\bds a}{|\bds a|^2} (\bds x, \bds a)
+    \]
+    
+    С одной стороны, $\phi$ переводит вектор как направленный отрезок в другой вектор~---~направленный отрезок.
+    С другой стороны, при заданном базисе, можно также думать о $\phi$ как о преобразовании между столбцами из координат в базисе.
+    И матрица как раз ``будет участвовать'' в формуле, где фигурируют не векторы-отрезки, а векторы-столбцы.
+    Пусть координатный столбец вектора $\bds x$ есть $\xi \hm= (x_1, x_2, x_3)$.
+    Тогда надо получить $\phi$ в форме
+    \[
+      \phi(\bds x) = A \xi
+    \]
+    то есть как матрица, умноженная на столбец.
+    
+    Вернёмся к векторной записи, и ``перейдём'' в ней от векторов к их компонентам (``переход'' от вектора к его вектор-столбцу отмечен значком $\cong$ вместо равно)\footnote{Скалярное произведение при этом расписывается ``хорошо'', потому что базис ортонормированный.}:
+    \begin{equation*}
+    \begin{split}
+      \phi(\bds x)
+      = \frac{1}{|\bds a|^2}(\bds x, \bds a) \bds a
+      \cong &\frac{1}{|\bds a|^2} (\bds x, \bds a) \begin{pmatrix}
+        a_1 \\ a_2 \\ a_3
+      \end{pmatrix}
+      = \frac{1}{|\bds a|^2} \begin{pmatrix}
+        a_1 \cdot (x_1 a_1 + x_2 a_2 + x_3 a_3)\\
+        a_2 \cdot (x_1 a_1 + x_2 a_2 + x_3 a_3)\\
+        a_3 \cdot (x_1 a_1 + x_2 a_2 + x_3 a_3)
+      \end{pmatrix}\\
+      = &\frac{1}{|\bds a|^2} \begin{pmatrix}
+        x_1 a_1a_1 + x_2 a_1a_2 + x_3 a_1a_3\\
+        x_1 a_2a_1 + x_2 a_2a_2 + x_3 a_2a_3\\
+        x_1 a_3a_1 + x_2 a_3a_2 + x_3 a_3a_3
+      \end{pmatrix}
+      = \underbrace{\frac{1}{|\bds a|^2} \begin{pmatrix}
+        a_1a_1 & a_1a_2 & a_1a_3\\
+        a_2a_1 & a_2a_2 & a_2a_3\\
+        a_3a_1 & a_3a_2 & a_3a_3
+      \end{pmatrix}}_{A} \begin{pmatrix}
+        x_1 \\ x_2 \\ x_3
+      \end{pmatrix}
+    \end{split}
+    \end{equation*}
+  \end{solution}
+\end{document}
