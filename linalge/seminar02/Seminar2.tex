@@ -10,6 +10,10 @@
 \graphicspath{ {images/} }
 
 
+\definecolor{violet}{RGB}{148, 0, 211}
+\definecolor{red}{RGB}{183, 65, 14}
+
+
 % https://tex.stackexchange.com/a/101138/135045
 
 \newcommand\widesim[1]{\ThisStyle{%
@@ -26,7 +30,7 @@
 
 
 \title{Семинар 2}
-\date{11 февраля + 12 февраля 2020}
+\date{11 февраля + 12 февраля 2021}
 
 
 \begin{document}
@@ -65,9 +69,9 @@
     \begin{split}
       &\left(
           \begin{matrix}
-            0 & 1 & 3\\
-            2 & 3 & 5\\
-            3 & 5 & 7
+            0 & \textcolor{violet}{\bds 1} & 3\\
+            2 & \textcolor{red}{\bds 3} & 5\\
+            3 & \textcolor{red}{\bds 5} & 7
           \end{matrix}
           \BigMiddleThree
           \begin{matrix}
@@ -92,8 +96,8 @@
       \xrightarrow{(2) = (2) / 2}\quad &\left(
           \begin{matrix}
             0 & 1 & 3\\
-            1 & 0 & -2\\
-            3 & 0 & -8
+            \textcolor{violet}{\bds 1} & 0 & -2\\
+            \textcolor{red}{\bds 3} & 0 & -8
           \end{matrix}
           \BigMiddleThree
           \begin{matrix}
@@ -117,9 +121,9 @@
         \right)\\
       \xrightarrow{(3) = -1/2 \cdot (3)}\quad &\left(
           \begin{matrix}
-            0 & 1 & 3\\
-            1 & 0 & -2\\
-            0 & 0 & 1
+            0 & 1 & \textcolor{red}{\bds 3}\\
+            1 & 0 & \textcolor{red}{\bds{-2}}\\
+            0 & 0 & \textcolor{violet}{\bds 1}
           \end{matrix}
           \BigMiddleThree
           \begin{matrix}
@@ -195,9 +199,9 @@
     \begin{split}
       &\left(
           \begin{matrix}
-            1 & 2 & -7 & -3\\
-            -5 & 4 & 63 & 29\\
-            5 & 24 & -7 & -1
+            \textcolor{violet}{\bds 1} & 2 & -7 & -3\\
+            \textcolor{red}{\bds{-5}} & 4 & 63 & 29\\
+            \textcolor{red}{\bds 5} & 24 & -7 & -1
           \end{matrix}
           \BigMiddleThree
           \begin{matrix}
@@ -209,8 +213,8 @@
       \xrightarrow{\substack{(2) = (2) + 5 \cdot (1)\\(3) = (3) - 5 \cdot (1)}}\quad &\left(
           \begin{matrix}
             1 & 2 & -7 & -3\\
-            0 & 14 & 28 & 14\\
-            0 & 14 & 28 & 14
+            0 & \textcolor{violet}{\bds{14}} & 28 & 14\\
+            0 & \textcolor{red}{\bds{14}} & 28 & 14
           \end{matrix}
           \BigMiddleThree
           \begin{matrix}
@@ -221,8 +225,8 @@
         \right)\\
       \xrightarrow{\substack{(3) = (3) - (2)\\(2) = (2) / 14}}\quad &\left(
           \begin{matrix}
-            1 & 2 & -7 & -3\\
-            0 & 1 & 2 & 1\\
+            1 & \textcolor{red}{\bds 2} & -7 & -3\\
+            0 & \textcolor{violet}{\bds 1} & 2 & 1\\
             0 & 0 & 0 & 0
           \end{matrix}
           \BigMiddleThree
