@@ -10,6 +10,11 @@
 \graphicspath{ {images/} }
 
 
+\definecolor{violet}{RGB}{148, 0, 211}
+\definecolor{red}{RGB}{183, 65, 14}
+
+
+
 % https://tex.stackexchange.com/a/101138/135045
 
 \newcommand\widesim[1]{\ThisStyle{%
@@ -26,7 +31,7 @@
 
 
 \title{Семинар 1}
-\date{4 февраля + 5 февраля 2020}
+\date{4 февраля + 5 февраля 2021}
 
 
 \begin{document}
@@ -59,7 +64,10 @@
   \]
   
   \begin{solution}
-    Найдём обратную с помощью метода Гаусса
+    Найдём обратную с помощью метода Гаусса.
+    Далее \textcolor{violet}{фиолетовым} цветом будем выделять элемент в столбце, с помощью которого будем занулять другие элементы в том же столбце.
+    Те, которые зануляем на данном шаге, будем отмечать \textcolor{red}{красным} цветом.
+    Когда столбец ``готов'' (остался один ненулевой~---~фиолетовый), переходим к другому столбцу и снова выбираем ненулевой элемент для ``зачищения столбца'', но \emph{из строчек, откуда ещё не выбирали}.
     
     \begin{equation*}
     \begin{split}
@@ -78,9 +86,9 @@
         \right)\\
       \widesim{(1) \leftrightarrow (3)}\quad &\left(
         \begin{matrix}
-          -1 & -1 & 1\\
+          \textcolor{violet}{\bds{-1}} & -1 & 1\\
           0 & 2 & -1\\
-          2 & -1 & 0
+          \textcolor{red}{\bds 2} & -1 & 0
         \end{matrix}
         \BigMiddleThree
         \begin{matrix}
@@ -104,9 +112,9 @@
         \right)\\
       \widesim{(2) = (2) / 2}\quad &\left(
         \begin{matrix}
-          -1 & -1 & 1\\
-          0 & 1 & -1/2\\
-          0 & -3 & 2
+          -1 & \textcolor{red}{\bds{-1}} & 1\\
+          0 & \textcolor{violet}{\bds 1} & -1/2\\
+          0 & \textcolor{red}{\bds{-3}} & 2
         \end{matrix}
         \BigMiddleThree
         \begin{matrix}
@@ -115,15 +123,15 @@
           1 & 0 & 2
         \end{matrix}
         \right)\\
-      \widesim{(3) = (3) + (2) \cdot 3}\quad &\left(
+      \widesim{\substack{(3) = (3) + (2) \cdot 3\\(1) = (1) + (2)}}\quad &\left(
         \begin{matrix}
-          -1 & -1 & 1\\
-          0 & 1 & -1/2\\
-          0 & 0 & 1/2
+          -1 & 0 & \textcolor{red}{\bds{1/2}}\\
+          0 & 1 & \textcolor{red}{\bds{-1/2}}\\
+          0 & 0 & \textcolor{violet}{\bds{1/2}}
         \end{matrix}
         \BigMiddleThree
         \begin{matrix}
-          1 & 0 & 0\\
+          0 & 1/2 & 1\\
           0 & 1/2 & 0\\
           1 & 3/2 & 2
         \end{matrix}
@@ -464,7 +472,5 @@
     \]
     В результате получаем $\alpha \hm= \frac{1}{k} \hm- 1$.
     То есть ранг матрицы $A$ при всех оставшихся $\alpha$ будет равен $2$.
-    
   \end{solution}
-  
 \end{document}
