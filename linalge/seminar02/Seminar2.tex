@@ -1,0 +1,462 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{mystyle}
+\usepackage{gensymb}
+
+
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+\graphicspath{ {images/} }
+
+
+\definecolor{violet}{RGB}{148, 0, 211}
+\definecolor{red}{RGB}{183, 65, 14}
+
+
+% https://tex.stackexchange.com/a/101138/135045
+
+\newcommand\widesim[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{-.1\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5150\wd0}}{.6\ht0}%
+  }{O}{c}{F}{T}{S}%
+}}
+
+\newcommand{\BigMiddleThree}{\;\left|\vphantom{\begin{pmatrix} 0\\0\\0 \end{pmatrix}}\right.\;}
+
+
+\author{Алексеев Василий}
+
+
+\title{Семинар 2}
+\date{11 февраля + 12 февраля 2021}
+
+
+\begin{document}
+  \maketitle
+  
+  \tableofcontents
+
+  \thispagestyle{empty}
+  
+  \newpage
+  
+  \pagenumbering{arabic}
+
+
+  \section{Системы линейных уравнений}
+  
+  \section{Задачи}
+  
+  
+  \subsection{\# 17.1(4)}
+  
+  Выписать расширенную матрицу.
+  Решить систему уравнений:
+  \[
+    \left\{
+    \begin{aligned}
+      &y + 3z = -1\\
+      &2x + 3y + 5z = 3\\
+      &3x + 5y + 7z = 6
+    \end{aligned}
+    \right.
+  \]
+  
+  \begin{solution}
+    \begin{equation*}
+    \begin{split}
+      &\left(
+          \begin{matrix}
+            0 & \textcolor{violet}{\bds 1} & 3\\
+            2 & \textcolor{red}{\bds 3} & 5\\
+            3 & \textcolor{red}{\bds 5} & 7
+          \end{matrix}
+          \BigMiddleThree
+          \begin{matrix}
+            -1\\
+            3\\
+            6
+          \end{matrix}
+        \right)\\
+      \xrightarrow{\substack{(2) = (2) - 3 \cdot (1)\\(3) = (3) - 5 \cdot (1)}}\quad &\left(
+          \begin{matrix}
+            0 & 1 & 3\\
+            2 & 0 & -4\\
+            3 & 0 & -8
+          \end{matrix}
+          \BigMiddleThree
+          \begin{matrix}
+            -1\\
+            6\\
+            11
+          \end{matrix}
+        \right)\\
+      \xrightarrow{(2) = (2) / 2}\quad &\left(
+          \begin{matrix}
+            0 & 1 & 3\\
+            \textcolor{violet}{\bds 1} & 0 & -2\\
+            \textcolor{red}{\bds 3} & 0 & -8
+          \end{matrix}
+          \BigMiddleThree
+          \begin{matrix}
+            -1\\
+            3\\
+            11
+          \end{matrix}
+        \right)\\
+      \xrightarrow{(3) = (3) - 3 \cdot (2)}\quad &\left(
+          \begin{matrix}
+            0 & 1 & 3\\
+            1 & 0 & -2\\
+            0 & 0 & -2
+          \end{matrix}
+          \BigMiddleThree
+          \begin{matrix}
+            -1\\
+            3\\
+            2
+          \end{matrix}
+        \right)\\
+      \xrightarrow{(3) = -1/2 \cdot (3)}\quad &\left(
+          \begin{matrix}
+            0 & 1 & \textcolor{red}{\bds 3}\\
+            1 & 0 & \textcolor{red}{\bds{-2}}\\
+            0 & 0 & \textcolor{violet}{\bds 1}
+          \end{matrix}
+          \BigMiddleThree
+          \begin{matrix}
+            -1\\
+            3\\
+            -1
+          \end{matrix}
+        \right)\\
+      \xrightarrow{\substack{(1) = (1) - 3 \cdot (3)\\(2) = (2) + 2 \cdot (3)}}\quad &\left(
+          \begin{matrix}
+            0 & 1 & 0\\
+            1 & 0 & 0\\
+            0 & 0 & 1
+          \end{matrix}
+          \BigMiddleThree
+          \begin{matrix}
+            2\\
+            1\\
+            -1
+          \end{matrix}
+        \right)\\
+    \end{split}
+    \end{equation*}
+    
+    Упрощённой матрице соответствует система
+    \[
+      \left\{
+        \begin{aligned}
+          &\hphantom{x +} y \hphantom{+ z} = 2\\
+          &x \hphantom{+ y} \hphantom{+ z} = 1\\
+          &\hphantom{x +} \hphantom{y +} z = -1\\
+        \end{aligned}
+      \right.
+    \]
+    решение которой, очевидно, $(2, 1, -1)^T$.
+  \end{solution}
+  
+  
+  \subsection{\# 19.6(20)}
+  
+  Решить систему с расширенной матрицей
+  \[
+    \left(
+      \begin{matrix}
+        1 & 2 & -7 & -3\\
+        -5 & 4 & 63 & 29\\
+        5 & 24 & -7 & -1
+      \end{matrix}
+      \BigMiddleThree
+      \begin{matrix}
+        -3\\
+        71\\
+        41
+      \end{matrix}
+    \right)
+  \]
+  
+  \begin{solution}
+    Расширенной матрице соответсвует система:
+    \[
+      \left\{
+        \begin{aligned}
+          &x_1 + 2x_2 - 7x_3 - 3x_4 = -3\\
+          &-5x_1 + 4x_2 + 63x_3 + 29x_4 = 71\\
+          &5x_1 + 24x_2 - 7x_3 - x_4 = 41
+        \end{aligned}
+      \right.
+    \]
+    
+    Для её решения снова воспользуемся методом Гаусса приведения расширенной матрицы к упрощённому виду:
+    
+    \begin{equation*}
+    \begin{split}
+      &\left(
+          \begin{matrix}
+            \textcolor{violet}{\bds 1} & 2 & -7 & -3\\
+            \textcolor{red}{\bds{-5}} & 4 & 63 & 29\\
+            \textcolor{red}{\bds 5} & 24 & -7 & -1
+          \end{matrix}
+          \BigMiddleThree
+          \begin{matrix}
+            -3\\
+            71\\
+            41
+          \end{matrix}
+        \right)\\
+      \xrightarrow{\substack{(2) = (2) + 5 \cdot (1)\\(3) = (3) - 5 \cdot (1)}}\quad &\left(
+          \begin{matrix}
+            1 & 2 & -7 & -3\\
+            0 & \textcolor{violet}{\bds{14}} & 28 & 14\\
+            0 & \textcolor{red}{\bds{14}} & 28 & 14
+          \end{matrix}
+          \BigMiddleThree
+          \begin{matrix}
+            -3\\
+            56\\
+            56
+          \end{matrix}
+        \right)\\
+      \xrightarrow{\substack{(3) = (3) - (2)\\(2) = (2) / 14}}\quad &\left(
+          \begin{matrix}
+            1 & \textcolor{red}{\bds 2} & -7 & -3\\
+            0 & \textcolor{violet}{\bds 1} & 2 & 1\\
+            0 & 0 & 0 & 0
+          \end{matrix}
+          \BigMiddleThree
+          \begin{matrix}
+            -3\\
+            4\\
+            0
+          \end{matrix}
+        \right)\\
+      \xrightarrow{(1) = (1) - 2 \cdot (2)}\quad &\left(
+          \begin{matrix}
+            1 & 0 & -11 & -5\\
+            0 & 1 & 2 & 1\\
+            0 & 0 & 0 & 0
+          \end{matrix}
+          \BigMiddleThree
+          \begin{matrix}
+            -11\\
+            4\\
+            0
+          \end{matrix}
+        \right)
+    \end{split}
+    \end{equation*}
+    
+    Упрощённой матрице соответствует система
+    \[
+      \left\{
+        \begin{aligned}
+          &x_1 \hphantom{+ x_2} - 11x_3 - 5x_4 = -11\\
+          &\hphantom{x_1 +} x_2 + 2x_3 + x_4 = 4
+        \end{aligned}
+      \right.
+    \]
+    
+    Базисные переменные~---~которым соответствовали базисные столбцы в упрощённой матрице~---~можно выразить через свободные:
+    \[
+      \left\{
+        \begin{aligned}
+          &x_1 = 11x_3 + 5x_4 -11\\
+          &x_2 = -2x_3 - x_4 + 4
+        \end{aligned}
+      \right.
+    \]
+    
+    То есть при произвольных $x_3$ и $x_4$ рассчитанные по формулам выше $x_1$ и $x_2$ дадут в совокупности с $x_3$ и $x_4$ решение системы.
+    Общий вид решения ($x_3 \hm\equiv t_1 \hm\in \RR$, $x_4 \hm\equiv t_2 \hm\in \RR$):
+    \begin{equation*}
+    \begin{split}
+      \begin{pmatrix}
+        x_1\\ x_2\\ x_3\\ x_4
+      \end{pmatrix}
+      = &\begin{pmatrix}
+        11t_1 + 5t_2 - 11\\
+        -2t_1 - t_2 + 4\\
+        t_1\\
+        t_2
+      \end{pmatrix}\\
+      = &\underbrace{\begin{pmatrix}
+        11 \\ -2 \\ 1 \\ 0
+      \end{pmatrix} t_1 + \begin{pmatrix}
+        5 \\ -1 \\ 0 \\ 1
+      \end{pmatrix} t_2}_{\substack{\tiny \mbox{Общее решение однородной системы}\\ \tiny \mbox{(решение при нулевом столбце свободных членов)}}} + \underbrace{\begin{pmatrix}
+        -11 \\ 4 \\ 0 \\ 0
+      \end{pmatrix}}_{\substack{\tiny \mbox{Частное решение неоднородной системы}\\ \tiny \mbox{(решение при нулевых свободных переменных)}}}\\
+    = &\underbrace{\begin{pmatrix}
+        11 & 5\\
+        -2 & -1\\
+        1 & 0\\
+        0 & 1
+      \end{pmatrix}}_{\substack{\tiny \mbox{Фундаментальная матрица}\\ \tiny \mbox{(её столбцы~---~базис в пространстве} \\ \tiny \mbox{решений однородной системы)}}} \begin{pmatrix} t_1 \\ t_2 \end{pmatrix} + \begin{pmatrix}
+        -11 \\ 4 \\ 0 \\ 0
+      \end{pmatrix}
+    \end{split}
+    \end{equation*}
+  \end{solution}
+  
+  
+  \subsection{\# 18.17(2)}
+  
+  Найти однородную систему, для которой фундаментальной является матрица $\Phi$ следующего вида:
+  \[
+    \Phi = \begin{pmatrix}
+      1 & 0\\
+      1 & -1\\
+      0 & 1\\
+      -4 & 1
+    \end{pmatrix}
+  \]
+  
+  \begin{solution}
+    \hphantom{X}\par  % TODO: new line after "`Solution"'
+    
+    \emph{Способ 1}
+    
+    При данной фундаментальной матрице общее решение однородной системы выражается как линейная комбинация её столбцов:
+    \begin{equation*}
+    \begin{split}
+      x = \Phi h = \begin{pmatrix}
+          1 & 0\\
+          1 & -1\\
+          0 & 1\\
+          -4 & 1
+        \end{pmatrix} \begin{pmatrix}
+          h_1 \\ h_2
+        \end{pmatrix}
+      = h_1 \cdot \begin{pmatrix} 1 \\ 1 \\ 0 \\ -4 \end{pmatrix} +
+         h_2 \cdot \begin{pmatrix} 0 \\ -1 \\ 1 \\ 1 \end{pmatrix} \quad h_1, h_2 \in \RR
+    \end{split}
+    \end{equation*}
+    
+    Если переписать выражение для общего решения выше в виде системы:
+    \[
+      \left\{
+        \begin{aligned}
+          &x_1 = h_1\\
+          &x_2 = h_1 - h_2\\
+          &x_3 = h_2\\
+          &x_4 = -4h_1 + h_2
+        \end{aligned}
+      \right. \Leftrightarrow \left\{
+        \begin{aligned}
+          &x_1 = h_1\\
+          &x_2 = x_1 - x_3\\
+          &x_3 = h_2\\
+          &x_4 = -4x_1 + x_3
+        \end{aligned}
+      \right. \Leftrightarrow \left\{
+        \begin{aligned}
+          &x_2 = x_1 - x_3\\
+          &x_4 = -4x_1 + x_3
+        \end{aligned}
+      \right. \Leftrightarrow \left\{
+        \begin{aligned}
+          &x_1 - x_2 - x_3 \hphantom{+ x_4} = 0\\
+          &4x_1 \hphantom{+ x_2} - x_3 + x_4 = 0
+        \end{aligned}
+      \right.
+    \]
+    
+    Очевидно, ответ не однозначен: к одной из строчек можно прибавить другую, и получится формально другая система.
+    
+    \bigskip
+    
+    \emph{Способ 2}
+    
+    В условии дана фундаментальная матрица.
+    То есть её столбцы~---~решения однородной системы.
+    Это значит, что в уравнение $Ax \hm= 0$ можно подставить вместо $x$ поочерёдно столбцы $\Phi$, и это будет давать верные числовые равенства.
+    Пусть в матрице $A$ всего $m$ строк (и $4$ столбца).
+    Тогда $Ax \hm= 0$ в виде системы можно записать так:
+    \[
+      \left\{
+        \begin{aligned}
+          &a_{11} x_1 + a_{12} x_2 + a_{13} x_3 + a_{14} x_4 = 0\\
+          &a_{21} x_1 + a_{22} x_2 + a_{23} x_3 + a_{24} x_4 = 0\\
+          &\ldots\\
+          &a_{m1} x_1 + a_{m2} x_2 + a_{m3} x_3 + a_{m4} x_4 = 0
+        \end{aligned}
+      \right.
+    \]
+    
+    Подставляем сюда вместо $x_1, \ldots, x_4$ компоненты первого столбца $\Phi$:
+    \[
+      \left\{
+        \begin{aligned}
+          &a_{11} + a_{12} \hphantom{+ a_{13}} - 4 a_{14} = 0\\
+          &a_{21} + a_{22} \hphantom{+ a_{23}} - 4 a_{24} = 0\\
+          &\ldots
+        \end{aligned}
+      \right.
+    \]
+    
+    И компоненты второго столбца $\Phi$:
+    \[
+      \left\{
+        \begin{aligned}
+          &\hphantom{a_{11}} - a_{12} + a_{13} + a_{14} = 0\\
+          &\hphantom{a_{21}} - a_{22} + a_{23} + a_{24} = 0\\
+          &\ldots
+        \end{aligned}
+      \right.
+    \]
+    
+    Отсюда надо найти коэффициенты $a_{ij}$, составляющие матрицу $A$.
+    Чтобы это сделать, можно сгруппировать уравнения из двух систем по строчкам:
+    \[
+      \left\{
+        \begin{aligned}
+          &\left\{
+            \begin{aligned}
+              &a_{11} + a_{12} \hphantom{+ a_{13}} - 4 a_{14} = 0\\
+              &\hphantom{a_{11}} - a_{12} + a_{13} + a_{14} = 0\\
+            \end{aligned}
+          \right.\\
+          &\ldots
+        \end{aligned}
+      \right.
+    \]
+    
+    В каждой такой паре уравнений можно принять первую и третью переменную за базисные (выразить через вторую и четвёртую).
+    В итоге строки матрицы $A$ должны выглядеть так:
+    \[
+      A = \begin{pmatrix}
+        &(-a_{12} + 4 a_{14}) + a_{12} + (a_{12} - a_{14}) + a_{14}\\
+        &(-a_{22} + 4 a_{24}) + a_{22} + (a_{22} - a_{24}) + a_{24}\\
+        &\ldots
+      \end{pmatrix}
+    \]
+    
+    Четыре столбца линейно зависимы: первый и третий выражаются через второй и четвёртый.
+    Поэтому максимальное число линейно независимых строк в матрице $A$ равно двум.
+    Меньше двух строк (одной) быть не может, так как число столбцов в фундаментальной матрице $2 \hm= 4 \hm- \Rg A$.
+    Поэтому остаётся составить две линейно независимые строки коэффициентов, удовлетворяющие соотношениям выше.
+    Например,
+    \[
+      A = \begin{pmatrix}
+        1 & -1 & -1 & 0\\
+        4 & 0 & -1 & 1
+      \end{pmatrix}
+    \]
+    
+    И тогда система уравнений:
+    \[
+      \left\{
+        \begin{aligned}
+          &x_1 - x_2 - x_3 \hphantom{+ x_4} = 0\\
+          &4x_1 \hphantom{+ x_2} - x_3 + x_4 = 0
+        \end{aligned}
+      \right.
+    \]
+  \end{solution}
+\end{document}
