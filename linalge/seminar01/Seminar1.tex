@@ -1,0 +1,476 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{mystyle}
+\usepackage{gensymb}
+
+
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+\graphicspath{ {images/} }
+
+
+\definecolor{violet}{RGB}{148, 0, 211}
+\definecolor{red}{RGB}{183, 65, 14}
+
+
+
+% https://tex.stackexchange.com/a/101138/135045
+
+\newcommand\widesim[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{-.1\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5150\wd0}}{.6\ht0}%
+  }{O}{c}{F}{T}{S}%
+}}
+
+\newcommand{\BigMiddleThree}{\;\left|\vphantom{\begin{pmatrix} 0\\0\\0 \end{pmatrix}}\right.\;}
+
+
+\author{Алексеев Василий}
+
+
+\title{Семинар 1}
+\date{4 февраля + 5 февраля 2021}
+
+
+\begin{document}
+  \maketitle
+  
+  \tableofcontents
+
+  \thispagestyle{empty}
+  
+  \newpage
+  
+  \pagenumbering{arabic}
+
+
+  \section{Ранг матрицы}
+  
+  
+  \section{Задачи}
+  
+  
+  \subsection{\# 15.45(2)}
+  
+  Вычислить обратную для матрицы
+  \[
+    A = \begin{pmatrix}
+      2 & -1 & 0\\
+      0 & 2 & -1\\
+      -1 & -1 & 1
+    \end{pmatrix}
+  \]
+  
+  \begin{solution}
+    Найдём обратную с помощью метода Гаусса.
+    Далее \textcolor{violet}{фиолетовым} цветом будем выделять элемент в столбце, с помощью которого будем занулять другие элементы в том же столбце.
+    Те, которые зануляем на данном шаге, будем отмечать \textcolor{red}{красным} цветом.
+    Когда столбец ``готов'' (остался один ненулевой~---~фиолетовый), переходим к другому столбцу и снова выбираем ненулевой элемент для ``зачищения столбца'', но \emph{из строчек, откуда ещё не выбирали}.
+    
+    \begin{equation*}
+    \begin{split}
+      &\left(
+        \begin{matrix}
+          2 & -1 & 0\\
+          0 & 2 & -1\\
+          -1 & -1 & 1
+        \end{matrix}
+        \BigMiddleThree
+        \begin{matrix}
+          1 & 0 & 0\\
+          0 & 1 & 0\\
+          0 & 0 & 1
+        \end{matrix}
+        \right)\\
+      \widesim{(1) \leftrightarrow (3)}\quad &\left(
+        \begin{matrix}
+          \textcolor{violet}{\bds{-1}} & -1 & 1\\
+          0 & 2 & -1\\
+          \textcolor{red}{\bds 2} & -1 & 0
+        \end{matrix}
+        \BigMiddleThree
+        \begin{matrix}
+          1 & 0 & 0\\
+          0 & 1 & 0\\
+          1 & 0 & 0
+        \end{matrix}
+        \right)\\
+      \widesim{(3) = (3) + (1) \cdot 2}\quad &\left(
+        \begin{matrix}
+          -1 & -1 & 1\\
+          0 & 2 & -1\\
+          0 & -3 & 2
+        \end{matrix}
+        \BigMiddleThree
+        \begin{matrix}
+          1 & 0 & 0\\
+          0 & 1 & 0\\
+          1 & 0 & 2
+        \end{matrix}
+        \right)\\
+      \widesim{(2) = (2) / 2}\quad &\left(
+        \begin{matrix}
+          -1 & \textcolor{red}{\bds{-1}} & 1\\
+          0 & \textcolor{violet}{\bds 1} & -1/2\\
+          0 & \textcolor{red}{\bds{-3}} & 2
+        \end{matrix}
+        \BigMiddleThree
+        \begin{matrix}
+          1 & 0 & 0\\
+          0 & 1/2 & 0\\
+          1 & 0 & 2
+        \end{matrix}
+        \right)\\
+      \widesim{\substack{(3) = (3) + (2) \cdot 3\\(1) = (1) + (2)}}\quad &\left(
+        \begin{matrix}
+          -1 & 0 & \textcolor{red}{\bds{1/2}}\\
+          0 & 1 & \textcolor{red}{\bds{-1/2}}\\
+          0 & 0 & \textcolor{violet}{\bds{1/2}}
+        \end{matrix}
+        \BigMiddleThree
+        \begin{matrix}
+          0 & 1/2 & 1\\
+          0 & 1/2 & 0\\
+          1 & 3/2 & 2
+        \end{matrix}
+        \right)\\
+      \widesim{\substack{(2) = (2) + (3)\\(1) = (1) - (3)}}\quad &\left(
+        \begin{matrix}
+          -1 & 0 & 0\\
+          0 & 1 & 0\\
+          0 & 0 & 1/2
+        \end{matrix}
+        \BigMiddleThree
+        \begin{matrix}
+          -1 & -1 & -1\\
+          1 & 2 & 2\\
+          1 & 3/2 & 2
+        \end{matrix}
+        \right)\\
+      \widesim{\substack{(1) = -1 \cdot (1)\\(3) = 2 \cdot (3)}}\quad &\left(
+        \begin{matrix}
+          1 & 0 & 0\\
+          0 & 1 & 0\\
+          0 & 0 & 1
+        \end{matrix}
+        \BigMiddleThree
+        \begin{matrix}
+          1 & 1 & 1\\
+          1 & 2 & 2\\
+          2 & 3 & 4
+        \end{matrix}
+        \right)
+    \end{split}
+    \end{equation*}
+    
+    Таким образом,
+    \[
+      A^{-1} = \begin{pmatrix}
+        1 & 1 & 1\\
+        1 & 2 & 2\\
+        2 & 3 & 4
+      \end{pmatrix}
+    \]
+    
+    Можно проверить:
+    \[
+      AA^{-1} = \begin{pmatrix}
+        2 & -1 & 0\\
+        0 & 2 & -1\\
+        -1 & -1 & 1
+      \end{pmatrix}
+      \cdot \begin{pmatrix}
+        1 & 1 & 1\\
+        1 & 2 & 2\\
+        2 & 3 & 4
+      \end{pmatrix}
+      = \begin{pmatrix}
+        1 & 0 & 0\\
+        0 & 1 & 0\\
+        0 & 0 & 1
+      \end{pmatrix}
+    \]
+    
+    Почему преобразования строк у ``сдвоенной'' матрицы позволило найти $A^{-1}$?
+    Каждое элементарное преобразование строк\footnote{Умножение строки на число, отличное от нуля, и прибавление к одной строке другой} можно задать невырожденной матрицей $S$, умножение на которую слева равносильно данному преобразованию строк.
+    Таким образом, каждый шаг метода Гаусса можно рассматривать как умножение слева на некоторую $S_i$:
+    \[
+      \bigl(A \mid E\bigr) \to \bigl(S_1 A \mid S_1 E\bigr) \to \ldots
+      \to \bigl(\overbrace{S_n \ldots S_1 A}^{E} \mid \overbrace{S_n \ldots S_1 E}^{B}\bigr)
+    \]
+    где единичная матрица $E \hm= S_n \ldots S_1 A$~---~то, что стремимся получить слева, справа же получается матрица $B \hm= S_n \ldots S_1 E \hm= S_n \ldots S_1$.
+    Выходит, $E \hm= BA$, что равносильно тому, что $B \hm= A^{-1}$.
+    
+    \bigskip
+    
+    \emph{Отступление}
+    
+    Найдём интереса ради какую-нибудь $S_i$.
+    Например, $S_1$, которая задаёт перестановку строк.
+    Правда, перестановка строк~---~не совсем элементарное преобразование.
+    Разложим его сначала на элементарные.
+    
+    Мы хотим задать преобразование перестановки строк (первой и третьей):
+    \[
+      \begin{pmatrix}
+        2 & -1 & 0\\
+        0 & 2 & -1\\
+        -1 & -1 & 1
+      \end{pmatrix}
+      \longrightarrow \begin{pmatrix}
+        -1 & -1 & 1\\
+        0 & 2 & -1\\
+        2 & -1 & 0
+      \end{pmatrix}
+    \]
+    
+    Это преобразование можно представить как композицию преобразований (над-под каждой стрелочкой обозначено элементарное преобризование и его матрица\footnote{Матрица, которую можно получить,например, из единичной, проведя над её строками аналогичное преобразование.}):
+    \begin{equation*}
+    \begin{split}
+      &\begin{pmatrix}
+        2 & -1 & 0\\
+        0 & 2 & -1\\
+        -1 & -1 & 1
+      \end{pmatrix}\\
+      \xrightarrow[(3) = (3) + (1)]{\left(\begin{smallmatrix}1 & 0 & 0\\0 & 1 & 0\\1 & 0 & 1\end{smallmatrix}\right)}\quad &\begin{pmatrix}
+          2 & -1 & 0\\
+          0 & 2 & -1\\
+          1 & -2 & 1
+        \end{pmatrix}\\
+      \xrightarrow[(1) = (1) - (3)]{\left(\begin{smallmatrix}1 & 0 & -1\\0 & 1 & 0\\0 & 0 & 1\end{smallmatrix}\right)}\quad &\begin{pmatrix}
+          1 & 1 & -1\\
+          0 & 2 & -1\\
+          1 & -2 & 1
+        \end{pmatrix}\\
+      \xrightarrow[(3) = (3) + (1)]{\left(\begin{smallmatrix}1 & 0 & 0\\0 & 1 & 0\\1 & 0 & 1\end{smallmatrix}\right)}\quad &\begin{pmatrix}
+          1 & 1 & -1\\
+          0 & 2 & -1\\
+          2 & -1 & 0
+        \end{pmatrix}\\
+      \xrightarrow[(1) = -1 \cdot (1)]{\left(\begin{smallmatrix}-1 & 0 & 0\\0 & 1 & 0\\0 & 0 & 1\end{smallmatrix}\right)}\quad &\begin{pmatrix}
+          -1 & -1 & 1\\
+          0 & 2 & -1\\
+          2 & -1 & 0
+        \end{pmatrix}
+    \end{split}
+    \end{equation*}
+    
+    И в итоге, $S_1$, задающая первую перестановку строк:
+    \[
+      S_1 = \begin{pmatrix}
+          -1 & 0 & 0\\
+          0 & 1 & 0\\
+          0 & 0 & 1
+        \end{pmatrix}
+      \cdot \begin{pmatrix}
+          1 & 0 & 0\\
+          0 & 1 & 0\\
+          1 & 0 & 1
+        \end{pmatrix}
+      \cdot \begin{pmatrix}
+          1 & 0 & -1\\
+          0 & 1 & 0\\
+          0 & 0 & 1
+        \end{pmatrix}
+      \cdot \begin{pmatrix}
+          1 & 0 & 0\\
+          0 & 1 & 0\\
+          1 & 0 & 1
+        \end{pmatrix}
+      = \ldots
+    \]
+  \end{solution}
+  
+  
+  \subsection{\# 15.65(1)}
+  
+  \[
+    \begin{pmatrix}
+      2 & 5\\
+      1 & 3
+    \end{pmatrix} X = \begin{pmatrix}
+      2 & 1\\
+      1 & 1
+    \end{pmatrix}
+  \]
+  
+  \begin{solution}
+    Какая размерность у матрицы $X$?
+    Очевидно, если $X_{m\times n}$, то $m \hm= 2$ и $n \hm= 2$.
+    
+    Также можно заметить, что матрица, которая известный множитель, и матрица-результат невырождены.
+    Поэтому и $X$ должна быть невырождена.
+    
+    Чтобы найти $X$, можно умножить обе части уравнение на обратную к матрице-множителю:
+    \[
+    \begin{pmatrix}
+      2 & 5\\
+      1 & 3
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+      2 & 5\\
+      1 & 3
+    \end{pmatrix} X = \begin{pmatrix}
+      2 & 5\\
+      1 & 3
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+      2 & 1\\
+      1 & 1
+    \end{pmatrix}
+  \]
+  
+  В итоге (после нахождения обратной по формуле или с помощью метода Гаусса) получается, что
+  \[
+    X \hm= \begin{pmatrix}
+      1 & -2\\
+      0 & 1
+    \end{pmatrix}
+  \]
+  \end{solution}
+  
+  \bigskip
+  
+  \emph{Отступление}
+  
+  Рассмотрим уравнение в форме
+  \[
+    AX = B
+  \]
+  
+  В задаче $A$ и $B$ были невырождены.
+  Но что было бы, если бы одна или две из них были бы вырождены?
+  
+  Уравнение
+  \[
+    \mbox{(невыр.)}\ X = \mbox{(выр.)}
+  \]
+  очевидно, не имеет решений.
+  
+  То же самое можно сказать и про уравнение
+  \[
+    \mbox{(выр.)}\ X = \mbox{(невыр.)}
+  \]
+  
+  Но в случае
+  \[
+    \mbox{(выр.)}\ X = \mbox{(выр.)}
+  \]
+  всё зависит от конкретных матриц.
+  
+  Например, пусть дано уравнение
+  \[
+    \begin{pmatrix}
+      1 & 1\\
+      1 & 1
+    \end{pmatrix} X = \begin{pmatrix}
+      1 & 3\\
+      2 & 6
+    \end{pmatrix}
+  \]
+  
+  Если искать матрицу $X$ в виде $X \hm= \left(\begin{smallmatrix}a & b\\ c & d\end{smallmatrix}\right)$, то матричное уравнение можно будет переписать как систему их четырёх скалярных уравнений
+  \[
+    \left\{
+      \begin{aligned}
+        &a + c = 1\\
+        &b + d = 3\\
+        &a + c = 2\\
+        &b + d = 6
+      \end{aligned}
+    \right.
+  \]
+  у которой нет решений.
+  
+  Но для уравнения же
+  \[
+    \begin{pmatrix}
+      1 & 2\\
+      1 & 2
+    \end{pmatrix} X = \begin{pmatrix}
+      2 & 1\\
+      2 & 1
+    \end{pmatrix}
+  \]
+  аналогичная система скалярных уравнений
+  \[
+    \left\{
+      \begin{aligned}
+        &a + 2c = 2\\
+        &b + 2d = 1\\
+        &a + 2c = 2\\
+        &b + 2d = 1
+      \end{aligned}
+    \right.
+  \]
+  уже будет иметь решение, причём не одно\footnote{Дело в том, что умножение матрицы $A$ справа на матрицу $X$ равносильно преобразованию столбцов (которое задаёт матрица $X$) матрицы $A$. Для рассматриваемого уравнения $AX \hm= B$ такое преобразование столбцов, очевидно, существует.}. И решение $X$ уравнение в общем виде будет
+  \[
+    X \hm= \begin{pmatrix}
+      2 - 2c & 1 - 2d\\
+      c & d
+    \end{pmatrix},\quad c, d \in \RR
+  \]
+  ($c$ и $d$ выбраны в качестве параметрических переменных, остальные две из системы выражены через них)
+  
+  
+  \subsection{\# 16.19(3)}
+  
+  \[
+    A = \begin{pmatrix}
+      1 & 1 & 1\\
+      1 & \alpha & \alpha\\
+      1 & \alpha^2 & \alpha^2
+    \end{pmatrix}
+  \]
+  \[
+    \Rg A = \?
+  \]
+  
+  \begin{solution}
+    Чтобы найти ранг матрицы, можно методом Гаусса привести её к упрощённому виду (то есть ``пытаться'' преобразованиями строк привести матрицу $A$ к единичной; некоторые строки в общем случае могут оказаться нулевыми).
+    Первым преобразованием можно вычесть первую строку из второй и третьей:
+    \[
+      \begin{pmatrix}
+        1 & 1 & 1\\
+        1 & \alpha & \alpha\\
+        1 & \alpha^2 & \alpha^2
+      \end{pmatrix}
+      \longrightarrow
+      \begin{pmatrix}
+      1 & 1 & 1\\
+      0 & \alpha - 1 & \alpha - 1\\
+      0 & \alpha^2 - 1 & \alpha^2 - 1
+    \end{pmatrix}
+    \]
+    
+    Далее метод Гаусса продолжать нельзя, пока не стало понятно, нулевые вторая и третья строки или нет.
+    Например, следующим шагом метода Гаусса могла бы быть ``чистка второго столбца'', но для этого во второй или третьей строчке должен быть ненулевой элемент во втором столбце.
+    \[
+      \alpha - 1 \overset{\?}{=} 0 \Rightarrow \alpha = 1 \Rightarrow A = \begin{pmatrix}
+        1 & 1 & 1\\
+        0 & 0 & 0\\
+        0 & 0 & 0
+      \end{pmatrix} \Rightarrow \Rg A = 1
+    \]
+    \[
+      \alpha^2 - 1 \overset{\?}{=} 0 \Rightarrow \alpha = -1\ \mbox{($1$ уже рассмотрели)} \Rightarrow A = \begin{pmatrix}
+        1 & 1 & 1\\
+        0 & -2 & -2\\
+        0 & 0 & 0
+      \end{pmatrix} \Rightarrow \Rg A = 2
+    \]
+    
+    Остаются случаи $\alpha \hm{\not=} 1; 2$.
+    При таком $\alpha$ вторая и третья строки точно ненулевые.
+    Если они к тому же линейно независимы, то ранг матрицы $A$ будет равен $3$.
+    Если линейно зависимы~---~ранг будет равен $2$.
+    Найдём, какие $\alpha$ будут давать ранг $2$:
+    \[
+      \alpha - 1 = k \cdot (\alpha^2 - 1),\quad k \in \RR \setminus \{0\}
+    \]
+    В результате получаем $\alpha \hm= \frac{1}{k} \hm- 1$.
+    То есть ранг матрицы $A$ при всех оставшихся $\alpha$ будет равен $2$.
+  \end{solution}
+\end{document}
