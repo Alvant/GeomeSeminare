@@ -1,0 +1,521 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{mystyle}
+\usepackage{gensymb}
+
+
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+\graphicspath{ {images/} }
+
+
+\definecolor{violet}{RGB}{148, 0, 211}
+
+
+% https://tex.stackexchange.com/a/101138/135045
+
+\newcommand\widesim[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{-.1\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5150\wd0}}{.6\ht0}%
+  }{O}{c}{F}{T}{S}%
+}}
+
+\newcommand{\BigMiddleThree}{\;\left|\vphantom{\begin{pmatrix} 0\\0\\0 \end{pmatrix}}\right.\;}
+\newcommand{\BigMiddleFour}{\;\left|\vphantom{\begin{pmatrix} 0\\0\\0\\0 \end{pmatrix}}\right.\;}
+
+
+\author{Алексеев Василий}
+
+
+\title{Семинар 4}
+\date{25 февраля + 26 февраля 2021}
+
+
+\begin{document}
+  \maketitle
+  
+  \tableofcontents
+
+  \thispagestyle{empty}
+  
+  \newpage
+  
+  \pagenumbering{arabic}
+
+
+  \section{Линейные пространства: сумма и пересечение}
+  
+  \section{Задачи}
+  
+  
+  \subsection{\# 20.23(4)}
+  
+  Составить систему уравнений, определяющую линейную оболочку системы столбцов:
+  \[
+    \mathcal L(\bds c_1, \bds c_2) = \{\alpha \bds c_1 + \beta \bds c_2 \mid \alpha, \beta \in \RR\}
+  \]
+  \[
+    \left\{
+      \begin{aligned}
+        &\bds c_1 = (1, 1, 1, 1)^T\\
+        &\bds c_2 = (1, 2, 1, 3)^T
+      \end{aligned}
+    \right.
+  \]
+  
+  \begin{solution}
+    \[
+      \begin{pmatrix}
+        x_1 \\ x_2 \\ x_3 \\ x_4
+      \end{pmatrix} = \alpha \begin{pmatrix}
+        1 \\ 1 \\ 1 \\ 1
+      \end{pmatrix} + \beta \begin{pmatrix}
+        1 \\ 2 \\ 1 \\ 3
+      \end{pmatrix}
+    \]
+    
+    Переходим к системе скалярных уравнений (относительно $\alpha$, $\beta$):
+    \begin{equation}\label{p-20-23-system}
+      \left\{
+        \begin{aligned}
+          &x_1 = \alpha + \beta\\
+          &x_2 = \alpha + 2\beta\\
+          &x_3 = \alpha + \beta\\
+          &x_4 = \alpha + 3\beta
+        \end{aligned}
+      \right.
+    \end{equation}
+    
+    Можно сразу заметить, что $x_1 \hm= x_3$~---~это будет одним из уравнений искомой системы.
+    Из второго и третьего уравнений можно получить $\beta \hm= x_4 \hm- x_2$.
+    Из третьего уравнения (используя только что полученное выражение для $\beta$): $\alpha \hm= x_3 \hm- (x_4 \hm- x_2)$.
+    Теперь можно ``заменить'' в правых частях всех уравнений $\alpha$ и $\beta$ на их выражения через $x_i$:
+    \[
+      \left\{
+        \begin{aligned}
+          &x_1 = x_3\\
+          &x_2 = x_3 - (x_4 - x_2) + 2(x_4 - x_2)\\
+          &x_3 = x_3\\
+          &x_4 = x_3 - (x_4 - x_2) + 3(x_4 - x_2)
+        \end{aligned}
+      \right.
+    \]
+    
+    Третье уравнение можно ``выкинуть''.
+    То же самое~---~например, с четвёртым (так как оно такое же, как второе).
+    В итоге получаем систему:
+    \[
+      \left\{
+        \begin{aligned}
+          &x_1 - x_3 = 0\\
+          &2x_2 - x_3 - x_4 = 0
+        \end{aligned}
+      \right.
+    \]
+    
+    \bigskip
+    
+    \emph{Другой способ работы с системой (\ref{p-20-23-system})}
+    
+    Можно бы было находить условия на $x_i$ из системы (\ref{p-20-23-system}) ``более системно'': рассмотрев расширенную матрицу системы.
+    После упрощения, приравнивание нулю компонент в последнем столбце, соответствующих нулевым строкам в основной матрице, дало бы условия на $x_i$\footnote{Теорема Кронекера-Капелли.}:
+    \[
+      \left(
+        \begin{matrix}
+          \textcolor{violet}{\bds 1} & 1\\
+          1 & 2\\
+          1 & 1\\
+          1 & 3
+        \end{matrix} \BigMiddleFour \begin{matrix}
+          x_1 \\ x_2 \\ x_3 \\ x_4
+        \end{matrix}
+      \right)
+      \sim \left(
+        \begin{matrix}
+          1 & 1\\
+          0 & \textcolor{violet}{\bds 1}\\
+          0 & 0\\
+          0 & 2
+        \end{matrix} \BigMiddleFour \begin{matrix}
+          x_1 \\ x_2 - x_1 \\ x_3 - x_1 \\ x_4 - x_1
+        \end{matrix}
+      \right)
+      \sim \left(
+        \begin{matrix}
+          1 & 0\\
+          0 & 1\\
+          0 & 0\\
+          0 & 0
+        \end{matrix} \BigMiddleFour \begin{matrix}
+          2x_1 - x_2 \\ x_2 - x_1 \\ x_3 - x_1 \\ x_4 + x_1 - 2x_2
+        \end{matrix}
+      \right)
+      \Rightarrow \left\{
+        \begin{aligned}
+          &x_3 - x_1 = 0\\
+          &x_4 + x_1 - 2x_2 = 0
+        \end{aligned}
+      \right.
+    \]
+  \end{solution}
+  
+  
+  \subsection{\# 15.94}
+  
+  Показать, что любую квадратную матрицу можно разложить в сумму симметрической и кососимметрической.
+  Единственно ли такое разложение?
+  
+  \begin{solution}
+    Симметрическая матрица $A$~---~такая что $A \hm= A^T$.
+    Кососимметрическая матрица $A$~---~такая что $A \hm= -A^T$.
+    
+    Можно заметить, что множества симметрических и кососимметрических матриц образуют линейные подпространства в пространстве всех квадратных матриц.
+    Покажем это, например, для случая симметрических матриц.
+    При умножении на число, очевидно, свойство симметричности сохраняется:
+    \[
+      (\alpha A)^T = \alpha A^T = \alpha A
+    \]
+    
+    При сложении двух симметрических тоже получим симметрическую:
+    \[
+      A + B = (a_{ij} + b_{ij})_{ij} = (a_{ji} + b_{ji})_{ij} = (A + B)^T
+    \]
+    
+    Как теперь представить произвольную матрицу в виде суммы симметрической и кососимметрической?..
+    
+    \bigskip
+    
+    \emph{Способ 1 (``простой'')}
+    
+    В предыдущем номере задачника предлагают показать, что матрица $A \hm+ A^T$ симметрическая, а матрица $A \hm- A^T$ кососимметрическая.
+    Если это в самом деле так, то, очевидно:
+    \[
+      A = \frac{1}{2} \bigl((A + A^T) + (A - A^T)\bigr) = \frac{1}{2} (A + A^T) + \frac{1}{2} (A - A^T)
+    \]
+    То есть разложение произвольной матрицы $A$ в виде суммы двух найдено.
+    
+    Остаётся в таком случае проверить, что $A \hm- A^T$ в самом деле кососимметрическая (а $A \hm+ A^T$~---~симметрическая):
+    \[
+      A - A^T = (a_{ij} - a_{ji})_{ij} = -(a_{ji} - a_{ij})_{ij} = -(A - A^T)^T
+    \]
+    
+    Аналогично и с симметричностью матрицы $A \hm+ A^T$.
+    
+    \bigskip
+    
+    \emph{Способ 2}
+    
+    Можно же по-честному записать, что хотим найти:
+    \[
+      A = X + Y,\quad
+      \left\{
+        \begin{aligned}
+          &X = X^T\\
+          &Y = -Y^T
+        \end{aligned}
+      \right.
+    \]
+    Представление матрицы $A$ в виде суммы двух и ограничения на матрицы-слагаемые (симметричность одной и кососимметричность другой) можно объединить в одну систему:
+    \[
+      \left\{
+        \begin{aligned}
+          &A = X + Y\\
+          &X = X^T\\
+          &Y = -Y^T
+        \end{aligned}
+      \right.
+    \]
+    
+    Пусть у матрицы $A$ размер $n \hm\times n$.
+    Тогда сейчас в системе $2 \cdot n^2$ неизвестных (количество элементов в матрицах $X$ и $Y$) и $3 \cdot n^2$ уравнений (каждое матричное уравнение равносильно $n^2$ скалярным уравнениям).
+    
+    Рассмотрим сначала отдельно уравнение $X \hm= X^T$.
+    Соответствующая система скалярный уравнений:
+    \[
+      \left\{
+        \begin{aligned}
+          &x_{11} = x_{11}\\
+          &x_{12} = x_{21}\\
+          &\ldots\\
+          &x_{21} = x_{12}\\
+          &x_{22} = x_{22}\\
+          &\ldots
+        \end{aligned}
+      \right.
+    \]
+    Таким образом, на самом деле $n$ уравнений вообще ничего не дают (которые для диагональных элементов).
+    Другие же позволяют сразу сократить число переменных $x_{ij}$: вместо $n^2$ их теперь (диагональные плюс в одной из половин)
+    \[
+      n + \frac{n^2 - n}{2} = \frac{n (n + 1)}{2}
+    \]
+    
+    Теперь посмотрим на $Y \hm= -Y^T$:
+    \[
+      \left\{
+        \begin{aligned}
+          &y_{11} = -y_{11}\\
+          &y_{12} = -y_{21}\\
+          &\ldots\\
+          &y_{21} = -y_{12}\\
+          &y_{22} = -y_{22}\\
+          &\ldots
+        \end{aligned}
+      \right.
+    \]
+    В этот раз уравнения для диагональных элементов информативны и дают: $y_{11} \hm= \ldots \hm= y_{nn} \hm= 0$.
+    Число неизвестных в матрице $Y$ после учёта уравнений $Y \hm= -Y^T$ (половинка без диагонали):
+    \[
+      \frac{n^2 - n}{2} = \frac{n (n - 1)}{2}
+    \]
+    
+    Остаётся посмотреть на уравнения, соответствующие $A \hm= X \hm+ Y$:
+    \[
+      \left\{
+      \begin{aligned}
+        &\left\{
+        \begin{aligned}
+          &a_{11} = x_{11} + y_{11}\\
+          &a_{12} = x_{12} + y_{12}\\
+          &\ldots\\
+          &a_{1n} = x_{1n} + y_{1n}
+        \end{aligned}\right.\\
+        &\left\{
+        \begin{aligned}
+          &a_{21} = x_{21} + y_{21} = x_{12} - y_{12}\\
+          &a_{22} = x_{22} + y_{22}\\
+          &\ldots\\
+          &a_{2n} = x_{2n} + y_{2n}
+        \end{aligned}\right.\\
+        &\ldots\\
+        &\left\{
+        \begin{aligned}
+          &a_{n1} = x_{n1} + y_{n1}\\
+          &a_{n2} = x_{n2} + y_{n2}\\
+          &\ldots\\
+          &a_{nn} = x_{nn} + y_{nn}
+        \end{aligned}\right.
+      \end{aligned}
+      \right.
+    \]
+    
+    Сначала опять стоит обратить внимание на уравнения с диагональными элементами.
+    С их помощью можно сразу найти диагональные элементы матрицы $X$!
+    Например
+    $
+      a_{11} \hm= x_{11} \hm+ y_{11} \hm\Leftrightarrow a_{11} \hm= x_{11}
+    $.
+    То есть $x_{ii} \hm= a_{ii}$.
+    Поэтому общее число неизвестных в матрице $X$ становится равным тоже
+    \[
+      \frac{n^2 - n}{2} = \frac{n (n - 1)}{2}
+    \]
+    И общее число неизвестных на данный момент (в обеих матрицах $X$ и $Y$):
+    \[
+      2 \cdot \frac{n (n - 1)}{2} = n (n - 1)
+    \]
+    
+    И ``неиспользованными'' остались следующие уравнения (с недиагональными элементами матрицы $A$):
+    \[
+      \left\{
+      \begin{aligned}
+        &\left\{
+        \begin{aligned}
+          &a_{12} = x_{12} + y_{12}\\
+          &\ldots\\
+          &a_{1n} = x_{1n} + y_{1n}
+        \end{aligned}\right.\\
+        &\left\{
+        \begin{aligned}
+          &a_{21} = x_{12} - y_{12}\\
+          &\ldots\\
+          &a_{2n} = x_{2n} + y_{2n}
+        \end{aligned}\right.\\
+        &\ldots
+      \end{aligned}
+      \right.
+    \]
+    И их тоже всего $n (n \hm- 1)$.
+    
+    Теперь можно заметить, что оставшаяся (до сих пор не очень маленькая) система на самом деле ``распадается'' на много систем из двух уравнений с двумя неизвестными.
+    Например, объединяя уравнения с $a_{12}$ и $a_{21}$, получаем:
+    \[
+      \left\{
+        \begin{aligned}
+          &a_{12} = x_{12} + y_{12}\\
+          &a_{21} = x_{12} - y_{12}
+        \end{aligned}
+      \right.
+    \]
+    
+    Откуда можно найти $x_{12}$ и $y_{12}$:
+    \[
+      x_{12} = \frac{a_{12} + a_{21}}{2},\quad y_{12} = \frac{a_{12} - a_{21}}{2}
+    \]
+    
+    И аналогичным образом можно найти все недиагональные элементы в матрицах $X$ и $Y$.
+    На самом деле, формулы будут верны и для диагональных элементов.
+    Таким образом,
+    \[
+      x_{ij} = \frac{a_{ij} + a_{ji}}{2},\quad y_{ij} = \frac{a_{ij} - a_{ji}}{2}
+    \]
+    
+    Матрицы $X$ и $Y$ найдены.
+    Решение единственное.
+  \end{solution}
+  
+  
+  \subsection{\# 21.6(5)}
+  
+  Найти проекцию вектора $\bds x$ из $\RR^4$ на подпространство $\mathcal P$ параллельно $\mathcal Q$\footnote{То есть предполагается, что $\RR^n = \mathcal P \hm\oplus \mathcal Q$.}.
+  Где $\mathcal P$ и $\mathcal Q$~---~линейные оболочки векторов:
+  \[
+    \mathcal P = \mathcal L \{\bds p_1, \bds p_2\} = \mathcal L \left\{
+      \begin{pmatrix}
+        1 \\ 1 \\ 1 \\ 1
+      \end{pmatrix},
+      \begin{pmatrix}
+        3 \\ -5 \\ 7 \\ 2
+      \end{pmatrix}
+    \right\}
+    \quad \mathcal Q = \mathcal L \{\bds q_1, \bds q_2\}  = \mathcal L \left\{
+      \begin{pmatrix}
+        1 \\ 1 \\ 2 \\ 2
+      \end{pmatrix},
+      \begin{pmatrix}
+        1 \\ 1 \\ 1 \\ 3
+      \end{pmatrix}
+    \right\}
+  \]
+  а сам вектор $\bds x$ равен
+  \[
+    \bds x = (1, -7, 5, -2)^T
+  \]
+  
+  \begin{solution}
+    Если $\RR^4 \hm= \mathcal P \oplus \mathcal Q$ (что следует из условия задачи), то существует единственное представление вектора $\bds x$ как:
+    \[
+      \bds x = \underbrace{\alpha \bds p_1 + \beta \bds p_2}_{\pi_{\mathcal P}(\bds x)} + \underbrace{\gamma \bds q_1 + \zeta \bds q_2}_{\pi_{\mathcal Q}(\bds x)}
+    \]
+    где $\pi_{\mathcal P}(\bds x)$~---~искомая проекция вектора $\bds x$ на $\mathcal P$ параллельно $\mathcal Q$.
+    Остаётся составить систему уравнений
+    \[
+      \begin{pmatrix}
+        1 \\ -7 \\ 5 \\ -2
+      \end{pmatrix}
+      = \alpha \begin{pmatrix}
+        1 \\ 1 \\ 1 \\ 1
+      \end{pmatrix} + \beta \begin{pmatrix}
+        3 \\ -5 \\ 7 \\ 2
+      \end{pmatrix} + \gamma \begin{pmatrix}
+        1 \\ 1 \\ 2 \\ 2
+      \end{pmatrix} + \zeta \begin{pmatrix}
+        1 \\ 1 \\ 1 \\ 3
+      \end{pmatrix}
+    \]
+    \[
+      \left\{
+        \begin{aligned}
+          &\alpha + 3\beta + \gamma + \zeta = 1\\
+          &\alpha - 5\beta + \gamma + \zeta = -7\\
+          &\alpha + 7\beta + 2\gamma + \zeta = 5\\
+          &\alpha + 2\beta + 2\gamma + 3\zeta = -2
+        \end{aligned}
+      \right.
+    \]
+    
+    И решить её методом Гаусса...
+    \begin{equation*}
+    \begin{split}
+      \left(
+        \begin{matrix}
+          \textcolor{violet}{\bds 1} & 3 & 1 & 1\\
+          1 & -5 & 1 & 1\\
+          1 & 7 & 2 & 1\\
+          1 & 2 & 2 & 3
+        \end{matrix}
+        \BigMiddleFour
+        \begin{matrix}
+          1 \\ -7 \\ 5 \\ -2
+        \end{matrix}
+      \right)
+      \sim &\left(
+        \begin{matrix}
+          1 & 3 & 1 & 1\\
+          0 & -8 & 0 & 0\\
+          0 & 4 & 1 & 0\\
+          0 & -1 & 1 & 2
+        \end{matrix}
+        \BigMiddleFour
+        \begin{matrix}
+          1 \\ -8 \\ 4 \\ -3
+        \end{matrix}
+      \right) \sim \left(
+        \begin{matrix}
+          1 & 3 & 1 & 1\\
+          0 & \textcolor{violet}{\bds 1} & 0 & 0\\
+          0 & 4 & 1 & 0\\
+          0 & -1 & 1 & 2
+        \end{matrix}
+        \BigMiddleFour
+        \begin{matrix}
+          1 \\ 1 \\ 4 \\ -3
+        \end{matrix}
+      \right) \sim \left(
+        \begin{matrix}
+          1 & 0 & 1 & 1\\
+          0 & 1 & 0 & 0\\
+          0 & 0 & \textcolor{violet}{\bds 1} & 0\\
+          0 & 0 & 1 & 2
+        \end{matrix}
+        \BigMiddleFour
+        \begin{matrix}
+          -2 \\ 1 \\ 0 \\ -2
+        \end{matrix}
+      \right)\\
+      \sim &\left(
+        \begin{matrix}
+          1 & 0 & 0 & 1\\
+          0 & 1 & 0 & 0\\
+          0 & 0 & 1 & 0\\
+          0 & 0 & 0 & 2
+        \end{matrix}
+        \BigMiddleFour
+        \begin{matrix}
+          -2 \\ 1 \\ 0 \\ -2
+        \end{matrix}
+      \right) \sim \left(
+        \begin{matrix}
+          1 & 0 & 0 & 1\\
+          0 & 1 & 0 & 0\\
+          0 & 0 & 1 & 0\\
+          0 & 0 & 0 & \textcolor{violet}{\bds 1}
+        \end{matrix}
+        \BigMiddleFour
+        \begin{matrix}
+          -2 \\ 1 \\ 0 \\ -1
+        \end{matrix}
+      \right) \sim \left(
+        \begin{matrix}
+          1 & 0 & 0 & 0\\
+          0 & 1 & 0 & 0\\
+          0 & 0 & 1 & 0\\
+          0 & 0 & 0 & 1
+        \end{matrix}
+        \BigMiddleFour
+        \begin{matrix}
+          -1 \\ 1 \\ 0 \\ -1
+        \end{matrix}
+      \right)
+    \end{split}
+    \end{equation*}
+    
+    Поэтому искомая проекция $\pi_{\mathcal P}(\bds x)$ равна:
+    \[
+      \pi_{\mathcal P}(\bds x) = -\bds p_1 + \bds p_2
+      = -\begin{pmatrix} 1 \\ 1 \\ 1 \\ 1 \end{pmatrix} + \begin{pmatrix} 3 \\ -5 \\ 7 \\ 2\end{pmatrix}
+      = \begin{pmatrix} 2 \\ -6 \\ 6 \\ 1 \end{pmatrix}
+    \]
+  \end{solution}
+\end{document}
