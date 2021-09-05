@@ -1,1 +1,3 @@
-# GeomeSeminare2020
+# GeomeSeminare2021
+
+Семинары по аналитической геометрии.
