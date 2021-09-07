@@ -11,7 +11,7 @@
 
 \author{Алексеев Василий}
 \title{Семинар 1}
-\date{1 сентября 2021}
+\date{1 + 6 сентября 2021}
 
 
 \begin{document}
@@ -237,7 +237,8 @@
 
   \begin{example}
     Определитель третьего порядка (разложение по первой строке):
-    \begin{equation*}
+    \begin{equation}
+    \label{eq:third-order-det-fy-first-line}
     \begin{split}
       &\begin{vmatrix}
         a_1 & b_1 & c_1\\
@@ -249,7 +250,7 @@
         + c_1 \cdot \begin{vmatrix}a_2 & b_2\\a_3 & b_3\end{vmatrix}\\
         =\; &a_1 b_2 c_3 - a_1 b_3 c_2 - a_2 b_1 c_3 + a_3 b_1 c_2 + a_2 b_3 c_1 - a_3 b_2 c_1
     \end{split}
-    \end{equation*}
+    \end{equation}
   \end{example}
   
   Но и при более высоких порядках (четыре и далее) можно использовать тот же алгоритм разложения по первой строке, сводя вычисление определителя порядка $n$ к вычислению нескольких определителей порядка $n \hm- 1$.
@@ -386,6 +387,26 @@
   \end{theorem}
   
   
+  \begin{example}
+    Если определитель матрицы системы равен нулю, то решений может как не быть вообще, так и быть бесконечно много.
+    Например:
+    \[
+      \left\{
+        \begin{aligned}
+          &x + y = 2\\
+          &x + y = -1
+        \end{aligned}
+      \right.
+      \quad \left\{
+        \begin{aligned}
+          &x + y = 2\\
+          &x + y = 2
+        \end{aligned}
+      \right.
+    \]
+  \end{example}
+  
+  
   \begin{problem}[17.1(2)]
     Решить систему:
     \[
@@ -457,7 +478,87 @@
   
   \section{Дополнение}
   
-  Приведём далее ещё несколько равносильных способов задать определитель (без доказательства равносильности), отметим пару свойств определителя.
+  В дополнении приведём ещё один способ считать определитель третьего порядка.
+  Отметим ``роль'' главной диагонали.
+  И далее приведём ещё несколько равносильных способов задать определитель (без доказательства равносильности), отметим пару свойств определителя.
+  
+  
+  \subsection{Правило треугольника}
+  
+  (Как было замечено на семинаре) при подсчёте определителя третьего порядка ещё можно пользоваться т.н. ``правилом треугольника'' (\ref{fig:triangle-rule}).
+  
+  \begin{figure}[h]
+    \centering
+    
+    \includegraphics[width=0.6\columnwidth]{triangle-rule}
+    
+    \caption{Правило треугольника для вычисления определителя третьего порядка.}
+    \label{fig:triangle-rule}
+  \end{figure}
+  
+  Если сложить все тройки, сначала с плюсом, потом с минусом, то получаем (первая тройка в каждом ``блоке''~---~диагональные элементы):
+  \begin{equation*}
+    \begin{vmatrix}
+      a_1 & b_1 & c_1\\
+      a_2 & b_2 & c_2\\
+      a_3 & b_3 & c_3
+    \end{vmatrix}
+      = a_1 b_2 c_3 + a_3 b_1 c_2 + a_2 b_3 c_1 - a_3 b_2 c_1 - a_1 b_3 c_2 - a_2 b_1 c_3
+  \end{equation*}
+  
+  Что совпадает, с точностью до перестановки троек, с формулой вычисления по первой строке (\ref{eq:third-order-det-fy-first-line}).
+  
+  Ещё есть (возможно, не такое красивое, как с треугольниками) правило Саррюса (\ref{fig:determinant-sarrus}).
+  
+  \begin{figure}[h]
+    \centering
+    
+    \includegraphics[width=0.5\columnwidth]{determinant-sarrus}
+    
+    \caption{Правило Саррюса для вычисления определителя третьего порядка (картинка взята с русской страницы \href{https://upload.wikimedia.org/wikipedia/commons/1/17/Determinant-sarrus.svg}{Википедии}).}
+    \label{fig:determinant-sarrus}
+  \end{figure}
+  
+  
+  \subsection{Диагональные дела}
+  
+  Главная диагональ, как для квадратных, так и для прямоугольных матриц, определяется как множество элементов матрицы с одинаковыми индексами: $\bigl\{a_{ij} \hm\mid i \hm= j,\ i \hm\in \{1, \ldots, m\},\ j \hm\in \{1, \ldots, n\}\bigr\}$.
+  
+  Где в мире прямоугольных матриц может встречаться понятие главной диагонали?
+  О транспонировании можно думать, как об отражении матрицы относительно главной диагонали (\ref{fig:main-diagonal}).
+  
+  \begin{figure}[h]
+    \centering
+    
+    \includegraphics[width=0.5\columnwidth]{main-diagonal}
+    
+    \caption{Главная диагональ прямоугольной матрицы (картинка с \href{https://en.wikipedia.org/wiki/Main\_diagonal}{en.wikipedia.org/wiki/Main\_diagonal}).}
+    \label{fig:main-diagonal}
+  \end{figure}
+  
+  Также известно, например, что любую прямоугольную матрицу можно представить в виде произведения трёх матриц с определёнными свойствами (SVD разложение).
+  Не обращая внимание на левый и правый множители, заметим лишь, что у матрицы-множителя посередине ненулевые элементы в SVD разложении могут стоять только на главной диагонали (\ref{fig:svd_reduced}).
+  
+  \begin{figure}[h]
+    \centering
+    
+    \includegraphics[width=0.5\columnwidth]{svd_reduced}  % TODO: make svg for this pic
+    
+    \caption{SVD разложение прямоугольной матрицы (картинка с \href{https://commons.wikimedia.org/wiki/File:Singular\_value\_decomposition_visualisation.svg}{en.wikipedia.org/wiki/Singular\_value\_decomposition}).}
+    \label{fig:svd_reduced}
+  \end{figure}
+
+  Побочная же диагональ вводится только для квадратных матриц $A \hm\in \RR^{n \hm\times n}$ как множество следующих элементов: $\bigl\{a_{ij} \hm\mid i \hm+ j \hm= n \hm+ 1,\ i \hm\in \{1, \ldots, n\},\ j \hm\in \{1, \ldots, n\}\bigr\}$ (\ref{fig:secondary-diagonal}).
+  
+  \begin{figure}[h]
+    \centering
+    
+    \includegraphics[width=0.11\columnwidth]{secondary-diagonal}  % TODO: make size of one matrix the same as for the pic with main diagonal
+    
+    \caption{Побочная диагональ квадратной матрицы (картинка с \href{https://en.wikipedia.org/wiki/Main\_diagonal}{en.wikipedia.org/wiki/Main\_diagonal}).}
+    \label{fig:secondary-diagonal}
+  \end{figure}
+  
   
   \subsection{Задание определителя с помощью формулы}
   
