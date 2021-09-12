@@ -348,9 +348,9 @@
       \label{eq:problem1.11}
       \left\{
         \begin{aligned}
-          &\bds l = \bds a + \bds b + \bds c\\
-          &\bds m =          \bds b + \bds c\\
-          &\bds n = -\bds a         + \bds c
+          &\bds l = \hphantom{-}\bds a + \bds b + \bds c\\
+          &\bds m = \hphantom{-\bds a +} \bds b + \bds c\\  % TODO: fix spacing
+          &\bds n = -\bds a \hphantom{+ \bds b} + \bds c
         \end{aligned}
       \right.
     \end{equation}
@@ -439,8 +439,7 @@
     В $\triangle ABC$ точка $M$~---~середина стороны $AC$.
     Также известно, что $K \hm\in [AB]$ и $AK \hm: KB \hm= 3 \hm: 5$.
     И ещё $L \hm\in [BC]$ и $BL \hm: LC \hm= 2 \hm: 3$.
-    Векторы $\vv{OA}, \vv{OB}$~---~базис.
-    
+
     Надо найти координаты вектора $\vv{BM}$ в базисе $\{\vv{AL}, \vv{CK}\}$.
   \end{problem}
   
