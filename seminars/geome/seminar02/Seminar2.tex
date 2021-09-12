@@ -17,13 +17,12 @@
 }
 
 
-\definecolor{light-cyan}{RGB}{0, 204, 204}
-\definecolor{light-purple}{RGB}{138, 43, 226}
+\definecolor{my-green}{RGB}{0, 153, 0}
 
 
 \author{Алексеев Василий}
 \title{Семинар 2}
-\date{8 + 14 сентября 2020}
+\date{8 сентября 2021}
 
 
 \begin{document}
@@ -99,15 +98,14 @@
     Будем считать два вектора $\bds a$ и $\bds b$ равными, если они
     \begin{itemize}
       \item равны по длине $|\bds a| = |\bds b|$
-      \item коллинеарны $\bds a \parallel \bds b$
       \item одинаково направлены $\bds a \upuparrows \bds b$
     \end{itemize}
     Точка приложения при равенстве не учитывается\footnote{То есть получается, что можно нарисовать несколько несовпадающих, но равных векторов. Хотя в зависимости от конкретной задачи может быть важным различать векторы с разной точкой приложения. Например, в физике, при действии сил на тело.}.
   \end{definition}
   
-  На множестве векторов определены следующие операции:
+  На множестве векторов можно определить следующие операции:
   \begin{itemize}
-    \item Сложение векторов:
+    \item Сложение векторов (по правилу треугольника):  % TODO: pic
       \[
         \vv{AB} + \vv{BC} = \vv{AC}
       \]
@@ -117,7 +115,6 @@
         \left\{
           \begin{aligned}
             &|\alpha \bds a| = |\alpha| \cdot |\bds a|\\
-            &\alpha \bds a \parallel \bds a\\
             &\left\{
                \begin{aligned}
                  &\alpha \bds a \upuparrows \bds a, \alpha > 0\\
@@ -127,9 +124,25 @@
           \end{aligned}
         \right.
       \]
+      (то есть при $\alpha \hm= 0$ будет нулевой вектор, и которого нет определённого направления).
   \end{itemize}
   
-  Множество векторов в $\RR^3$ с введёнными операциями сложения и умножения на число из $\RR$ образуют линейное пространство.
+  Множество векторов в $\RR^3$ с введёнными операциями сложения и умножения на число из $\RR$ образуют линейное пространство\footnote{Формально $\RR^3$~---~это не векторы как направленные отрезки, а столбцы из чисел. Но мы будем использовать обозначения $\RR^2$ и $\RR^3$ не только для векторов-столбцов, но и для векторов~---~направленных отрезков на плоскости и в трёхмерном пространстве соответственно.}.
+  
+  \begin{remark}
+    В чём можно убедиться, проверив следующие свойства операций, введённых на множестве векторов (обозначим за $V$ векторы трёхмерного пространства):
+    \begin{enumerate}
+      \item $\bds a + (\bds b + \bds c) = (\bds a + \bds b) + \bds c$, $\forall \bds a, \bds b, \bds c \in V$ (ассоциативность сложения).
+      \item $\bds a + \bds b = \bds b + \bds a$, $\forall \bds a, \bds b \in V$ (коммутативность сложения).
+      \item $\exists \bds 0 \in V: \bds 0 + \bds a = \bds a$, $\forall \bds a \hm\in V$.
+      \item $\forall \bds a \in V\, \exists {-\bds a} \in V: \bds a + ({-\bds a}) = \bds 0$.
+      \item $\alpha (\beta \bds a) = (\alpha \beta) \bds a$, $\forall \alpha, \beta \in \RR$, $\forall \bds a \hm\in V$ (ассоциативность умножения на скаляр).
+      \item $1 \cdot \bds a = \bds a$, $\forall \bds a \in V$.
+      \item $(\alpha + \beta) \bds a = \alpha \bds a + \beta \bds a$, $\forall \alpha, \beta \hm\in \RR$, $\bds a \hm\in V$ (дистрибутивность умножения матрицы на число относительно сложения чисел).
+      \item $\alpha (\bds a + \bds b) = \alpha \bds a + \alpha \bds b$, $\forall \alpha \hm\in \RR$, $\bds a, \bds b \hm\in V$ (дистрибутивность умножения матрицы на число относительно сложения матриц).
+    \end{enumerate}
+  \end{remark}
+  
   Но рассмотрим векторы на одной прямой: сложение и умножение на число не выводят с прямой.
   То же самое с векторами на плоскости: сложение и умножение на число даёт вектор, также лежащий в той же плоскости.
   Таким образом, не только векторы из всего $\RR^3$ образуют линейное пространство, но и векторы, параллельные одной прямой, и векторы, параллельные одной плоскости.
@@ -206,17 +219,17 @@
     \begin{itemize}
       \item Один вектор линейно зависим $\Leftrightarrow$ это нулевой вектор.
       \item Два вектора линейно зависимы $\Leftrightarrow$ эти векторы коллинеарны.
-      \item Три ветора линейно зависимы $\Leftrightarrow$ эти векторы компланарны.
-      \item Любые четыре вектора линейно зависимы\footnote{В $\RR^3$.}.
+      \item Три вектора линейно зависимы $\Leftrightarrow$ эти векторы компланарны.
+      \item Любые четыре вектора линейно зависимы.
     \end{itemize}
   \end{theorem}
   
   \begin{definition}[Базис]
     Базисом в пространстве называется
     \begin{itemize}
-      \item упорядоченная
-      \item линейно независимая
-      \item полная\footnote{Любой вектор пространства может быть разложен по системе.}
+      \item упорядоченная (векторы перенумерованы)
+      \item линейно независимая (только тривиальная линейная комбинация векторов равна нулевому вектору)
+      \item полная (любой вектор пространства можно представить как их линейную комбинацию)
     \end{itemize}
     система векторов.
   \end{definition}
@@ -234,102 +247,10 @@
     \[
         \bds a \leftrightarrow (\alpha_1, \ldots, \alpha_n) \in \RR^n
     \]
-    Соответствие взаимно однозначное, потому что базисная система векторов линейно независима.
-  \end{remark}
-  
-  \begin{remark}[Про матричное умножение]
-    Почему матричное умножение введено именно так: $C_{m\times n} \hm= A_{m\times p}B_{p\times n}$, $c_{ij} \hm= \sum\limits_{k=1}^p a_{ik} b_{kn},\ 1 \hm\leq i \hm\leq m, 1 \hm\leq j \hm\leq n$?
-    
-    Пусть есть ортонормированный\footnote{Вектора взаимно перпендикулярны и по длине равны единице $1$.} базис $\bds e_1, \bds e_2$.
-    Повернём вектор $\bds v$ с компонентами $(1, 0)$ на угол $45$ градусов против часовой стрелки (\ref{fig:turning-vector}).
-    
-    \begin{figure}[h]
-      \centering
-      
-      \begin{tikzpicture}
-        \draw[step=1cm,gray,very thin] (0,0) grid (5,5);
-        \draw[-Latex,ultra thick] (0,0) -- (3,0) node[anchor=north]{$\boldsymbol{v}$};
-        \draw[-Latex,ultra thick] (0,0) -- (2.121,2.121) node[anchor=south west]{$\boldsymbol{v'}$};
-        \draw[-Latex,ultra thick] (0,0) -- (0,3) node[anchor=east]{$\boldsymbol{v''}$};
-      \end{tikzpicture}
-      
-      \caption{Несколько поворотов вектора $\bds v$ на $45$ градусов против часовой стрелки.}
-      \label{fig:turning-vector}
-    \end{figure}
-    
-    Получим вектор $\left(1/\sqrt{2}, 1/\sqrt{2}\right)$.
-    Проверим, что матрица $\left(\begin{smallmatrix}1/\sqrt{2} & -1/\sqrt{2}\\ 1/\sqrt{2} & 1/\sqrt{2}\end{smallmatrix}\right)$ как раз задаёт нужное преобразование:
-    \[
-      v'
-      = A \bds v
-      = \begin{pmatrix}
-          1/\sqrt{2} & -1/\sqrt{2}\\
-          1/\sqrt{2} & 1/\sqrt{2}
-        \end{pmatrix}
-        \begin{pmatrix}
-          1 \\ 0
-        \end{pmatrix}
-      = \begin{pmatrix}
-          1/\sqrt{2} \\ 1/\sqrt{2}
-        \end{pmatrix}
-    \]
-    
-    Снова повернём вектор на угол $45$ градусов против часовой стрелки.
-    Должны получить вектор с компонентами $\left(\begin{smallmatrix}0 \\ 1\end{smallmatrix}\right)$:
-    \[
-      v''
-      = A \bds v'
-      = \begin{pmatrix}
-          1/\sqrt{2} & -1/\sqrt{2}\\
-          1/\sqrt{2} & 1/\sqrt{2}
-        \end{pmatrix}
-        \begin{pmatrix}
-          1/\sqrt{2} \\ 1/\sqrt{2}
-        \end{pmatrix}
-      = \begin{pmatrix}
-          0 \\ 1
-        \end{pmatrix}
-    \]
-    
-    Какой матрицей задаётся поворот сразу на $90$ градусов против часовой стрелки?
-    Как из вектора
-    $\left(\begin{smallmatrix}1 \\ 0\end{smallmatrix}\right)$
-    сразу получить вектор
-    $\left(\begin{smallmatrix}0 \\ 1\end{smallmatrix}\right)$?
-    
-    Возведём матрицу, задающую поворот на $45$ против часовой стрелки, в квадрат:
-    \[
-      A^2
-      = A A
-      = \begin{pmatrix}
-          1/\sqrt{2} & -1/\sqrt{2}\\
-          1/\sqrt{2} & 1/\sqrt{2}
-        \end{pmatrix}
-        \begin{pmatrix}
-          1/\sqrt{2} & -1/\sqrt{2}\\
-          1/\sqrt{2} & 1/\sqrt{2}
-        \end{pmatrix}
-      = \begin{pmatrix}
-          0 & -1\\
-          1 & 0
-        \end{pmatrix}
-    \]
-    и умножим её на исходный вектор $\bds v$:
-    \[
-      A^2 \bds v
-      = \begin{pmatrix}
-          0 & -1\\
-          1 & 0
-        \end{pmatrix}
-        \begin{pmatrix}
-          1 \\ 0
-        \end{pmatrix}
-      = \begin{pmatrix}
-          0 \\ 1
-        \end{pmatrix}
-    \]
-    
-    Таким образом, благодаря введённому матричному умножению, матрица композиции линейных преобразований получилась равна произведению матриц этих преобразований.
+    Соответствие взаимно однозначное (каждому вектору соответствует один координатный столбец и каждому столбцу соответствует один вектор), потому что базисная система векторов линейно независима.
+    Более того, сложение векторов~---~направленных отрезков соответствует сложению их координатных столбцов (у вектора~---~результата сложения координатный столбец в базисе равен сумме координатных столбцов векторов-слагаемых).
+    И умножение вектора на число соответствует умножению его координатного столбца на это же самое число.
+    То есть между векторами~---~направленными отрезками и векторами~---~координатными столбцами соответствие не просто взаимно однозначное, но такое, при котором ещё сохраняются линейные операции.
   \end{remark}
   
   \begin{definition}[Система координат]
@@ -345,21 +266,21 @@
   \end{remark}
   
   
+  \subsection{Задачи}
+  
   \begin{problem}[1.6]
-    $\bds a(-5, -1), \bds b(-1, 3)$~---~проверить, что базис.
+    $\bds a(-5, -1), \bds b(-1, 3)$~---~проверить, что система из двух векторов образует базис.
     Разложить $\bds c(-1, 2)$ и $\bds d(2, -6)$ по этому базису.
   \end{problem}
   
   \begin{solution}
-    Для доказательства того, что $\bds a$ и $\bds b$ вместе образуют базис, достаточно проверить их линейную независимость:
+    Все векторы заданы компонентами в некотором неизвестном базисе $(\bds e_1, \bds e_2)$.
+    
+    Для доказательства того, что $\bds a$ и $\bds b$ вместе образуют базис, достаточно проверить их линейную независимость.
+    Для проверки же линейной независимости векторов, можно проверить линейную независимость соответствующих им столбцов.
+    Иными словами, надо проверить, что координатные столбцы $\bds a$ и $\bds b$ в базисе $(\bds e_1, \bds e_2)$ неколлинеарны:
     \[
-      \begin{vmatrix}
-        -5 & -1\\
-        -1 & 3
-      \end{vmatrix}
-      = -15 - 1
-      = -16
-      \not= 0
+      (-5, -1) = \alpha (-1, 3) \Rightarrow \alpha \in \noth
     \]
     
     Теперь разложим, например, вектор $\bds c$ по $\bds a$ и $\bds b$ (с вектором $\bds d$ будет аналогично):
@@ -423,64 +344,321 @@
 
   \begin{problem}[1.11(1)]
     Компланарны ли $\bds l, \bds m, \bds n$?
+    \begin{equation}
+      \label{eq:problem1.11}
+      \left\{
+        \begin{aligned}
+          &\bds l = \bds a + \bds b + \bds c\\
+          &\bds m =          \bds b + \bds c\\
+          &\bds n = -\bds a         + \bds c
+        \end{aligned}
+      \right.
+    \end{equation}
+    (про векторы $\bds a, \bds b, \bds c$ при этом известно, что они некомпланарны).
+  \end{problem}
+  
+  \begin{solution}
+    \vphantom{}\par
+    
+    \emph{Способ 1.}
+    
+    \medskip
+    
+    Векторы $\bds a, \bds b, \bds c$ некомпланарны $\Rightarrow$ они линейно независимы, и в трёхмерном пространстве образуют базис.
+    Компланарность $\bds l, \bds m, \bds n$ равносильна их линейной зависимости:
+    \[
+      \alpha \bds l + \beta \bds m + \gamma \bds n = \bds 0
+    \]
+    
+    Что, в свою очередь, равносильно линейной зависимости (с теми же коэффициентами) их координатных столбцов в базисе:
+    \[
+      \alpha \begin{pmatrix}
+        1 \\ 1 \\ 1
+      \end{pmatrix}
+      + \beta \begin{pmatrix}
+        0 \\ 1 \\ 1
+      \end{pmatrix}
+      + \gamma \begin{pmatrix}
+        -1 \\ 0 \\ 1
+      \end{pmatrix}
+      = 0
+    \]
+    
+    Или, в более компактном виде:
+    \[
+      \begin{pmatrix}
+        1 & 0 & -1\\
+        1 & 1 & 0\\
+        1 & 1 & 1
+      \end{pmatrix}
+      \begin{pmatrix}
+        \alpha \\ \beta \\ \gamma
+      \end{pmatrix}
+      = 0
+    \]
+    
+    Очевидно, определитель матрицы системы не равен нулю ($\Delta \hm= 1$).
+    То есть, по Крамеру, решение системы существует и единственно.
+    Но нулевой вектор $(\alpha, \beta, \gamma)^T \hm= (0, 0, 0)^T$ точно является решением (система однородная).
+    Поэтому единственное решение:
+    \[
+      (\alpha, \beta, \gamma)^T \hm= (0, 0, 0)^T
+    \]
+    Но это значит, что система векторов $\bds l$, $\bds m$, $\bds n$ линейно независима (только их тривиальная линейная комбинация, где все коэффициенты нулевые, может быть равна нулевому вектору).
+    То есть векторы некомпланарны.
+    
+    \bigskip
+    
+    \emph{Способ 2.}
+    
+    \medskip
+    
+    (Как было замечено на семинаре) можно было просто попробовать решить систему (\ref{eq:problem1.11}).
+    В системе этой участвуют не числа (как обычно), а векторы (направленные отрезки).
+    Но так как линейные операции (сложение и умножение на число) работают одинаково, что с векторами, что с числами, то мы можем попробовать решить систему относительно векторов $\bds a$, $\bds b$, $\bds c$.
+    Что нам это даст, если получится выразить $\bds a$, $\bds b$, $\bds c$ через $\bds l$, $\bds m$, $\bds n$ (или если не получится)?
+    Система $\bds a$, $\bds b$, $\bds c$ образует базис.
+    То есть они линейно независимы и любой вектор пространства можно представить как их линейную комбинацию.
+    Если $\bds a$, $\bds b$, $\bds c$ выражаются через $\bds l$, $\bds m$, $\bds n$, то потому и любой вектор пространства тоже разложится по $\bds l$, $\bds m$, $\bds n$.
+    То есть система векторов $\bds l$, $\bds m$, $\bds n$ тоже полная.
+    
+    (...Внимательно смотрим на систему из условия задачи, понимаем, что она решается относительно $\bds a$, $\bds b$, и $\bds c$...)
+    
+    Могут ли теперь $\bds l$, $\bds m$, $\bds n$ быть линейно зависимыми?
+    Допустим, да.
+    Тогда максимальное количество линейно независимых векторов среди $\bds l$, $\bds m$, $\bds n$~---~это два вектора или вообще один.
+    В любом случае, если $\bds l$, $\bds m$, $\bds n$ линейно зависимы, то они компланарны (\ref{theo:linear-dependence-criteria}).
+    Но тогда в трёхмерном пространстве можно будет найти вектор, который по $\bds l$, $\bds m$, $\bds n$ разложен быть не может (который не лежит в плоскости $\bds l$, $\bds m$, $\bds n$).
+    Получаем противоречие с уже доказанной полнотой.
+    
+    То есть $\bds l$, $\bds m$, $\bds n$, линейно независимы, а потому некомпланарны.
+  \end{solution}
+  
+  
+  \begin{problem}[1.21]
+    В $\triangle ABC$ точка $M$~---~середина стороны $AC$.
+    Также известно, что $K \hm\in [AB]$ и $AK \hm: KB \hm= 3 \hm: 5$.
+    И ещё $L \hm\in [BC]$ и $BL \hm: LC \hm= 2 \hm: 3$.
+    Векторы $\vv{OA}, \vv{OB}$~---~базис.
+    
+    Надо найти координаты вектора $\vv{BM}$ в базисе $\{\vv{AL}, \vv{CK}\}$.
+  \end{problem}
+  
+  \begin{solution}
+    Очевидно, векторы $\{\vv{AL}, \vv{CK}\}$, которые предлагается взять в качестве базисных, неколлинеарны, а потому в самом деле образуют базис на плоскости (\ref{fig:triangle-for-problem-1-21}).
+    
+    \begin{figure}[h]
+      \centering
+      
+      \begin{tikzpicture}
+        \node[anchor=east] at (0,0) {$A$};
+        \coordinate (A) at (0,0);
+        
+        \node[anchor=west] at (5,0) {$C$};
+        \coordinate (C) at (5,0);
+        
+        \node[anchor=south] at (1.5,4) {$B$};
+        \coordinate (B) at (1.5,4);
+        
+        \draw[-,thick] (A) -- (C)
+                       (C) -- (B)
+                       (B) -- (A);
+        
+        \node[anchor=north] at (2.5,0) {$M$};
+        \coordinate (M) at (2.5,0);
+        
+        \node[anchor=south west] at (2.9,2.4) {$L$};
+        \coordinate (L) at (2.9,2.4);
+        
+        \node[anchor=south east] at (0.5625,1.5) {$K$};
+        \coordinate (K) at (0.5625,1.5);
+        
+        \draw[-Latex,thick]          (B) -- (M);
+        \draw[-Latex,thick,my-green] (A) -- (L);
+        \draw[-Latex,thick,my-green] (C) -- (K);
+      \end{tikzpicture}
+      
+      \caption{Треугольник $\triangle ABC$ и точки $M$, $K$ и $L$, делящие его стороны в заданном отношении.}
+      \label{fig:triangle-for-problem-1-21}
+    \end{figure}
+    
+    Задачу можно бы было решить, отложив векторы $\vv{BM}$ и $\{\vv{AL}, \vv{CK}\}$ от одной точки и далее воспользовавшись правилом треугольника сложения векторов (\ref{fig:physi-way}).
+    Но точное решение, очевидно, надо получить, воспользовавшись соотношениями между отрезками, на которые точки делят стороны треугольника...
+    
+    Какие соотношения можно выписать для векторов?
+    Можно представить $\vv{BM}$ как сумму чего-то:
     \[
       \left\{
         \begin{aligned}
-          &\bds l = 2 \bds a - \bds b - \bds c\\
-          &\bds m = 2 \bds b - \bds c - \bds a\\
-          &\bds n = 2 \bds c - \bds a - \bds b
+          &\vv{BM} = \vv{BA} + \vv{AM}\\
+          &\vv{BM} = \vv{BC} + \vv{CM}
         \end{aligned}
       \right.
     \]
-    (векторы $\bds a, \bds b, \bds c$ некомпланарны).
-  \end{problem}
-  
-  \begin{solution}
-    Векторы $\bds a, \bds b, \bds c$ некомпланарны $\Rightarrow$ образуют базис.
-    Компланарность $\bds l, \bds m, \bds n$ $\Leftrightarrow$
-    линейная зависимость $\bds l, \bds m, \bds n$.
-    Для проверки линейной зависимости или независимости можно посчитать определитель матрицы, составленной из компонент векторов $\bds l, \bds m, \bds n$ в базисе $\bds a, \bds b, \bds c$ (столбец матрицы~---~компоненты в разложении по данному вектору базиса):
+    
+    Потом можно ещё выписать несколько соотношений с известными $\vv{CK}$ и $\vv{AL}$:
     \[
-      \begin{vmatrix}
-        2 & -1 & -1\\
-        -1 & 2 & -1\\
-        -1 & -1 & 2
-      \end{vmatrix}
-      \stackrel{(2) = (2) + (3)}{=} \begin{vmatrix}
-        2 & -1 & -1\\
-        -2 & 1 & 1\\
-        -1 & -1 & 2
-      \end{vmatrix}
+      \left\{
+        \begin{aligned}
+          &\vv{CK} = \vv{CA} + \vv{AK}\\
+          &\vv{AL} = \vv{AC} + \vv{CL}
+        \end{aligned}
+      \right.
     \]
     
-    Откуда видно, что $(1) = -\bigl((2) + (3)\bigr)$, или, если от строчек вернуться к векторам:
-    \[
-      \bds l = -(\bds m + \bds n) = -\bds m - \bds n
-    \]
-    \[
-      \bds l + \bds m + \bds n = 0
-    \]
+    Очевидно, из соотношений с $\vv{BM}$ можно выразить $\vv{AK}$ и $\vv{CL}$ через $\vv{BM}$.
+    И потом подставить это в систему с $\vv{CK}$ и $\vv{AL}$.
+    Получится система из двух уравнений с двумя неизвестными ($\vv{BM}$ и, например, $\vv{AC}$).
+    Которую уже можно решить...
+    
+    \begin{figure}[h]
+      \centering
+      
+      \begin{tikzpicture}
+        \coordinate (A) at (0,0);
+        \coordinate (C) at (0,0);
+        
+        \node[anchor=south] at (0,0) {$B$};
+        \coordinate (B) at (0,0);
+   
+        \node[anchor=west] at (1,-4) {$M$};
+        \coordinate (M) at (1,-4);
+        
+        \node[anchor=south] at (2.9,2.4) {$\bds e_1$};
+        \coordinate (L) at (2.9,2.4);
+        
+        \node[anchor=south] at (-4.4375,1.5) {$\bds e_2$};
+        \coordinate (K) at (-4.4375,1.5);
+  
+        \draw[-Latex,thick]          (B) -- (M);
+        \draw[-Latex,thick,my-green] (A) -- (L);
+        \draw[-Latex,thick,my-green] (C) -- (K);
+        
+        \draw[thick,dotted]          (B) -- (-5.8,-4.8);
+        \draw[thick,dotted]          (L) -- (4.35,3.6);
+        \draw[thick,dotted]          (M) -- (-5.65625,-1.75);
+        
+        \coordinate (X) at (-3.142,-2.6);
+        \node[above=0.5em of X] at (X) {$\alpha \bds e_1$};  % TODO: fix spacing here (read https://tex.stackexchange.com/questions/43807/what-are-the-ways-one-can-control-spacing-between-nodes-in-tikz ?)
+        \node[anchor=north east] at (M) {$\beta \bds e_2$};
+        
+        \draw[-Latex,thick,dotted,my-green]   (B) -- (X);
+        \draw[-Latex,thick,dotted,my-green]   (X) -- (M);
+      \end{tikzpicture}
+      
+      \caption{Разложить вектор по базису можно с помощью правила треугольника сложения векторов.}
+      \label{fig:physi-way}
+    \end{figure}
+    
+    А вообще, стоит про себя на всякий случай понимать, что треугольник однозначно определяется длинами дрёх его сторон (либо двумя сторонами и углом между ними).
+    Обладая этими тремя значениями, дальше в треугольнике можно посчитать что угодно.
+    
+    Два вектора, связанные с треугольником, по условию даны.
+    Ещё точно известно соотношение между векторами, отложенными на сторонах треугольника ($\vv{AB} \hm+ \vv{BC} \hm+ \vv{CA} \hm= \bds 0$).
+    Получается, есть три неизвестных (векторы~---~стороны треугольника) и три соотношения между ними.
+    Откуда точно можно всё найти.
   \end{solution}
   
   
-  \begin{problem}[1.24(1)]
-    Три точки, не лежащие на одной прямой: $O, A, B$.
-    Векторы $\vv{OA}, \vv{OB}$~---~базис.
-    Найти вектор $\vv{OM}$, где $M \hm\in [AB]$, так что $|AM| \hm\div |MB| \hm= m \hm\div n$.
-  \end{problem}
+  \section{Дополнение}
   
-  \begin{solution}
-    \[
-      \vv{OM} = \vv{OA} + \vv{AM}
-    \]
-    \[
-      \vv{AM} = \frac{m}{m + n} \vv{AB} = \frac{m}{m + n} \bigl(\vv{OB} - \vv{OA} \bigr)
-    \]
-    \[
-      \vv{OM} = \frac{n}{m + n} \vv{OA} + \frac{m}{m + n} \vv{OB} = \left(\frac{n}{m + n}, \frac{m}{m + n}\right)
-    \]
-  \end{solution}
+  \subsection{Про матричное умножение}
   
+  Почему матричное умножение введено именно так: $C_{m\times n} \hm= A_{m\times p}B_{p\times n}$, $c_{ij} \hm= \sum\limits_{k=1}^p a_{ik} b_{kn},\ 1 \hm\leq i \hm\leq m, 1 \hm\leq j \hm\leq n$?
+  
+  Пусть есть ортонормированный\footnote{Вектора взаимно перпендикулярны и по длине равны единице $1$.} базис $\bds e_1, \bds e_2$.
+  Повернём вектор $\bds v$ с компонентами $(1, 0)$ на угол $45$ градусов против часовой стрелки (\ref{fig:turning-vector}).
+  
+  \begin{figure}[h]
+    \centering
+    
+    \begin{tikzpicture}
+      \draw[step=1cm,gray,very thin] (0,0) grid (5,5);
+      \draw[-Latex,ultra thick] (0,0) -- (3,0) node[anchor=north]{$\boldsymbol{v}$};
+      \draw[-Latex,ultra thick] (0,0) -- (2.121,2.121) node[anchor=south west]{$\boldsymbol{v'}$};
+      \draw[-Latex,ultra thick] (0,0) -- (0,3) node[anchor=east]{$\boldsymbol{v''}$};
+    \end{tikzpicture}
+    
+    \caption{Несколько поворотов вектора $\bds v$ на $45$ градусов против часовой стрелки.}
+    \label{fig:turning-vector}
+  \end{figure}
+  
+  Получим вектор $\left(1/\sqrt{2}, 1/\sqrt{2}\right)$.
+  Проверим, что матрица $\left(\begin{smallmatrix}1/\sqrt{2} & -1/\sqrt{2}\\ 1/\sqrt{2} & 1/\sqrt{2}\end{smallmatrix}\right)$ как раз задаёт нужное преобразование:
+  \[
+    v'
+    = A \bds v
+    = \begin{pmatrix}
+        1/\sqrt{2} & -1/\sqrt{2}\\
+        1/\sqrt{2} & 1/\sqrt{2}
+      \end{pmatrix}
+      \begin{pmatrix}
+        1 \\ 0
+      \end{pmatrix}
+    = \begin{pmatrix}
+        1/\sqrt{2} \\ 1/\sqrt{2}
+      \end{pmatrix}
+  \]
+  
+  Снова повернём вектор на угол $45$ градусов против часовой стрелки.
+  Должны получить вектор с компонентами $\left(\begin{smallmatrix}0 \\ 1\end{smallmatrix}\right)$:
+  \[
+    v''
+    = A \bds v'
+    = \begin{pmatrix}
+        1/\sqrt{2} & -1/\sqrt{2}\\
+        1/\sqrt{2} & 1/\sqrt{2}
+      \end{pmatrix}
+      \begin{pmatrix}
+        1/\sqrt{2} \\ 1/\sqrt{2}
+      \end{pmatrix}
+    = \begin{pmatrix}
+        0 \\ 1
+      \end{pmatrix}
+  \]
+  
+  Какой матрицей задаётся поворот сразу на $90$ градусов против часовой стрелки?
+  Как из вектора
+  $\left(\begin{smallmatrix}1 \\ 0\end{smallmatrix}\right)$
+  сразу получить вектор
+  $\left(\begin{smallmatrix}0 \\ 1\end{smallmatrix}\right)$?
+  
+  Возведём матрицу, задающую поворот на $45$ против часовой стрелки, в квадрат:
+  \[
+    A^2
+    = A A
+    = \begin{pmatrix}
+        1/\sqrt{2} & -1/\sqrt{2}\\
+        1/\sqrt{2} & 1/\sqrt{2}
+      \end{pmatrix}
+      \begin{pmatrix}
+        1/\sqrt{2} & -1/\sqrt{2}\\
+        1/\sqrt{2} & 1/\sqrt{2}
+      \end{pmatrix}
+    = \begin{pmatrix}
+        0 & -1\\
+        1 & 0
+      \end{pmatrix}
+  \]
+  и умножим её на исходный вектор $\bds v$:
+  \[
+    A^2 \bds v
+    = \begin{pmatrix}
+        0 & -1\\
+        1 & 0
+      \end{pmatrix}
+      \begin{pmatrix}
+        1 \\ 0
+      \end{pmatrix}
+    = \begin{pmatrix}
+        0 \\ 1
+      \end{pmatrix}
+  \]
+  
+  Таким образом, благодаря введённому матричному умножению, матрица композиции линейных преобразований получилась равна произведению матриц этих преобразований.
+  
+  
+  \subsection{Ещё пара задач}
   
   \begin{problem}[1.51]
     Доказать, что три отрезка, соединяющие середины скрещивающихся рёбер тетраэдра, пересекаются в одной точке и делятся этой точкой пополам.
@@ -520,143 +698,6 @@
       \caption{Середины четырёх рёбер тетраэдра.}
       \label{fig:tetrahedron}
     \end{figure}
-  \end{solution}
-  
-  
-  \begin{problem}[1.39]
-    Однородная проволока~---~угол $AOB$.
-    При этом $|OA| \hm= a$, $|OB| \hm= b$.
-    Найти координаты центра тяжести проволоки в системе координат: $O, \vv{OA}/a, \vv{OB}/b$.
-  \end{problem}
-  
-  \begin{solution}
-    Обозначим за $\rho$ плотность проволоки на единицу длины.
-    Пусть также $\bds e_1 \hm\equiv \vv{OA}/a$ и $\bds e_2 \hm\equiv \vv{OB}/B$.
-    Тогда радиус-вектор центра масс:
-    \[
-      \bds r_c
-      = \frac{\sum\nolimits_i m \bds r_i}{\sum\nolimits_i m_i}
-      = \frac{(\rho \cdot a) \cdot (a/2 \cdot \bds e_1) + (\rho \cdot b) \cdot (b/2 \cdot \bds e_2)}{\rho \cdot a + \rho \cdot b}
-      = \frac{1}{2(a + b)} \Bigl(a^2 \bds e_1 + b^2 \bds e_2\Bigr)
-    \]
-  \end{solution}
-  
-  
-  \begin{problem}[1.37]
-    В плоскости треугольника $ABC$ найти точку $O$, такую что
-    \[
-      \vv{OA} + \vv{OB} + \vv{OC} = \bds 0
-    \]
-    
-    Есть ли ещё такие точки?
-  \end{problem}
-  
-  \begin{solution}
-    \par\indent
-    
-    \emph{Вспомогательная часть $1$: координаты центра масс треугольника.}
-    
-    \[
-      \bds r_c(\triangle ABC) = \frac{1}{3} \bigl(\bds r_A + \bds r_B + \bds r_C\bigr)
-    \]
-    
-    \medskip
-    
-    \emph{Вспомогательная часть $2$: координаты точки пересечения медиан треугольника.}
-    
-    Пусть $AM$~---~медиана, проведённая из вершины $A$ треугольника к стороне $BC$ (\ref{fig:intersecting-medians}).
-    
-    \begin{figure}[h]
-      \centering
-      
-      \begin{tikzpicture}
-        \draw[-,thick] (0,0) node[anchor=east]{$C$} -- (5,0) node[anchor=west]{$B$}
-                       (5,0)                        -- (1.5,4) node[anchor=south]{$A$}
-                       (1.5,4)                      -- (0,0)
-                       (1.5,4)                      -- (2.5,0) node[anchor=north]{$M$};
-      \end{tikzpicture}
-      
-      \caption{Медиана $AM$ в треугольнике $ABC$.}
-      \label{fig:intersecting-medians}
-    \end{figure}
- 
-    Радиус-вектор точки $M$:
-    \[
-      \bds r_{M} = \bds r_C + \vv{CM} = \bds r_C + \frac{1}{2} \vv{CB}
-      = \bds r_C + \frac{1}{2} \bigl(\bds r_B - \bds r_C\bigr)
-      = \frac{1}{2} \bigl(\bds r_B + \bds r_C\bigr)
-    \]
-    
-    Вектор $\vv{AM}$:
-    \[
-      \vv{AM} = \bds r_{M} - \bds r_A
-      = \frac{1}{2} \bigl(\bds r_B + \bds r_C\bigr) - \bds r_A
-      = \frac{1}{2} \bigl(\bds r_B + \bds r_C - 2 \bds r_A\bigr)
-    \]
-    
-    Обозначим точкой $Q$ центр масс.
-    Вектор $\vv{AQ}$:
-    \[
-      \vv{AQ} = \bds r_c - \bds r_A
-      = \frac{1}{3} \bigl(\bds r_A + \bds r_B + \bds r_C\bigr) - \bds r_A
-      = \frac{1}{3} \bigl(\bds r_B + \bds r_C - 2 \bds r_A\bigr)
-    \]
-    
-    Получаем, что $\vv{AQ} \hm\upuparrows \vv{AM}$, причём $|AQ| \hm\div |AM| \hm= 2 \hm\div 3$.
-    Значит, $Q \hm\in [AM]$.
-    
-    Аналогично доказывается, что $Q$ лежит на медианах из вершин $B$ и $C$.
-    Так как несовпадающие прямые могут иметь не больше одной общей точки, то получаем, что точка пересечения медиан треугольника совпадает с его центром масс.
-    
-    \medskip
-    
-    \emph{Собственно решение задачи.}
-    
-    \[
-      \vv{AB} + \vv{AC}
-      = \overbrace{\left(\vv{AO} + \vv{OA}\right)}^{\bds 0} + \left(\vv{AO} + \vv{OB}\right) + \left(\vv{AO} + \vv{OC}\right)
-      = 3 \vv{AO} + \left(\vv{OA} + \vv{OB} + \vv{OC}\right)
-      = 3 \vv{AO}
-    \]
-    
-    То есть
-    \[
-      \vv{AO} = \frac{1}{3} \left(\vv{AB} + \vv{AC}\right)
-    \]
-    
-    Или, если переписать через радиус-векторы:
-    \[
-      \bds r_O - \bds r_A = \frac{1}{3} (\bds r_B - \bds r_A + \bds r_C - \bds r_A)
-    \]
-    
-    Откуда получаем выражение для $\bds r_O$:
-    \[
-      \bds r_O = \frac{1}{3} (\bds r_A + \bds r_B + \bds r_C)
-    \]
-    
-    Что значит, что точка $O$~---~точка пересечения медиан $\triangle ABC$.
-    
-    Существует ли ещё одна точка $Q \hm{\not=} O$, такая что $\vv{QA} \hm+ \vv{QB} \hm+ \vv{QC} \hm= \bds 0$?
-    Допустим, такая точка $Q$ существует.
-    Тогда
-    \[
-      \left\{
-        \begin{aligned}
-          &\vv{QO} = \vv{QA} + \vv{AO}\\
-          &\vv{QO} = \vv{QB} + \vv{BO}\\
-          &\vv{QO} = \vv{QC} + \vv{CO}
-        \end{aligned}
-      \right.
-    \]
-    
-    Складывая уравнения системы выше, получаем
-    \[
-      3 \vv{QO} = \left(\vv{QA} + \vv{QB} + \vv{QC}\right) + \left(\vv{AO} + \vv{BO} + \vv{CO}\right)
-      = \bds 0 - \bds 0 = \bds 0
-    \]
-    
-    Поэтому $\vv{QO} \hm= \bds 0$ и $Q \hm= O$.
-    Другой точки, удовлетворяющей условию задачи, кроме точки $O$, в плоскости $\triangle ABC$ нет.
   \end{solution}
   
   
@@ -763,23 +804,4 @@
         = \frac{|\bds r_C - \bds r_B| \bds r_A + |\bds r_C - \bds r_A| \bds r_B + |\bds r_A - \bds r_B| \bds r_C}{|\bds r_C - \bds r_B| + |\bds r_C - \bds r_A| + |\bds r_A - \bds r_B|}
     \]
   \end{solution}
-  
-  
-  \section{Дополнение}
-  
-  \subsection{Про центр масс}
-  
-  Есть задача, где надо было найти центр масс однородной проволоки, изогнутой под углом.
-  В общем случае положение центра масс тела объёма $V$ и массы $M$ вычисляется по формуле
-  \[
-    \bds r_c = \frac{1}{M} \int_V \rho(\bds r) \bds r dV
-  \]
-  где $\rho(\bds r)$~---~плотность в точке $\bds r$.
-  
-  Поэтому, даже в случае, когда система состоит не из материальных точек, а из протяжённых тел, центр масс системы тоже можно вычислять как взвешенное среднее центров масс отдельных частей (потому что интеграл по телу разбивается на несколько интегралов).
-  
-  В задаче же про центр масс треугольника не важно, где сосредоточена масса в треугольнике: в вершинах или распределена равномерно по сторонам.
-  \sout{Положение центра масс в обоих случаях будет одинаковое.}
-  Положение центра масс в случае распределения массы по сторонам будет таким же, как и в случае, когда массы сосредоточены в вершинах, если все стороны одинаковой массы (то есть плотность на разных сторонах может быть разной).
-  Если же масса пропорциональна длине стороны (например, плотность одинакова по сторонам), то центр масс будет смещён к более длинной стороне.
 \end{document}
