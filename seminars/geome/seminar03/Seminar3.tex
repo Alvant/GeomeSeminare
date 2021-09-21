@@ -24,7 +24,7 @@
 
 \author{Алексеев Василий}
 \title{Семинар 3}
-\date{15 сентября 2021}
+\date{15 + 20 сентября 2021}
 
 
 \begin{document}
@@ -259,9 +259,31 @@
   \]
   
   Таким образом, получили матрицу, задающую поворот правого ортонормированного базиса на угол $\phi$ против часовой стрелки.
-  Аналогично можно получить матрицу перехода, когда базис $\bds e'$ не только повёрнут относительно $\bds e$, но если второй вектор ещё отражён относительно первого (то есть базис $\bds e'$ левый).
+  То же самое получилось бы, если бы старый базис был левый ортонормированный, а новый получался бы его поворотом по часовой стрелке на угол $\phi$.
+  
+  Аналогично можно получить матрицу перехода, когда базис $\bds e'$ не только повёрнут относительно $\bds e$, но если второй вектор ещё отражён относительно первого.
+  То есть если базис $\bds e'$ левый, а $\bds e$ правый, и наоборот (\ref{fig:turned-ortonorm-basis}).
   В этом случае при нахождении $\bds e_2'$ будет использоваться угол не $\phi \hm+ \dfrac{\pi}{2}$, а $\phi \hm- \dfrac{\pi}{2}$.
   
+  \begin{figure}
+    \centering
+    
+    \begin{subfigure}[b]{0.3\columnwidth}
+      \centering
+      \includegraphics[width=\textwidth]{turned-ortonorm-basis2_left2}
+      \caption{$\bds e$ правый, а $\bds e'$ левый.}
+    \end{subfigure}
+    \hspace{5em}
+    \begin{subfigure}[b]{0.4\columnwidth}
+      \centering
+      \includegraphics[width=\textwidth]{turned-ortonorm-basis2_left1}
+      \caption{$\bds e$ левый, а $\bds e'$ правый.}
+    \end{subfigure}  % TODO: make axes of plots equal
+    
+    \caption{Базис $\bds e'$ повёрнут на угол $\phi$ относительно базиса $\bds e$, при этом поворот от первого вектора ко второму по наименьшему углу в старом и новом базисах совершается в разные стороны.}
+    \label{fig:turned-ortonorm-basis2}
+  \end{figure}
+
 
   \section{Система координат $+$ Замена}
   
@@ -685,7 +707,7 @@
     
       \caption{Базисы, отложенные от соответствующих начал координат~---~прямоугольные тетраэдры.}
       \label{fig:many-vectors-kisses}
-    \end{figure}
+    \end{figure}  % TODO: kisses should not be on the same line
     
     Поэтому вектор $\vv{OO'}$ можно найти как
     \[
