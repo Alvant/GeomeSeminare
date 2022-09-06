@@ -1,6 +1,7 @@
 \documentclass[a4paper,12pt]{article}
 
 \usepackage{mystyle}
+\usepackage{minted}  % with "-shell-escape" arg for compilation
 
 \graphicspath{ {images/} }
 
@@ -14,7 +15,7 @@
 
 \author{Алексеев Василий}
 \title{Семинар 1}
-\date{1 сентября 2022}
+\date{1 + 5 сентября 2022}
 
 
 \begin{document}
@@ -47,13 +48,13 @@
   \begin{definition}[Сложение матриц]
     Пусть $A, B \in \RR^{m \times n}$.
     Суммой $A \hm+ B$ называется матрица $C \hm\in \RR^{m \times n}$, такая что
-    $c_{ij} \hm= a_{ij} + b_{ij}$ ($i \hm= 1, \ldots, m$, $j \hm= 1, \ldots, n$).
+    $c_{ij} \hm= a_{ij} + b_{ij}$ ($i \hm= 1 \ldots m$, $j \hm= 1 \ldots n$).
   \end{definition}
   
   \begin{definition}[Умножение матрицы на число]
     Пусть $A \in \RR^{m \times n}, \alpha \in \RR$.
     Произведением матрицы $A$ на число $\alpha$ называется матрица $C \hm\in \RR^{m \times n}$, такая что
-    $c_{ij} \hm= \alpha \cdot a_{ij}$ ($i \hm= 1, \ldots, m$, $j \hm= 1, \ldots, n$).
+    $c_{ij} \hm= \alpha \cdot a_{ij}$ ($i \hm= 1 \ldots m$, $j \hm= 1 \ldots n$).
   \end{definition}
   
   \begin{remark}
@@ -71,7 +72,7 @@
   \end{remark}
   
   \begin{definition}[Линейная комбинация матриц]
-    Линейной комбинацией матриц $A_1, \ldots, A_n \hm\in \RR^{m \times n}$ называется их сумма с некоторыми коэффициентами $\alpha_i \hm\in \RR$:
+    Линейной комбинацией\\матриц $A_1, \ldots, A_n \hm\in \RR^{m \times n}$ называется их сумма с некоторыми коэффициентами $\alpha_i \hm\in \RR$:  % TODO: eq splits on several lines without "\\"
     \[
       \alpha_1 \cdot A_1 + \ldots + \alpha_n \cdot A_n
     \]
@@ -191,9 +192,25 @@
   
   \begin{definition}[Транспонирование матрицы]
     Пусть $A \hm\in \RR^{\textcolor{light-cyan}{m} \times \textcolor{light-purple}{n}}$.
-    Тогда транспонированной по отношению к матрице $A$ называется матрица $C \hm\in \RR^{\textcolor{light-purple}{n} \times \textcolor{light-cyan}{m}}$, такая что $c_{ij} \hm= a_{ji}$ ($i \hm= 1, \ldots, m$, $j \hm= 1, \ldots, n$).
+    Тогда транспонированной по отношению к матрице $A$ называется матрица $C \hm\in \RR^{\textcolor{light-purple}{n} \times \textcolor{light-cyan}{m}}$, такая что $c_{ij} \hm= a_{ji}$ ($i \hm= 1 \ldots n$, $j \hm= 1 \ldots m$).
     Транспонированная матрица обозначается $A^T$.
   \end{definition}
+  
+  \begin{example}
+    О транспонировании можно думать как о замене строк матрицы на столбцы и наоборот.
+    Либо как об отражении элементов матрицы относительно главной диагонали:
+    \[
+      \begin{pmatrix}
+        \textcolor{light-purple}{1} & 2\\
+        3                           & \textcolor{light-purple}{4}\\
+        5                           & 6
+      \end{pmatrix}^T
+      = \begin{pmatrix}
+        \textcolor{light-purple}{1} & 3                           & 5\\
+        2                           & \textcolor{light-purple}{4} & 6
+      \end{pmatrix}^T
+    \]
+  \end{example}
   
   \begin{problem}[15.13(1)]
     Проверить справедливость тождества:
@@ -239,7 +256,7 @@
   \end{solution}
   
   \begin{definition}[След матрицы]
-    Следом квадратной матрицы $A \in \RR^{n \times n}$ называется сумма элементов, находящихся на главной диагонали $\{a_{ij} \hm\mid i = j,\ i = 0, \ldots, n\}$:
+    Следом квадратной матрицы $A \in \RR^{n \times n}$ называется сумма элементов, находящихся на главной диагонали $\{a_{ij} \hm\mid i = j,\ i = 0 \ldots n\}$:
     \[
       \left\{
         \begin{aligned}
@@ -435,7 +452,7 @@
       \left\{
         \begin{aligned}
           &x_i = \frac{\Delta_i}{\Delta}\\
-          &i = 1, \ldots, n
+          &i = 1 \ldots n
         \end{aligned}
       \right.
     \]
@@ -445,11 +462,11 @@
       \left\{
         \begin{aligned}
           &\Delta_i \equiv \det (\bds a_1, \ldots, \bds a_{i - 1}, \bds b, \bds a_{i + 1}, \ldots, \bds a_n)\\
-          &i = 1, \ldots, n
+          &i = 1 \ldots n
         \end{aligned}
       \right.
     \]
-    где $\bds a_i$, $(i \hm= 1, \ldots, n)$~---~это столбцы матрицы $A$.
+    где $\bds a_i$, $(i \hm= 1 \ldots n)$~---~это столбцы матрицы $A$.
   \end{theorem}
   
   
@@ -554,10 +571,11 @@
   
   \section{Дополнение}
   
-  В дополнении упомянем ещё один вариант матричного умножения (``интуитивный'').
+  В дополнении упомянем ещё один вариант матричного умножения (``интуитивный'') и то, где он может применяться.
   Рассмотрим ещё один способ считать определитель третьего порядка.
   Приведём ещё несколько равносильных способов задать определитель (без доказательства равносильности).
   Отметим пару свойств определителя.
+  И в конце~---~ещё пара слов про сложение (о возможности складывать ``когда формально нельзя, но на практике удобно'').
   
   
   \subsection{``Интуитивное'' матричное умножение}
@@ -571,8 +589,8 @@
     \left\{
       \begin{aligned}
         &c_{ij} \hm= a_{ij} b_{ij}\\
-        &i \hm= 1, \ldots, m\\
-        &j \hm= 1, \ldots, n
+        &i \hm= 1 \ldots m\\
+        &j \hm= 1 \ldots n
       \end{aligned}
     \right.
   \]
@@ -582,6 +600,12 @@
   Почему ``умножение по умолчанию'' выбрано не так просто и понятно, а по-другому (\ref{def:matrix-multiplication}), будет понятно далее в курсе (наверно).
   Поэлементное же умножение тоже используется.
   Например, в анализе изображений при \href{https://en.wikipedia.org/wiki/Kernel\_(image\_processing)}{свёртке с помощью фильтра} (\ref{fig:ezh-in-conv}).
+  Изображение представляется как совокупность прямоугольных матриц (по матрице на каждый цвет: красный, зелёный и синий~---~если изображение цветное), где каждый элемент матрицы отвечает за ``величину'' соответствующего цвета в данном пикселе.
+  Ядро свёртки~---~квадратная (как правило) матрица меньшего (как правило) размера.
+  В процессе свёртки ядро как бы ``скользит'' по матрице изображения, адамарово умножаясь на подматрицу изображения, находящуюся в данный момент под ядром.
+  Элементы матрицы, полученной в результате такого умножения, складываются, и результат записывается как значение цвета в пиксель матрицы преобразованного изображения.
+  Таким образом, свёртка~---~это как ещё одна операция между матрицами, которая принимает на вход две матрицы (разных размеров) и возвращает одну матрицу.
+  Размер матрицы-результата может быть такой же, как у исходной матрицы изображения, а может быть больше или меньше (в зависимости от того, \href{https://github.com/vdumoulin/conv\_arithmetic}{как ``скользит'' ядро}).
   
   \begin{figure}[h]
     \centering
@@ -623,7 +647,7 @@
   \begin{figure}[h]
     \centering
     
-    \includegraphics[width=0.5\columnwidth]{determinant-sarrus}
+    \includegraphics[width=0.4\columnwidth]{determinant-sarrus}
     
     \caption{Правило Саррюса для вычисления определителя третьего порядка (картинка взята с русской страницы \href{https://upload.wikimedia.org/wikipedia/commons/1/17/Determinant-sarrus.svg}{Википедии}).}
     \label{fig:determinant-sarrus}
@@ -787,4 +811,56 @@
     \end{itemize}
   \end{definition}
   
+  
+  \subsection{``Программистское'' матричное сложение}
+  
+  Помимо ``математических'' операций сложения и умножения матриц, стоит отметить ещё такое явление, как ``программистское'' сложение и умножение.
+  Так, программные пакеты, реализующие действия с матрицами, могут ради удобства давать возможность складывать и поэлементно умножать матрицы разных размеров.
+  В рамках библиотеки \href{https://numpy.org/}{numpy} Питона это называется \href{https://numpy.org/doc/stable/user/basics.broadcasting.html}{Broadcasting} (\ref{fig:broadcasting-example}).
+  Но, хоть размеры матриц при сложении с помощью broadcasting и могут отличаться, они всё равно должны соотноситься определённым образом.
+  
+  \begin{figure}[p]
+    \begin{minted}{python}
+import numpy as np
+
+
+A = np.array([
+    [1, 2],
+    [3, 4],
+    [5, 6]
+])
+
+x = np.array([
+    [-1],
+    [-1],
+    [-1]
+])
+
+result = A + x
+
+print(f'Matrix:\n{A}\n')
+print(f'Vector:\n{x}\n')
+print(f'Sum:\n{result}')
+
+# Output:
+#
+# Matrix:
+# [[1 2]
+#  [3 4]
+#  [5 6]]
+#
+# Vector:
+# [[-1]
+#  [-1]
+#  [-1]]
+#
+# Sum:
+# [[0 1]
+#  [2 3]
+#  [4 5]]
+    \end{minted}
+
+    \caption{Пример сложения матриц разных размеров в Питоне. Матрица меньшего размера в процессе сложения как бы увеличивается, самокопируясь вдоль определённой размерности.}
+    \label{fig:broadcasting-example}
+  \end{figure}
 \end{document}
