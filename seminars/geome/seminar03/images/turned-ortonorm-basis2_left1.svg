@@ -206,9 +206,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="195.79861"
-     inkscape:cy="650.5688"
+     inkscape:zoom="0.9899495"
+     inkscape:cx="373.2806"
+     inkscape:cy="744.26969"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -335,14 +335,14 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.29166746px;line-height:1.25;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="60.892139"
-       y="142.18941"
+       x="62.495758"
+       y="141.92213"
        id="text9951"><tspan
          sodipodi:role="line"
          id="tspan9949"
-         x="60.892139"
-         y="142.18941"
-         style="font-size:5.29166746px;stroke-width:0.26458332">−φ</tspan></text>
+         x="62.495758"
+         y="141.92213"
+         style="font-size:5.29166746px;stroke-width:0.26458332">φ</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.26499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker4636)"
        d="m 58.874491,133.14908 c 2.811191,0.98401 5.622236,1.96797 7.681843,3.8684 2.059607,1.90043 3.378956,4.74114 4.692866,7.57014"
@@ -375,6 +375,6 @@
          id="tspan9949-0"
          x="68.016251"
          y="125.16396"
-         style="font-size:5.29166746px;stroke-width:0.26458332">−φ + π/2</tspan></text>
+         style="font-size:5.29166746px;stroke-width:0.26458332">φ + π/2</tspan></text>
   </g>
 </svg>
