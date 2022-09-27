@@ -8,7 +8,7 @@
 
 \author{Алексеев Василий}
 \title{Семинар 4}
-\date{22 сентября 2022}
+\date{22 + 26 сентября 2022}
 
 
 \begin{document}
@@ -163,12 +163,56 @@
     \[
       \cos \alpha = \frac{-12}{3 \cdot 5} = -\frac{4}{5}
     \]
+    
+    \medskip
+    
+    Задачу можно считать решённой.
+    Но вернёмся ещё раз к скалярному $\bds a$ на $\bds b$.
+    Распишем его ещё раз, и в общем случае.
+    То есть пусть вектор $\bds a$~---~это вектор с компонентами $(a_1, a_2, a_3)$, а вектор $\bds b$~---~с компонентами $(b_1, b_2, b_3)$ в некотором базисе $e \hm= \{\bds e_1, \bds e_2, \bds e_3\}$.
+    \begin{equation*}
+    \begin{split}
+      (\bds a, \bds b) = (a_1 \bds e_1 &+ a_2 \bds e_2 + a_3 \bds e_3, b_1 \bds e_1 + b_2 \bds e_2 + b_3 \bds e_3) = a_1 b_1 (\bds e_1, \bds e_1) + a_2 b_2 (\bds e_2, \bds e_2)\\
+      &+ a_3 b_3 (\bds e_3, \bds e_3)
+       + (a_1 b_2 + a_2 b_1) (\bds e_1, \bds e_2) + (a_1 b_3 + a_3 b_1) (\bds e_1, \bds e_3) + (a_2 b_3 + a_3 b_2) (\bds e_2, \bds e_3)\\
+    \end{split}
+    \end{equation*}
+    
+    Теперь ``не трудно заметить'', что выражение для скалярного через компоненты можно свернуть и записать в матричном виде:
+    \[
+      (\bds a, \bds b) = \begin{pmatrix}
+          a_1 & a_2 & a_3
+        \end{pmatrix} \begin{pmatrix}
+          (\bds e_1, \bds e_1) & (\bds e_1, \bds e_2) & (\bds e_1, \bds e_3)\\
+          (\bds e_2, \bds e_1) & (\bds e_2, \bds e_2) & (\bds e_2, \bds e_3)\\
+          (\bds e_3, \bds e_1) & (\bds e_3, \bds e_2) & (\bds e_3, \bds e_3)
+        \end{pmatrix}
+        \begin{pmatrix}
+          b_1 \\ b_2 \\ b_3
+        \end{pmatrix}
+    \]
+        
+    Матрица, куда собираем скалярные произведения между парами базисных векторов, называется \emph{матрицей Грама} базиса:
+    \[
+      \left\{
+        \begin{aligned}
+          &\Gamma \hm= (g_{ij}) \in \RR^{3\times 3}\\
+          &g_{ij} = (\bds e_i, \bds e_j)
+        \end{aligned}
+      \right.
+    \]
+    
+    Итого, с матрицей Грама скалярное произведение можно считать по формуле:
+    \[
+      \boxed{(\bds a, \bds b) = \bds a^T \Gamma \bds b}
+    \]
+    где в левой части символы $\bds a$ и $\bds b$ означают векторы~---~направленные отрезки, а в правой те же самые символы означают координатные столбцы соответствующих векторов в базисе.
   \end{solution}
   
   
   В случае же \textbf{ортонормированного} базиса формулы с применением скалярных произведений упрощаются:
   \begin{equation}\label{eq:scalar-product-simplified}
-    (\bds a, \bds b) = \sum_{i=1}^n a_i b_i
+    \boxed{(\bds a, \bds b) = \sum_{i=1}^n a_i b_i}
   \end{equation}
   \[
     |\bds a| = \sqrt{\sum_{i=1}^n a_i^2}
@@ -438,39 +482,40 @@
   где в последнем переходе использовались свойство антикоммутативности векторного произведения и свойство равенства нулевому вектору векторного квадрата любого вектора.
   Полученное соотношение можно переписать в таком виде
   \begin{equation}
-    [\bds a, \bds b] = \begin{vmatrix}
+    \boxed{[\bds a, \bds b] = \begin{vmatrix}
       [\bds e_2, \bds e_3] & [\bds e_3, \bds e_1] & [\bds e_1, \bds e_2]\\
       a_1 & a_2 & a_3\\
       b_1 & b_2 & b_3
-    \end{vmatrix}
+    \end{vmatrix}}
   \end{equation}
   где, отметим ещё раз, $(\bds e_1, \bds e_2, \bds e_3)$~---~произвольный базис.
   
   Если воспользоваться полученным представлением векторного произведения через компоненты векторов, подставив его в формулу (\ref{eq:triple-as-scalar-and-vector}), то получим
   \begin{equation}
-    (\bds a, \bds b, \bds c) = \begin{vmatrix}
+    \boxed{(\bds a, \bds b, \bds c) = \begin{vmatrix}
       a_1 & a_2 & a_3\\
       b_1 & b_2 & b_3\\
       c_1 & c_2 & c_3
-    \end{vmatrix} \cdot (\bds e_1, \bds e_2, \bds e_3)
+    \end{vmatrix} \cdot (\bds e_1, \bds e_2, \bds e_3)}
   \end{equation}
 
   Если же базис $e$ \textbf{правый ортонормированный}, то формулы упрощаются.
   Для векторного произведения:
   \begin{equation}\label{eq:vector-product-simplified}
-    [\bds a, \bds b] = \begin{vmatrix}
+    \boxed{[\bds a, \bds b] = \begin{vmatrix}
       \bds e_1 & \bds e_2 & \bds e_3\\
       a_1 & a_2 & a_3\\
       b_1 & b_2 & b_3
-    \end{vmatrix}
+    \end{vmatrix}}
   \end{equation}
-  и для смешанного:
+  
+  И для смешанного:
   \begin{equation}\label{eq:triple-product-simplified}
-    (\bds a, \bds b, \bds c) = \begin{vmatrix}
+    \boxed{(\bds a, \bds b, \bds c) = \begin{vmatrix}
       a_1 & a_2 & a_3\\
       b_1 & b_2 & b_3\\
       c_1 & c_2 & c_3
-    \end{vmatrix}
+    \end{vmatrix}}
   \end{equation}
   
   
