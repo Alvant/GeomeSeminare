@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Creator: fig2dev Version 3.2 Patchlevel 5e -->
+
+<!-- CreationDate: Sat Nov 14 10:56:50 2015 -->
+
+<!-- Magnification: 1.050 -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="296.34543"
+   height="367.62662"
+   viewBox="2811 -23 3935.8377 4945.5993"
+   id="svg3770"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="exzentr3d.svg">
+  <metadata
+     id="metadata3810">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3808" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1205"
+     inkscape:window-height="530"
+     id="namedview3806"
+     showgrid="false"
+     units="mm"
+     fit-margin-top="2"
+     fit-margin-left="2"
+     fit-margin-right="2"
+     fit-margin-bottom="2"
+     inkscape:zoom="0.65555556"
+     inkscape:cx="121.43261"
+     inkscape:cy="181.65495"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg3770" />
+  <g
+     style="fill:none;stroke-width:0.025in"
+     id="g3772"
+     transform="translate(55.526653,80.334647)">
+    <!-- Line -->
+    <polygon
+       points="2834,0 4724,2362 6614,0 2834,0 "
+       style="fill:#ffe0e0;stroke:#ffffff;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+       id="polygon3774" />
+    <!-- Line -->
+    <polygon
+       points="4724,2362 6614,4724 2834,4724 4724,2362 "
+       style="fill:#ffe0e0;stroke:#ffffff;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+       id="polygon3776" />
+    <!-- Line -->
+    <polyline
+       points="4724,0 4724,4724 "
+       style="stroke:#000000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:62, 31, 10, 31"
+       id="polyline3778" />
+    <!-- Line -->
+    <polyline
+       points="2834,0 6614,4724 "
+       style="stroke:#ff0000;stroke-width:16;stroke-linecap:butt;stroke-linejoin:miter"
+       id="polyline3780" />
+    <!-- Line -->
+    <polyline
+       points="6614,0 2834,4724 "
+       style="stroke:#ff0000;stroke-width:16;stroke-linecap:butt;stroke-linejoin:miter"
+       id="polyline3782" />
+    <!-- Line -->
+    <polyline
+       points="2834,0 6614,0 "
+       style="stroke:#ff0000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+       id="polyline3784" />
+    <!-- Line -->
+    <polyline
+       points="2834,4724 6614,4724 "
+       style="stroke:#ff0000;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter"
+       id="polyline3786" />
+    <!-- Line -->
+    <polyline
+       points="4002,4716 6141,0 "
+       style="stroke:#0000ff;stroke-width:16;stroke-linecap:butt;stroke-linejoin:miter"
+       id="polyline3788" />
+    <!-- Arc -->
+    <path
+       style="stroke:#000000;stroke-width:8;stroke-linecap:butt"
+       d="M 3401,4724 A 581,581 0 0 0 3204,4283"
+       id="path3790"
+       inkscape:connector-curvature="0" />
+    <!-- Arrowhead on XXXpoint 3298 4389 - 3204 4283-->
+    <polyline
+       points="3322 4368 3215 4296 3275 4410 "
+       style="stroke:#000000;stroke-width:8;stroke-miterlimit:8"
+       id="polyline3792" />
+    <!-- Arrowhead on XXXpoint 3385 4583 - 3401 4724-->
+    <polyline
+       points="3353 4585 3399 4707 3416 4578 "
+       style="stroke:#000000;stroke-width:8;stroke-miterlimit:8"
+       id="polyline3794" />
+    <!-- Arc -->
+    <path
+       style="stroke:#000000;stroke-width:8;stroke-linecap:butt"
+       d="M 4590,4716 A 554,554 0 0 0 4236,4204"
+       id="path3796"
+       inkscape:connector-curvature="0" />
+    <!-- Arrowhead on XXXpoint 4361 4271 - 4236 4204-->
+    <polyline
+       points="4376 4244 4251 4213 4347 4300 "
+       style="stroke:#000000;stroke-width:8;stroke-miterlimit:8"
+       id="polyline3798" />
+    <!-- Arrowhead on XXXpoint 4570 4575 - 4590 4716-->
+    <polyline
+       points="4538 4578 4587 4699 4600 4569 "
+       style="stroke:#000000;stroke-width:8;stroke-miterlimit:8"
+       id="polyline3800" />
+    <!-- Text -->
+    <text
+       xml:space="preserve"
+       x="3023"
+       y="4677"
+       font-style="normal"
+       font-weight="normal"
+       font-size="315"
+       id="text3802"
+       style="font-size:315px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:'Times,Symbol'">α</text>
+    <!-- Text -->
+    <text
+       xml:space="preserve"
+       x="4157"
+       y="4677"
+       font-style="normal"
+       font-weight="normal"
+       font-size="315"
+       id="text3804"
+       style="font-size:315px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:'Times,Symbol'">β</text>
+  </g>
+</svg>
