@@ -613,7 +613,7 @@
     A_n = \begin{pmatrix}
       1      & 2      & 2      & \ldots & 2      & 2\\
       2      & 1      & 2      & \ldots & 2      & 2\\
-      \vdots & \vdots & \vdots & \vdots & \ddots & \vdots\\
+      \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
       2      & 2      & 2      & \ldots & 1      & 2\\
       2      & 2      & 2      & \ldots & 2      & 1
     \end{pmatrix}
@@ -633,22 +633,22 @@
     \begin{split}
       \begin{vmatrix}
         1      & 2      & 2      & \ldots & 2      & 2\\
-        2      & 1      & 2      & 2      & 2      & 2\\
-        \vdots & \vdots & \vdots & \vdots & \ddots & \vdots\\
+        2      & 1      & 2      & \ldots & 2      & 2\\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
         2      & 2      & 2      & \ldots & 1      & 2\\
         2      & 2      & 2      & \ldots & 2      & 1
       \end{vmatrix}
       &= \bigl(2(n-1) + 1\bigr) \cdot \begin{vmatrix}
         1      & 1      & 1      & \ldots & 1      & 1\\
-        2      & \hphantom{\scalebox{0.8}[1.0]{-}}1\hphantom{\scalebox{0.8}[1.0]{-}} & 2      & 2      & 2      & 2\\
-        \vdots & \vdots & \vdots & \vdots & \ddots & \vdots\\
+        2      & \hphantom{\scalebox{0.8}[1.0]{-}}1\hphantom{\scalebox{0.8}[1.0]{-}} & 2      & \ldots & 2      & 2\\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
         2      & 2      & 2      & \ldots & \hphantom{\scalebox{0.8}[1.0]{-}}1\hphantom{\scalebox{0.8}[1.0]{-}} & 2\\
         2      & 2      & 2      & \ldots & 2      & \hphantom{\scalebox{0.8}[1.0]{-}}1\hphantom{\scalebox{0.8}[1.0]{-}}
       \end{vmatrix}\\
       &= \bigl(2(n-1) + 1\bigr) \cdot \begin{vmatrix}
         1      & 1      & 1      & \ldots & 1      & 1\\
-        0      & -1     & 0      & 0      & 0      & 0\\
-        \vdots & \vdots & \vdots & \vdots & \ddots & \vdots\\
+        0      & -1     & 0      & \ldots & 0      & 0\\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
         0      & 0      & 0      & \ldots & -1     & 0\\
         0      & 0      & 0      & \ldots & 0      & -1
       \end{vmatrix}
@@ -784,7 +784,7 @@
     Вспомним формулу полного разложения~(\ref{eq:complete-expansion}).
     В случае определителя Вандермонда она примет вид:
     \begin{equation}\label{eq:p14-24-7-full-expansion}
-      \det V_n = \sum_{(j_1, \ldots, j_n)} (-1)^{N(j_1, \ldots, j_n)} 1 \cdot \lambda_{j_2}^2 \cdot \ldots \cdot \lambda_{j_n}^{n-1}
+      \det V_n = \sum_{(j_1, \ldots, j_n)} (-1)^{N(j_1, \ldots, j_n)} 1 \cdot \lambda_{j_2}^1 \cdot \ldots \cdot \lambda_{j_n}^{n-1}
     \end{equation}
     Иными словами, сумма слагаемых, каждое из которых есть произведение элементов из разных строк и столбцов.
     А потому обязательно будет множитель $1$ (элемент из первой строки), ``какой-то $\lambda$'' в первой степени (вторая строка) ``какой-то $\lambda$'' во второй и т.д.
@@ -803,11 +803,11 @@
     \[
       C_n^2 \equiv \binom{n}{2} = \frac{n!}{2!(n-2)!} = \frac{n(n-1)}{2}
     \]
-    Получается, что определитель как многочлен от лямбд $V_n \hm= p(\lambda_1, \ldots, \lambda_n)$ должен быть кратен разностям $(\lambda_j \hm- \lambda_i)$ при $j \hm= i$:
+    Получается, что определитель как многочлен от лямбд $\det V_n \hm= p(\lambda_1, \ldots, \lambda_n)$ должен быть кратен разностям $(\lambda_j \hm- \lambda_i)$ при $j \hm{\not=} i$:
     \[
       p(\lambda_1, \ldots, \lambda_n) = \underbrace{(\lambda_{n} - \lambda_1) (\lambda_{n-1} - \lambda_1) \cdot \ldots \cdot (\lambda_2 - \lambda_1) \cdot (\lambda_{n} - \lambda_2) \cdot \ldots \cdot (\lambda_{n} - \lambda_{n-1})}_{\prod_{j > i} (\lambda_j - \lambda_i)} \cdot q(\lambda_1, \ldots, \lambda_n)
     \]
-    где $q(\lambda_1, \ldots, \lambda_n)$~---~какой-то другой многолчлен от лямбд.
+    где $q(\lambda_1, \ldots, \lambda_n)$~---~какой-то другой многочлен от лямбд.
     Что можно сказать про этот многочлен?
     Произведение ``скобок'' $\prod_{j > i} (\lambda_j \hm- \lambda_i)$ уже даёт многочлен степени $n(n\hm-1) \hm/ 2$.
     Поэтому многочлен $q$ не может быть ничем иным, кроме как константой $q(\lambda_1, \ldots, \lambda_n) \hm= C \hm\in \RR$.
@@ -823,7 +823,7 @@
       \end{vmatrix} = (\lambda_2 - \lambda_1) \cdot 1
     \]
     
-    (Уже создаётся впечатление, что $C \hm= 1$.
+    (Уже ``создаётся впечатление'', что $C \hm= 1$.
     Хотя, возможно, $C$ просто как-то не очевидно зависит от $n$...)
     
     Либо начать раскрывать скобки в выражении для $p(\lambda_1, \ldots, \lambda_n)$, и посмотреть на член, получающийся при перемножении всех уменьшаемых:
@@ -832,7 +832,7 @@
     \]
     Но ведь это произведение $\lambda_n^{n-1} \hm\cdot \ldots \hm\cdot \lambda_3^2 \lambda_2$~---~это ведь одно из слагаемых в формуле полного разложения~(\ref{eq:p14-24-7-full-expansion})!
     Причём такое, в котором совсем нет беспорядков.
-    Значит, $C \hm= (-1)^0 \hm= 1$.
+    Значит, $C \hm= 1$.
     Итого, определитель Вандермонда порядка~$n$:
     \begin{equation}\label{eq:vander-de-mond}
       D_n = \det V_n = \prod_{j > i} (\lambda_j - \lambda_i)
@@ -1112,7 +1112,7 @@
         2 & 1\\
         1 & 1
       \end{pmatrix}
-      = X = \begin{pmatrix}
+      = \begin{pmatrix}
         3 & -5\\
         -1 & 2
       \end{pmatrix} \begin{pmatrix}
@@ -1211,16 +1211,9 @@
     
     \emph{Способ $2$: ``где вначале всё стандартно, а потом следует не самый очевидный выкрутас и аналитическая геометрия отходит на второй план''}.
     
-    В первой строке всего два ненулевых элемента~---~попробуем разложить по ней определитель:
+    В первой строчке всего два ненулевых элемента~---~попробуем же разложить по ней определитель:
     \[
-      \begin{vmatrix}
-        2      & 1      & 0      & 0      & \ldots & 0      & 0\\
-        1      & 2      & 1      & 0      & \ldots & 0      & 0\\
-        0      & 1      & 2      & 1      & \ldots & 0      & 0\\
-        \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
-        0      & 0      & 0      & 0      & \ldots & 2      & 1\\
-        0      & 0      & 0      & 0      & \ldots & 1      & 2
-      \end{vmatrix}
+      \Delta_n
       = 2 \cdot \begin{vmatrix}
         2      & 1      & 0      & \ldots & 0      & 0\\
         1      & 2      & 1      & \ldots & 0      & 0\\
@@ -1238,14 +1231,7 @@
     
     Второй определитель справа можно разложить по первому столбцу (там всего одна единица и все нули):
     \[
-      \begin{vmatrix}
-        2      & 1      & 0      & 0      & \ldots & 0      & 0\\
-        1      & 2      & 1      & 0      & \ldots & 0      & 0\\
-        0      & 1      & 2      & 1      & \ldots & 0      & 0\\
-        \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
-        0      & 0      & 0      & 0      & \ldots & 2      & 1\\
-        0      & 0      & 0      & 0      & \ldots & 1      & 2
-      \end{vmatrix}
+      \Delta_n
       = 2 \cdot \begin{vmatrix}
         2      & 1      & 0      & \ldots & 0      & 0\\
         1      & 2      & 1      & \ldots & 0      & 0\\
@@ -1278,13 +1264,13 @@
     
     Откуда характеристическое уравнение:
     \[
-      \lambda^2 = 2 \lambda - 1 \Leftrightarrow (\lambda - 1)^2 = 0 \Leftrightarrow \lambda_{1, 2} = 1
+      \boxed{\lambda^2 = 2 \lambda - 1} \Leftrightarrow (\lambda - 1)^2 = 0 \Leftrightarrow \lambda_{1, 2} = 1
     \]
     
     Два совпавших корня.
     Значит, общее решение $\Delta_n$ надо искать в виде:
     \[
-      \Delta_n = (C_1 n + C_2) \lambda^n \xrightarrow{\lambda = 1} С_1 n + С_2,\quad C_1,\, C_2 \in \RR
+      \Delta_n = (C_1 n + C_2) \lambda^n \xrightarrow{\lambda = 1} C_1 n + C_2,\quad C_1,\, C_2 \in \RR
     \]
     (можно подставить в соотношение~(\ref{eq:p14-23-16-recurrent}) и убедиться, что ``работает''; но если бы корни характеристического уравнения были разные, то решение надо бы было искать в другом виде).
     
@@ -1292,12 +1278,12 @@
     \[
       \left\{
         \begin{aligned}
-          &\Delta_1 = |2| = 2 = С_1 + С_2\\
+          &\Delta_1 = |2| = 2 = C_1 + C_2\\
           &\Delta_2 = \left|\begin{smallmatrix}2 & 1 \\ 1 & 2\end{smallmatrix}\right| = 3 = 2 C_1 + C_2
         \end{aligned}
       \right. \Leftrightarrow \left\{
         \begin{aligned}
-          &C_1 = 2\\
+          &C_1 = 1\\
           &C_2 = 1
         \end{aligned}
       \right.
