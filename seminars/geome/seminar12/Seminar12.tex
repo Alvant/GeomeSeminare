@@ -1,0 +1,1660 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{mystyle}
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+% https://tex.stackexchange.com/questions/5461/is-it-possible-to-change-the-size-of-an-arrowhead-in-tikz-pgf
+\usetikzlibrary{arrows.meta}
+
+\graphicspath{ {images/} }
+
+
+\definecolor{light-cyan}{RGB}{0, 204, 204}
+\definecolor{light-purple}{RGB}{138, 43, 226}
+\definecolor{my-orange}{RGB}{255, 79, 0}
+\definecolor{my-green}{RGB}{19, 136, 8}
+\definecolor{my-cyan}{RGB}{0, 155, 118}
+%\definecolor{my-blue}{RGB}{0, 90, 235}
+\definecolor{my-blue}{RGB}{24, 59, 217}
+%\definecolor{my-blue}{RGB}{31, 117, 254}
+\definecolor{violet}{RGB}{148, 0, 211}
+\definecolor{red}{RGB}{183, 65, 14}
+\definecolor{cyan}{RGB}{0, 153, 153}
+
+
+\hypersetup{
+  urlcolor=my-blue,
+  linkcolor=my-blue
+}
+
+
+% https://tex.stackexchange.com/questions/3700/double-strikeout
+\def\dout{\bgroup
+ \markoverwith{\lower-0.2ex\hbox
+ {\kern-.03em\vbox{\hrule width.2em\kern0.45ex\hrule}\kern-.03em}}%
+ \ULon}
+\MakeRobust\dout
+
+
+% https://tex.stackexchange.com/a/101138/135045
+
+\newcommand\widesim[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{-.1\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5150\wd0}}{.6\ht0}%
+  }{O}{c}{F}{T}{S}%
+}}
+
+
+\newcommand{\BigMiddleThree}{\;\left|\vphantom{\begin{pmatrix} 0\\0\\0 \end{pmatrix}}\right.\;}
+
+% https://tex.stackexchange.com/questions/137073/writing-mod-in-congruence-problems-without-leading-space
+\newcommand{\mmod}[1]{\ (\mathrm{mod}\ #1)}
+
+
+\newtheorem{proposition}{Утверждение}[section]
+
+\theoremstyle{remark}
+\newtheorem*{exercise}{Упражнение}
+
+
+\author{Алексеев Василий}
+\title{Семинар 12}
+\date{1 + 5 декабря 2022}
+
+
+\begin{document}
+  \maketitle
+  
+  \tableofcontents
+
+  \thispagestyle{empty}
+  
+  \newpage
+  
+  \pagenumbering{arabic}
+
+
+  \section{Матрицы: ``Вспомнить всё''}
+  
+  С матрицами мы уже \href{https://github.com/Alvant/GeomeSeminare/tree/master2022/seminars/geome/seminar01}{познакомились на самом первом семинаре}.
+  Вспомним же, ``что там было'', и обсудим ещё кое-что сверх.
+  
+  \bigskip
+  
+  Вещественная матрица $A$ размера $m \times n$~---~это ``таблица'' из чисел размера $m$~строк на $n$~столбцов $a_{ij} \hm\in \RR$ ($i \hm= 1 \ldots m$, $j \hm= 1 \ldots n$):
+  \[
+    A = \begin{pmatrix}
+      a_{11} & a_{12} & \ldots & a_{1n}\\
+      a_{21} & a_{22} & \ldots & a_{2n}\\
+      \vdots & \vdots & \ddots & \vdots\\
+      a_{m1} & a_{m2} & \ldots & a_{mn}
+    \end{pmatrix} \in \RR^{m \times n}
+  \]
+  
+  
+  \subsection{Операции с матрицами}
+  
+  \begin{definition}[Сложение матриц]
+    Пусть $A, B \in \RR^{m \times n}$.
+    Суммой $A \hm+ B$ называется матрица $C \hm\in \RR^{m \times n}$, такая что
+    $c_{ij} \hm= a_{ij} + b_{ij}$ ($i \hm= 1 \ldots m$, $j \hm= 1 \ldots n$).
+  \end{definition}
+  
+  \begin{definition}[Умножение матрицы на число]
+    Пусть $A \in \RR^{m \times n}, \alpha \in \RR$.
+    Произведением матрицы $A$ на число $\alpha$ называется матрица $C \hm\in \RR^{m \times n}$, такая что
+    $c_{ij} \hm= \alpha \cdot a_{ij}$ ($i \hm= 1 \ldots m$, $j \hm= 1 \ldots n$).
+  \end{definition}
+  
+  \begin{remark}
+    Множество матриц одного размера с введёнными операциями сложения и умножения на число образуют \emph{линейное пространство}.
+  \end{remark}
+  
+  \begin{definition}[Умножение матриц]\label{def:matrix-multiplication}
+    Пусть $A \hm\in \RR^{m \times \textcolor{light-cyan}{p}}$, $B \hm\in \RR^{\textcolor{light-cyan}{p} \times n}$.
+    Тогда матрица $C \hm\in \RR^{m \times n}$ называется произведением матриц $A$ и $B$, если
+    \[
+      \left\{
+        \begin{aligned}
+          &c_{ij} = \sum_{k = 1}^p a_{ik} b_{kj}\\
+          &1 \leq i \leq m\\
+          &1 \leq j \leq n
+        \end{aligned}
+      \right.
+    \]
+    и обозначается $C \hm= AB$.
+  \end{definition}
+  
+  \begin{remark}
+    Почему матричное умножение введено именно так?
+    \[
+      C_{m\times n} \hm= A_{m\times p}B_{p\times n},\ c_{ij} \hm= \sum\limits_{k=1}^p a_{ik} b_{kn},\ 1 \hm\leq i \hm\leq m, 1 \hm\leq j \hm\leq n
+    \]
+    
+    Пусть есть ортонормированный базис $\bds e_1, \bds e_2$.
+    То есть базис, в котором вектора взаимно перпендикулярны и по длине равны единице $1$.
+    Повернём вектор $\bds v$ с компонентами $(1, 0)$ на угол $45$ градусов против часовой стрелки (\ref{fig:turning-vector}).
+    
+    \begin{figure}[h]
+      \centering
+      
+      \begin{tikzpicture}
+        \draw[step=1cm,gray,very thin] (0,0) grid (5,5);
+        \draw[-Latex,ultra thick] (0,0) -- (3,0) node[anchor=north]{$\boldsymbol{v}$};
+        \draw[-Latex,ultra thick] (0,0) -- (2.121,2.121) node[anchor=south west]{$\boldsymbol{v'}$};
+        \draw[-Latex,ultra thick] (0,0) -- (0,3) node[anchor=east]{$\boldsymbol{v''}$};
+      \end{tikzpicture}
+      
+      \caption{Несколько поворотов вектора $\bds v$ на $45$ градусов против часовой стрелки.}
+      \label{fig:turning-vector}
+    \end{figure}
+    
+    Получим вектор $\left(1/\sqrt{2}, 1/\sqrt{2}\right)$.
+    Проверим, что матрица $\left(\begin{smallmatrix}1/\sqrt{2} & -1/\sqrt{2}\\ 1/\sqrt{2} & 1/\sqrt{2}\end{smallmatrix}\right)$ как раз задаёт нужное преобразование (умноженная на исходный вектор даёт вектор~---~результат поворота):
+    \[
+      v'
+      = A \bds v
+      = \begin{pmatrix}
+          1/\sqrt{2} & -1/\sqrt{2}\\
+          1/\sqrt{2} & 1/\sqrt{2}
+        \end{pmatrix}
+        \begin{pmatrix}
+          1 \\ 0
+        \end{pmatrix}
+      = \begin{pmatrix}
+          1/\sqrt{2} \\ 1/\sqrt{2}
+        \end{pmatrix}
+    \]
+    
+    Снова повернём вектор на угол $45$ градусов против часовой стрелки.
+    Должны получить вектор с компонентами $(0, 1)$:
+    \[
+      v''
+      = A \bds v'
+      = \begin{pmatrix}
+          1/\sqrt{2} & -1/\sqrt{2}\\
+          1/\sqrt{2} & 1/\sqrt{2}
+        \end{pmatrix}
+        \begin{pmatrix}
+          1/\sqrt{2} \\ 1/\sqrt{2}
+        \end{pmatrix}
+      = \begin{pmatrix}
+          0 \\ 1
+        \end{pmatrix}
+    \]
+    
+    Какой матрицей задаётся поворот сразу на $90$ градусов против часовой стрелки?
+    Как из вектора
+    $\left(\begin{smallmatrix}1 \\ 0\end{smallmatrix}\right)$
+    сразу получить вектор
+    $\left(\begin{smallmatrix}0 \\ 1\end{smallmatrix}\right)$?
+    
+    Возведём матрицу, задающую поворот на $45$ против часовой стрелки, в квадрат:
+    \begin{equation}\label{eq:idea-behind-matrix-multiplication}
+      A^2
+      = A A
+      = \begin{pmatrix}
+          1/\sqrt{2} & -1/\sqrt{2}\\
+          1/\sqrt{2} & 1/\sqrt{2}
+        \end{pmatrix}
+        \begin{pmatrix}
+          1/\sqrt{2} & -1/\sqrt{2}\\
+          1/\sqrt{2} & 1/\sqrt{2}
+        \end{pmatrix}
+      = \begin{pmatrix}
+          0 & -1\\
+          1 & 0
+        \end{pmatrix}
+    \end{equation}
+    и умножим её на исходный вектор $\bds v$:
+    \[
+      A^2 \bds v
+      = \begin{pmatrix}
+          0 & -1\\
+          1 & 0
+        \end{pmatrix}
+        \begin{pmatrix}
+          1 \\ 0
+        \end{pmatrix}
+      = \begin{pmatrix}
+          0 \\ 1
+        \end{pmatrix}
+    \]
+    
+    Таким образом, благодаря введённому матричному умножению, матрица композиции линейных преобразований получилась равна произведению матриц этих преобразований.
+  \end{remark}
+  
+
+  Приведём ещё пару небесполезных определений, связанных с матрицами.
+  
+  \begin{definition}[Единичная матрица]
+    Матрица $A \in \RR^{n \times n}$ называется единичной, если она нулевая, кроме главной диагонали ($\{a_{ij} \hm\mid i \hm= j\}$), на которой стоят единицы.
+    То есть $a_{ij} \hm= 1$ при $i \hm= j$ и $a_{ij} \hm= 0$ при $i \hm{\not=} j$:
+    \[
+      A = \begin{pmatrix}
+        1      & 0      & \ldots & 0       & 0\\
+        0      & 1      & \ldots & 0       & 0\\
+        \vdots & \vdots & \ddots & \vdots & \vdots\\
+        0      & 0      & \ldots & 1      & 0\\
+        0      & 0      & \ldots & 0      & 1
+      \end{pmatrix}
+    \]
+    
+    Единичная матрица обычно обозначается $E$ или $I$.
+  \end{definition}
+  
+  \begin{definition}[Транспонирование матрицы]
+    Пусть $A \hm\in \RR^{\textcolor{light-cyan}{m} \times \textcolor{light-purple}{n}}$.
+    Тогда транспонированной по отношению к матрице $A$ называется матрица $C \hm\in \RR^{\textcolor{light-purple}{n} \times \textcolor{light-cyan}{m}}$, такая что $c_{ij} \hm= a_{ji}$ ($i \hm= 1 \ldots n$, $j \hm= 1 \ldots m$).
+    Транспонированная матрица обозначается $A^T$.
+  \end{definition}
+  
+  \begin{example}
+    О транспонировании можно думать как о замене строк матрицы на столбцы и наоборот.
+    Либо как об отражении элементов матрицы относительно главной диагонали:
+    \[
+      \begin{pmatrix}
+        \textcolor{light-purple}{1} & 2\\
+        3                           & \textcolor{light-purple}{4}\\
+        5                           & 6
+      \end{pmatrix}^T
+      = \begin{pmatrix}
+        \textcolor{light-purple}{1} & 3                           & 5\\
+        2                           & \textcolor{light-purple}{4} & 6
+      \end{pmatrix}^T
+    \]
+  \end{example}
+  
+  \begin{definition}[След матрицы]
+    Следом квадратной матрицы $A \in \RR^{n \times n}$ называется сумма элементов, находящихся на главной диагонали $\{a_{ij} \hm\mid i = j,\ i = 0 \ldots n\}$:
+    \[
+      \left\{
+        \begin{aligned}
+          &\Sp \colon \RR^{n \times n} \to \RR\\
+          &\Sp \colon A \mapsto \sum_{i = 1}^n a_{ii}
+        \end{aligned}
+      \right.
+    \]
+    У следа есть несколько возможных обозначений.
+    Ещё одно, например, $\Tr A$.
+  \end{definition}
+
+
+  \subsection{Определитель матрицы}
+  
+  Об определителе можно думать как об особой числовой функции на множестве квадратных матриц, обозначаемой $\det$ или $|\cdot|$
+  \[
+    \det \colon \RR^{n\times n} \to \RR
+  \]
+  Существует несколько эквивалентных способов определения $\det$: через свойства функции, конкретную формулу вычисления по элементам матрицы (\ref{eq:complete-expansion}) при произвольном $n$.
+  Мы пока опустим строгое определение $\det$ и просто посмотрим, как его можно вычислять для квадратных матриц размерностей $2$ и $3$.
+  
+  \emph{Определитель второго порядка}:
+  \[
+    \begin{vmatrix}
+      \textcolor{light-cyan}{a}   & \textcolor{light-purple}{b} \\
+      \textcolor{light-purple}{c} & \textcolor{light-cyan}{d} 
+    \end{vmatrix} = \textcolor{light-cyan}{a} \textcolor{light-cyan}{d}  - \textcolor{light-purple}{c} \textcolor{light-purple}{b}
+  \]
+
+  \emph{Определитель третьего порядка}.
+  Способ вычисления ``разложением по первой строке'' (перебираем элементы первой строки; чередуем знаки начиная с плюса; домножаем на определитель матрицы, остающейся после вычёркивания строчки и столбца, где стоит текущий элемент первой строки):
+  \begin{equation}
+  \label{eq:third-order-det-fy-first-line}
+  \begin{split}
+    \begin{vmatrix}
+      a_1 & b_1 & c_1\\
+      a_2 & b_2 & c_2\\
+      a_3 & b_3 & c_3
+    \end{vmatrix} &=
+      a_1 \cdot \begin{vmatrix}b_2 & c_2\\b_3 & c_3\end{vmatrix}
+      - b_1 \cdot \begin{vmatrix}a_2 & c_2\\a_3 & c_3\end{vmatrix}
+      + c_1 \cdot \begin{vmatrix}a_2 & b_2\\a_3 & b_3\end{vmatrix}\\
+      &=a_1 b_2 c_3 - a_1 b_3 c_2 - a_2 b_1 c_3 + a_3 b_1 c_2 + a_2 b_3 c_1 - a_3 b_2 c_1
+  \end{split}
+  \end{equation}
+  
+  Но и при более высоких порядках (четыре и далее) можно использовать тот же алгоритм разложения по первой строке, сводя вычисление определителя порядка $n$ к вычислению нескольких определителей порядка $n \hm- 1$.
+  Даже если мы ещё раз посмотрим на определитель второго порядка, то увидим, что он тоже может быть посчитан разложением по первой строке, если положить определитель матрицы размера $1 \hm\times 1$ из одного элемента равным этому самому элементу:
+  \[
+    \begin{vmatrix}
+      a & b\\
+      c & d
+    \end{vmatrix}
+    = a \cdot |d| - b \cdot |c|
+    \xrightarrow{|x| \equiv x} ad - cb
+  \]
+  
+  Таким образом, мы уже фактически пришли к следующему варианту определить функцию $\det$:
+  
+  \begin{definition}[Определитель (рекурсивный вариант определения через разложение по первой строке)]
+    Положим определитель матрицы из одного элемента равным этому самому элементу
+    \[
+      \det \begin{pmatrix}a\end{pmatrix} \equiv a
+    \]
+    Пусть $M_{ij}$~---~определитель подматрицы матрицы $A \in \RR^{n \times n}$, которая получается при вычёркивании $i$-ой строки и $j$-го столбца (\emph{дополнительный минор}, соответствующий элементу~$a_{ij}$).
+    Тогда определитель матрицы~$A$:
+    \begin{equation}\label{eq:recursive-det}
+      \det A = \sum\limits_{j = 1}^n (-1)^{1 + j} a_{1j} M_{1j}
+    \end{equation}
+  \end{definition}
+  
+  \begin{proposition}
+    Оказывается, не обязательно раскладывать определитель только по первой строчке.
+    Можно раскладывать \emph{по любой}.
+    При этом получится \emph{то же самое}, что и при разложении по первой строке.
+    Только знаки надо чередовать по-разному: то начиная с ``плюса'', то начиная с ``минуса'' (зависит от номера строки).
+    Итак, формула \emph{разложения определителя по $i$-ой строке}:
+    \begin{equation}
+      \boxed{
+        \det A = \sum\limits_{j = 1}^n (-1)^{i + j} a_{ij} M_{ij}
+      }
+    \end{equation}
+    
+    Более того, раскладывать можно не только по строчке, но и \emph{по столбцу}.
+    И тоже~---~по любому.
+    Формула \emph{разложения по $j$-ому столбцу}:
+    \begin{equation}
+      \det A = \sum\limits_{i = 1}^n (-1)^{i + j} a_{ij} M_{ij}
+    \end{equation}
+  \end{proposition}
+  
+  \begin{definition}[Вырожденная матрица (возможный вариант определения)]
+    Матрица $A$ называется вырожденной, если её строки линейно зависимы.\footnote{Можно сложить с не равными нулю одновременно коэффициентами так, чтобы получилась нулевая строка.}
+    В противном случае матрица $A$ называется невырожденной.
+  \end{definition}
+  
+  \begin{proposition}
+    Матрица~$A$ вырождена тогда и только тогда, когда $\det A \hm= 0$.
+  \end{proposition}
+  
+  ``Другой взгляд'' на определитель даёт следующая теорема (можно бы было взять утверждение этой теоремы в качестве определения детерминанта, но тогда рекурсивное определение до этого было бы ``теоремой''~---~суть в том, что детерминант получается ``одинаковый'', каким бы способом его ни считать).
+  
+  \begin{theorem}[Формула полного разложения определителя]\label{theor:complete-expansion}
+    Пусть $A \in \RR^{n \times n}$.
+    Тогда определитель $\det A$ матрицы равен
+    \begin{equation}
+      \label{eq:complete-expansion}
+      \det A = \sum_{(j_1, \ldots, j_n)} (-1)^{N(j_1, \ldots, j_n)} a_{1 j_1} \ldots a_{n j_n}
+    \end{equation}
+    где $N(j_1, \ldots, j_n)$~---~число нарушений порядка в перестановке чисел $j_1, \ldots, j_n$\footnote{Нарушение порядка~---~когда правее большего элемента стоит меньший элемент. Например, перестановка $(2, 1)$, в ней $j_1 \hm= 2 \hm> 1 \hm= j_2$.}.
+    Сумма в формуле берётся по всем перестановкам чисел $1, \ldots, n$\footnote{Например, перестановки чисел $1, 2, 3$: $(1, 2, 3), (1, 3, 2), (2, 1, 3), (2, 3, 1), (3, 1, 2), (3, 2, 1)$.}.
+  \end{theorem}
+  
+  \begin{example}
+    Вспомним формулу вычисления определителя для матрицы размера $3$:
+    \begin{equation}\label{eq:full-expansion-3x3}
+      \begin{vmatrix}
+        a_1 & b_1 & c_1\\
+        a_2 & b_2 & c_2\\
+        a_3 & b_3 & c_3
+      \end{vmatrix}
+        = a_1 b_2 c_3 - a_1 b_3 c_2 - a_2 b_1 c_3 + a_3 b_1 c_2 + a_2 b_3 c_1 - a_3 b_2 c_1
+    \end{equation}
+    
+    Элементы в каждом слагаемом упорядочены по номеру столбца.
+    Поэтому посмотрим на число беспорядков по строкам (неважно, как считать беспорядки, по строкам или по столбцам, потому что $\det A \hm= \det A^T$).
+    В первом слагаемом: $N(1, 2, 3) \hm= 0$.
+    Во втором: $N(1, 3, 2) \hm= 1$ (тройка и двойка).
+    В третьем: $N(2, 1, 3) \hm= 1$ (двойка и единица).
+    В четвёртом: $N(3, 1, 2) \hm= 2$ (два беспорядка с тройкой и единицей и тройкой и двойкой).
+    В пятом: $N(2, 3, 1) \hm= 1 \hm+ 1 \hm= 2$ (для двойки и единицы и для тройки и единицы).
+    В шестом: $N(3, 2, 1) \hm= 2 \hm+ 1 \hm= 3$ (тройка-двойка, тройка-единица, двойка-единица).
+  \end{example}
+  
+  \begin{proof}
+    ``Поймём'', почему работает формула полного разложения, откуда она берётся.
+    На самом деле идея, как можно будет заметить, не очень сложная.
+    При разложении определителя по первой строке чередуется знак: ``плюс'', ``минус'', ``плюс'' и т.д.
+    То есть первый элемент~---~``плюс''.
+    Но с ним и не будет связано ни одного беспорядка!
+    (Ведь первый элемент первой строки домножается на определитель подматрицы, где все элементы из столбцов ``правее'' первого.)
+    Второй элемент~---~перед ним стоит ``минус''.
+    Но он и создаёт ровно один беспорядок.
+    (В определителе подматрицы, на который домножается второй элемент первой строки, будут все столбцы, что правее второго в исходной матрице и \emph{ещё первый столбец}, у которого номер меньше, но который в перестановке тоже окажется правее.)
+    И так далее для других элементов первой строки.
+    Аналогично раскручиваем определители подматриц, и приходим к формуле полного разложения.
+    
+    Это было ``идейно''.
+    ``По-нормальному'' же формулу можно доказать с помощью математической индукции.
+    База уже есть: формула полного разложения верна для определителей второго~---~и даже третьего, как проверили в примере~(\ref{eq:full-expansion-3x3})~---~порядка.
+    Теперь переход.
+    Разложим определитель $n \hm> 3$ порядка по первой строке~(\ref{eq:recursive-det}), при этом считая верной формулу полного разложения для определителей всех порядков меньше~$n$.
+    \begin{equation}
+    \begin{split}
+      \det A &= \sum\limits_{j=1}^n (-1)^{1+j} a_{1j} M_{1j}\\
+      &= \sum\limits_{j=1}^n (-1)^{1+j} a_{1j} \sum\limits_{\substack{(k_1, \ldots, k_{n-1}) \\ k_1, \ldots, k_{n-1} \not= j}} (-1)^{N(k_1, \ldots, k_{n-1})} a_{2 k_1} \cdot \ldots \cdot a_{n k_{n-1}}\\
+      &= \sum\limits_{j=1}^n \sum\limits_{\substack{(k_1, \ldots, k_{n-1}) \\ k_1, \ldots, k_{n-1} \not= j}} (-1)^{1+j+N(k_1, \ldots, k_{n-1})} a_{1j} a_{2 k_1} \cdot \ldots \cdot a_{n k_{n-1}}
+    \end{split}
+    \end{equation}
+    
+    Очевидно, ``сумма'' $\sum_{j=1}^n \sum_{(k_1, \ldots, k_{n-1})}$ есть то же самое, что просто сумма по всем перестановкам столбцов: $\sum_{(j, k_1, \ldots, k_{n-1})}$.
+    Или, если переименовать: $\sum_{(j_1, j_2, \ldots, j_n)}$.
+    
+    Но как преобразовать показатель $1 \hm+ j \hm+ N(k_1, \ldots, k_{n-1})$?
+    Сколько в перестановке $(k_1, \ldots, k_{n-1})$, где все $k_l \hm{\not=} j$, находится элементов, которые \emph{меньше $j$-го}?
+    (Ведь именно столько элементов будет определять число беспорядков, связанных с номером $j$, в перестановке $(j, k_1, \ldots, k_{n-1})$, где все оставшиеся номера стоят правее $j$, и те, что больше, и те, что меньше.)
+    Очевидно, их $j \hm- 1$.
+    Таким образом, общее число беспорядков в перестановке $(j, k_1, \ldots, k_{n-1})$ есть сумма того числа беспорядков, что были в перестановке~$(k_1, \ldots, k_{n-1})$, плюс ``новые'' за счёт~$j$:  % TODO: fix line width (bigger than average because of j, k_1, ...)
+    \[
+      N(j, k_1, \ldots, k_{n-1}) = N(k_1, \ldots, k_{n-1}) + j - 1
+    \]
+    
+    Но при этом, очевидно,
+    \[
+      (-1)^{N(k_1, \ldots, k_{n-1}) + j - 1} = (-1)^{N(k_1, \ldots, k_{n-1}) + j + 1}
+    \]
+    
+    Поэтому ``можно считать'', что в показателе у $(-1)$ в формуле стоит именно~$N(j, k_1, \ldots, k_{n-1})$.
+    Или, если переименовать: $N(j_1, j_2, \ldots, j_n)$.
+    
+    Таким образом, складывая одно с другим (как ``переписать'' сумму и показатель $(-1)$), получаем формулу полного разложения и для определителя порядка~$n$.
+  \end{proof}
+  
+  
+  \subsubsection{Свойства}
+  
+  \begin{theorem}
+    Некоторые свойства определителя (матрицы в формулах ниже представляются столбцами $\bds a_i \hm\in \RR^n$):\footnote{Отметим, что, вообще говоря, это зависит от способа введения понятия ``определитель'': те ли это свойства, которые ``надо доказывать'' (теорема), или же те, которые ``просто принимаются как верные'' (аксиома). В текущем конспекте ``базовым определением'' детерминанта считается рекурсивный способ (разложение по строке или столбцу). Который (отметили, но не доказывали) равносилен способу, связанному с числами беспорядков (полное разложение). Итого, вывод~---~надо смотреть, как детерминант определяли на лекции :) И отталкиваться от этого.}
+    \begin{enumerate}
+      \item Линейность по столбцу (строке)~---~полилинейность:
+        \begin{equation}\label{eq:poly-linearity}
+          \left\{
+            \begin{aligned}
+              &\det (\bds a_1, \ldots, \underbrace{\bds p + \bds q}_{\bds a_i}, \ldots, \bds a_n)
+                = \det (\bds a_1, \ldots, \bds p, \ldots, \bds a_n)
+                + \det (\bds a_1, \ldots, \bds q, \ldots, \bds a_n)\\
+              &\det (\bds a_1, \ldots, \underbrace{\alpha \bds p}_{\bds a_i}, \ldots, \bds a_n)
+                = \alpha \det (\bds a_1, \ldots, \bds p, \ldots, \bds a_n)
+            \end{aligned}
+          \right.
+        \end{equation}
+      \item При перестановке двух столбцов (строк) матрицы её определитель меняет знак (кососимметричность, антисимметричность по столбцам/строкам):
+        \begin{equation}\label{eq:row-swap}
+          \det (\bds a_1, \ldots, \bds a_{\textcolor{light-cyan}{i}}, \ldots, \bds a_{\textcolor{light-purple}{j}}, \ldots, \bds a_n)
+          = -\det (\bds a_1, \ldots, \bds a_{\textcolor{light-purple}{j}}, \ldots, \bds a_{\textcolor{light-cyan}{i}}, \ldots, \bds a_n)
+        \end{equation}
+      \item Если два столбца (две строки) матрицы совпадают, то её определитель равен нулю:
+        \begin{equation}\label{eq:same-rows}
+          \det (\bds a_1, \ldots, \bds p, \ldots, \bds p, \ldots, \bds a_n) = 0
+        \end{equation}
+    \end{enumerate}
+  \end{theorem}
+  
+  Свойство~(\ref{eq:poly-linearity}) очевидным образом следует из формулы полного разложения~(\ref{eq:complete-expansion}).
+  Свойство~(\ref{eq:same-rows}) несложно вывести из свойства~(\ref{eq:row-swap}).
+  Свойство же~(\ref{eq:row-swap})... тоже следует из~(\ref{eq:complete-expansion}).
+  Поймём же, почему.
+  Пусть между столбцами $i$ и $j$ было ещё $k \hm\geq 0$ столбцов.
+  Среди этих $k$ столбцов было $k_{>i}$ тех, номера которых больше $i$, а также $k_{<i}$ с номерами меньше $i$ (то есть $k_{<i} \hm= k \hm- k_{>i}$).
+  Аналогично, было $k_{>j}$ и $k_{<j} \hm= k - k_{>j}$ столбцов среди тех же $k$, номера которых были соответственно больше и меньше $j$.
+  Число беспорядков до перестановки столбцов $i$ и $j$ было равно $k_{<i} \hm+ k_{>j}$ плюс, возможно, ещё один беспорядок, если $j \hm< i$.
+  После же интересующей нас перестановки столбцов беспорядков станет $k_{>i} \hm+ k_{<j} \hm= 2k \hm- (k_{<i} \hm+ k_{>j})$ и \emph{минус тот возможный беспорядок, который был при $j \hm< i$}.
+  Несложно видеть, что именно беспорядок из-за пары $i$ и $j$ (или возникающий, или пропадающий) и меняет знак определителя при перемене мест столбцов $i$ и $j$.
+  
+  И ещё пара более частных утверждений, которые следуют из/являются подслучаями свойств выше:
+  \begin{itemize}
+    \item Общий множитель элементов строки (столбца) можно выносить за знак определителя:
+      \begin{equation}\label{eq:common-multiplier-out-of-det}
+        \det (\bds a_1, \ldots, \alpha \bds p, \ldots, \bds a_n)
+          = \alpha \cdot \det (\bds a_1, \ldots, \bds p, \ldots, \bds a_n)
+      \end{equation}
+    \item К любой строке (столбцу) матрицы можно прибавлять линейную комбинацию других строк (столбцов)~---~определитель при этом не изменится:
+      \begin{equation}\label{eq:add-rows-to-row-det-unchanged}
+        \det (\bds a_1, \ldots, \bds a_i, \ldots, \bds a_n)
+          = \det (\bds a_1, \ldots, \sum_{\substack{1 \leq j \leq n\\j \not= i}} \alpha_j \bds a_j + \bds a_i, \ldots, \bds a_n)
+      \end{equation}
+    \item При вычислении определителя матрицы вида $\alpha A$ скаляр $\alpha$ можно выносить за знак $\det$ следующим образом:
+      \begin{equation}
+        \det \alpha A = \alpha^n \det A
+      \end{equation}
+  \end{itemize}
+  
+  \begin{example}
+    Определитель единичной матрицы:
+    \[
+      \det E = 1^n = 1
+    \]
+  \end{example}
+  
+  \begin{proposition}
+    Определитель транспонированной матрицы
+    \[
+      \det A^T = \det A
+    \]
+  \end{proposition}
+  
+  \begin{theorem}
+    Определитель произведения двух квадратных матриц:
+    \begin{equation}\label{eq:det-of-product}
+      \det (AB) = \det A \cdot \det B
+    \end{equation}
+  \end{theorem}
+  
+  
+  \subsection{Обратная матрица}
+  
+  \begin{definition}
+    Для невырожденной матрицы $A \hm\in \RR^{n\times n}$ \emph{обратной} называется матрица $B \hm\in \RR^{n\times n}$, такая что
+    \[
+      AB = BA = E
+    \]
+    
+    Обратная к матрице~$A$ обозначается как $A^{-1}$.
+  \end{definition}
+  
+  \begin{remark}
+    На самом деле для того, чтобы $B$ была обратной к $A$, достаточно выполнения \emph{лишь одного} из условий $AB \hm= E$ или $BA \hm= E$ (и тогда второе будет выполнено автоматически).
+    При желании можно это проверить :)
+  \end{remark}
+  
+  \begin{proposition}
+    Определитель матрицы, обратной к \emph{невырожденной} матрице
+    \[
+      \det A^{-1} = \bigl(\det A\bigl)^{-1}
+    \]
+  \end{proposition}
+  
+  \begin{proof}
+    Из определения обратной матрицы:
+    \[
+      A A^{-1} = E
+    \]
+    
+    Возьмём определитель от обеих частей равенства, и преобразуем левую часть, пользуясь свойством~(\ref{eq:det-of-product}) определителя:
+    \[
+      \det\left(A A^{-1}\right) = \det(E)
+        \Leftrightarrow \det A \det A^{-1} = 1
+        \Leftrightarrow \det A^{-1} = 1 / \det A
+    \]
+  \end{proof}
+  
+  Оказывается, что для данной невырожденной матрицы обратную можно сразу найти по специальной формуле.
+  Придём же к этой формуле, например, для матрицы размера $3 \times 3$ в общем виде:
+  \[
+    A = \begin{pmatrix}
+      a_{11} & a_{12} & a_{13}\\
+      a_{21} & a_{22} & a_{23}\\
+      a_{31} & a_{32} & a_{33}
+    \end{pmatrix}
+  \]
+  
+  Будем искать обратную в виде:
+  \[
+    B = \begin{pmatrix}
+      b_{1\textcolor{light-purple}{1}} & b_{12} & b_{13}\\
+      b_{2\textcolor{light-purple}{1}} & b_{22} & b_{23}\\
+      b_{3\textcolor{light-purple}{1}} & b_{32} & b_{33}
+    \end{pmatrix}
+  \]
+  
+  Мы знаем, что, раз $B$ обратная к $A$, то верно, например, следующее:
+  \[
+    AB = E
+  \]
+  
+  Это выражение можно рассматривать как матричное уравнения для поиска~$B$.
+  Чему равносильно одно такое матричное уравнение?
+  Девяти скалярным.
+  Девять уравнений, девять неизвестных (составляющие~$B$)...
+  Получится решить?
+  Может быть, но иметь дело с системой $9$ на $9$ ``не очень хочется''...
+  
+  Посмотрим ещё раз, внимательнее, что происходит в сточке $AB \hm= E$.
+  Каждый элемент на позиции $ij$ матрицы~--~результата произведения~$AB$ вычисляется с помощью $i$-ой строки $A$ и $j$-го столбца $B$.
+  Таким образом, элементы первого столбца $B$ участвуют при ``составлении'' только первого столбца матрицы $E$.
+  Аналогичная ситуация~---~и со всеми оставшимися столбцами (в нашем случае это, очевидно, второй и третий столбцы, а вообще, если бы матрица~$A$ была порядка~$n$, то это бы были все столбцы вплоть до $n$-го).
+  Выходит, выражение $AB \hm= E$ на самом деле приводит нас не просто к ``какой-то'' системе $9$ на $9$, а к системе, состоящей из трёх подсистем $3 \hm\times 3$!
+  Которые, стоит надеяться, мы уже сможем решить...
+  
+  Рассмотрим такую подсистему для поиска первого столбца $\textcolor{light-purple}{\bds b_1}$ матрицы~$B$:
+  \[
+    A \bds b_{\textcolor{light-purple}{1}} = \bds e_1
+  \]
+  где $\bds e_1$ означает первый столбец единичной матрицы~$E$.
+  Система в ``развёрнутом виде'':
+  \[
+    \left\{
+      \begin{aligned}
+        &a_{11} b_{1\textcolor{light-purple}{1}} + a_{12} b_{2\textcolor{light-purple}{1}} + a_{13} b_{3\textcolor{light-purple}{1}} = 1\\
+        &a_{21} b_{1\textcolor{light-purple}{1}} + a_{22} b_{2\textcolor{light-purple}{1}} + a_{23} b_{3\textcolor{light-purple}{1}} = 0\\
+        &a_{31} b_{1\textcolor{light-purple}{1}} + a_{32} b_{2\textcolor{light-purple}{1}} + a_{33} b_{3\textcolor{light-purple}{1}} = 0
+      \end{aligned}
+    \right.
+  \]
+  
+  Определитель этой системы есть просто определитель исходной матрицы $\det A$!
+  Причём, так как~$A$ невырожденная, то $\det A \hm{\not=} 0$.
+  Поэтому систему можно решить методом Крамера:
+  \[
+    b_{\textcolor{light-cyan}{1}\textcolor{light-purple}{1}}
+    = \frac{1}{\det A} \begin{vmatrix}
+      \textcolor{light-cyan}{1} & a_{\textcolor{light-purple}{1}2} & a_{\textcolor{light-purple}{1}3}\\
+      0                         & a_{22}                           & a_{23}\\
+      0                         & a_{32}                           & a_{33}
+    \end{vmatrix} = \frac{(-1)^{\textcolor{light-purple}{1}+\textcolor{light-cyan}{1}} M_{\textcolor{light-purple}{1}\textcolor{light-cyan}{1}}}{\det A}
+  \]
+  \[
+    b_{\textcolor{light-cyan}{2}\textcolor{light-purple}{1}}
+    = \frac{1}{\det A} \begin{vmatrix}
+      a_{\textcolor{light-purple}{1}1} & \textcolor{light-cyan}{1} & a_{\textcolor{light-purple}{1}3}\\
+      a_{21}                           & 0                         & a_{23}\\
+      a_{31}                           & 0                         & a_{33}
+    \end{vmatrix} = \frac{(-1)^{\textcolor{light-purple}{1}+\textcolor{light-cyan}{2}} M_{\textcolor{light-purple}{1}\textcolor{light-cyan}{2}}}{\det A}
+  \]
+  \[
+    b_{\textcolor{light-cyan}{3}\textcolor{light-purple}{1}}
+    = \frac{1}{\det A} \begin{vmatrix}
+      a_{\textcolor{light-purple}{1}1} & a_{\textcolor{light-purple}{1}2} & \textcolor{light-cyan}{1}\\
+      a_{21}                           & a_{22}                           & 0\\
+      a_{31}                           & a_{32}                           & 0
+    \end{vmatrix} = \frac{(-1)^{\textcolor{light-purple}{1}+\textcolor{light-cyan}{3}} M_{\textcolor{light-purple}{1}\textcolor{light-cyan}{3}}}{\det A}
+  \]
+  
+  Где при вычислении определителей пользовались разложением по ``нужному'' столбцу (тому, где всего одна единица).
+  Также использовано обозначение~$M_{ij}$ для \emph{дополнительного минора} элемента $a_{ij}$ матрицы~$A$ (определитель подматрицы, получающейся из~$A$ вычёркиванием строки и столбца, где стоит~$a_{ij}$, то есть вычёркиванием $i$-ой строки и $j$-го столбца).\
+  
+  Не сложно заметить закономерность, верную для всех элементов первого столбца~$B$ ($i \hm= 1, 2, 3$, $j \hm= 1$).
+  А также и для всех столбцов~$B$ ($j \hm= 1, 2, 3$).
+  То есть получаем формулу для нахождения элементов обратной матрицы:
+  \begin{equation}\label{eq:inverse-matrix}
+    \boxed{
+      b_{ij} = \frac{(-1)^{j + i} M_{ji}}{\det A}
+    }
+  \end{equation}
+  
+  \begin{exercise}
+    Какие формулы для вычисления элементов $b_{ij}$ получатся, если ``отталкиваться'' от соотношения $BA \hm= E$?
+  \end{exercise}
+  
+  
+  
+  
+  
+  
+  
+  \section{Задачи}
+  
+  \subsection{\# 14.23(11)}
+  
+  Вычислить определитель порядка~$n$:
+  \[
+    \Delta_n = \det A_n
+  \]
+  \[
+    A_n = \begin{pmatrix}
+      1      & 2      & 2      & \ldots & 2      & 2\\
+      2      & 1      & 2      & \ldots & 2      & 2\\
+      \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+      2      & 2      & 2      & \ldots & 1      & 2\\
+      2      & 2      & 2      & \ldots & 2      & 1
+    \end{pmatrix}
+  \]
+  
+  \begin{solution}
+    \leavevmode
+    
+    \dout{После $100$ грамм} Можно ``увидеть'', что суммы элементов матрицы~$A_n$ по строкам и по столбцам одинаковы...
+    
+    Но в таком случае сразу понятно, что стоит попробовать сделать: прибавим к одной строке, например, к первой, все остальные.
+    Получим строку из одинаковых элементов.
+    Определитель при этом не изменится~(\ref{eq:add-rows-to-row-det-unchanged}).
+    Далее вынесем общий множитель элементов первой строки ``за определитель''~(\ref{eq:common-multiplier-out-of-det})~---~получим строку из единиц.
+    И потом попытаемся ``упростить'' все остальные строки, используя эту первую.
+    \begin{equation*}
+    \begin{split}
+      \begin{vmatrix}
+        1      & 2      & 2      & \ldots & 2      & 2\\
+        2      & 1      & 2      & \ldots & 2      & 2\\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+        2      & 2      & 2      & \ldots & 1      & 2\\
+        2      & 2      & 2      & \ldots & 2      & 1
+      \end{vmatrix}
+      &= \bigl(2(n-1) + 1\bigr) \cdot \begin{vmatrix}
+        1      & 1      & 1      & \ldots & 1      & 1\\
+        2      & \hphantom{\scalebox{0.8}[1.0]{-}}1\hphantom{\scalebox{0.8}[1.0]{-}} & 2      & \ldots & 2      & 2\\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+        2      & 2      & 2      & \ldots & \hphantom{\scalebox{0.8}[1.0]{-}}1\hphantom{\scalebox{0.8}[1.0]{-}} & 2\\
+        2      & 2      & 2      & \ldots & 2      & \hphantom{\scalebox{0.8}[1.0]{-}}1\hphantom{\scalebox{0.8}[1.0]{-}}
+      \end{vmatrix}\\
+      &= \bigl(2(n-1) + 1\bigr) \cdot \begin{vmatrix}
+        1      & 1      & 1      & \ldots & 1      & 1\\
+        0      & -1     & 0      & \ldots & 0      & 0\\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+        0      & 0      & 0      & \ldots & -1     & 0\\
+        0      & 0      & 0      & \ldots & 0      & -1
+      \end{vmatrix}
+      = (-1)^{n-1} (2n-1)
+    \end{split}
+    \end{equation*}
+    % TODO: fix length of the phantom minus (currently it is "hand-crafted"), see: https://tex.stackexchange.com/questions/6058/making-a-shorter-minus
+  \end{solution}
+  
+  
+  \subsection{\# 14.24(1)}
+  
+  Вычислить определитель порядка~$n$ (полезно получить рекуррентную формулу):
+  \[
+    \Delta_n = \det A_n
+  \]
+  \[
+    A_n = \begin{pmatrix}
+      1      & 1      & 1      & \ldots & 1      & 1      & 1\\
+      1      & 1      & 0      & \ldots & 0      & 0      & 0\\
+      0      & 1      & 1      & \ldots & 0      & 0      & 0\\
+      \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots\\
+      0      & 0      & 0      & \ldots & 1      & 1      & 0\\
+      0      & 0      & 0      & \ldots & 0      & 1      & 1
+    \end{pmatrix}
+  \]
+  
+  \begin{solution}
+    По первой строчке, очевидно, раскладывать не стоит.
+    Но по первому столбцу~---~вполне можно попробовать:
+    \[
+      \begin{vmatrix}
+        1      & 1      & 1      & \ldots & 1      & 1      & 1\\
+        1      & 1      & 0      & \ldots & 0      & 0      & 0\\
+        0      & 1      & 1      & \ldots & 0      & 0      & 0\\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots\\
+        0      & 0      & 0      & \ldots & 1      & 1      & 0\\
+        0      & 0      & 0      & \ldots & 0      & 1      & 1
+      \end{vmatrix}
+      = \begin{vmatrix}
+        1      & 0      & \ldots & 0      & 0      & 0\\
+        1      & 1      & \ldots & 0      & 0      & 0\\
+        \vdots & \vdots & \ddots & \vdots & \vdots & \vdots\\
+        0      & 0      & \ldots & 1      & 1      & 0\\
+        0      & 0      & \ldots & 0      & 1      & 1
+      \end{vmatrix} - \begin{vmatrix}
+        1      & 1      & \ldots & 1      & 1      & 1\\
+        1      & 1      & \ldots & 0      & 0      & 0\\
+        \vdots & \vdots & \ddots & \vdots & \vdots & \vdots\\
+        0      & 0      & \ldots & 1      & 1      & 0\\
+        0      & 0      & \ldots & 0      & 1      & 1
+      \end{vmatrix}
+    \]
+    
+    Первый из определителей справа уже ``считается'' (его самого можно разложить по первой строке, потом тот, который останется после него и т.д.).
+    А второй, очевидно, ``совсем как'' исходный, только на порядок меньше.
+    Итого, получаем формулу:
+    \[
+      \Delta_n = 1 - \Delta_{n-1}
+    \]
+    
+    Но как теперь вычислить $\Delta_n$?..
+    Сразу из формулы это не совсем очевидно.
+    Поэтому посмотрим на определители меньших порядков и попытаемся ``увидеть'' закономерность (помня про полученную формулу):
+    \[
+      \Delta_1 = |1| = 1
+    \]
+    \[
+      \Delta_2 = \begin{vmatrix}
+        1 & 1\\
+        1 & 1
+      \end{vmatrix} = 0 = 1 - \Delta_1
+    \]
+    \[
+      \Delta_3 = \begin{vmatrix}
+        1 & 1 & 1\\
+        1 & 1 & 0\\
+        0 & 1 & 1
+      \end{vmatrix} = 1 = 1 - \Delta_2
+    \]
+    
+    Кажется, теперь должно быть понятно, ``что происходит''.
+    ``Прыжки'' с единицы на ноль и обратно.
+    Таким образом, приходим к формуле (не рекуррентной) для определителя порядка~$n$:
+    \[
+      \Delta_n = \begin{cases}
+        0,\quad \mbox{если } n = 0 \mmod{2}\\
+        1,\quad \mbox{если } n = 1 \mmod{2}
+      \end{cases}
+    \]
+    
+    Или так:
+    \[
+      \Delta_n = \frac{1 - (-1)^n}{2}
+    \]
+    
+    А можно и так:
+    \[
+      \Delta_n = \left|\sin{\frac{n \pi}{2}}\right|
+    \]
+    
+    Или даже так:
+    \[
+      \Delta_n = 1 - D\left(\sqrt{2^{|2022 - n|}}\right)
+    \]
+    где $D(x)$~---~функция Дирихле (\href{https://en.wikipedia.org/wiki/Dirichlet_function}{``индикатор'' множества рациональных чисел}).
+  \end{solution}
+  
+  
+  \subsection{\# 14.24(7)}
+  
+  Вычислить определитель Вандермонда порядка~$n$ (полезно получить рекуррентную формулу):
+  \[
+    \Delta_n = \det V_n
+  \]
+  \[
+    V_n = \begin{pmatrix}
+      1               & 1               & 1               & \ldots & 1\\
+      \lambda_1       & \lambda_2       & \lambda_3       & \ldots & \lambda_n\\
+      \lambda_1^2     & \lambda_2^2     & \lambda_3^2     & \ldots & \lambda_n^2\\
+      \vdots          & \vdots          & \vdots          & \ddots & \vdots\\
+      \lambda_1^{n-1} & \lambda_2^{n-1} & \lambda_3^{n-1} & \ldots & \lambda_n^{n-1}\\
+    \end{pmatrix}
+  \]
+  
+  \begin{solution}
+    Решим задачу несколькими способами.
+    
+    \medskip
+    
+    \emph{Способ $1$: ``рассуждающий''}.
+    
+    Вспомним формулу полного разложения~(\ref{eq:complete-expansion}).
+    В случае определителя Вандермонда она примет вид:
+    \begin{equation}\label{eq:p14-24-7-full-expansion}
+      \det V_n = \sum_{(j_1, \ldots, j_n)} (-1)^{N(j_1, \ldots, j_n)} 1 \cdot \lambda_{j_2}^1 \cdot \ldots \cdot \lambda_{j_n}^{n-1}
+    \end{equation}
+    Иными словами, сумма слагаемых, каждое из которых есть произведение элементов из разных строк и столбцов.
+    А потому обязательно будет множитель $1$ (элемент из первой строки), ``какой-то $\lambda$'' в первой степени (вторая строка) ``какой-то $\lambda$'' во второй и т.д.
+    Суммарная степень всех лямбд в каждом из слагаемых одинакова и равна:
+    \[
+      0 + 1 + 2 + \ldots + (n-1) = \frac{n(n-1)}{2}
+    \]
+    
+    Таким образом, на $\det V_n$ можно смотреть как на многочлен от лямбд $p(\lambda_1, \ldots, \lambda_n)$ степени $n(n \hm- 1) \hm/ 2$.
+    
+    Что ещё можно заметить ``интересного''?
+    Лямбды ($n$ штук)~---~это как параметры, выбор которых определяет конкретное значение детерминанта.
+    И если окажется так, что какая-то пара лямбд одинаковы (например, $\lambda_1 \hm= \lambda_2$), то определитель в таком случае, по свойству~(\ref{eq:same-rows}), будет равен нулю!
+    Сколько всего есть пар лямбд с разными номерами?
+    Их всего
+    \[
+      C_n^2 \equiv \binom{n}{2} = \frac{n!}{2!(n-2)!} = \frac{n(n-1)}{2}
+    \]
+    Получается, что определитель как многочлен от лямбд $\det V_n \hm= p(\lambda_1, \ldots, \lambda_n)$ должен быть кратен разностям $(\lambda_j \hm- \lambda_i)$ при $j \hm{\not=} i$:
+    \[
+      p(\lambda_1, \ldots, \lambda_n) = \underbrace{(\lambda_{n} - \lambda_1) (\lambda_{n-1} - \lambda_1) \cdot \ldots \cdot (\lambda_2 - \lambda_1) \cdot (\lambda_{n} - \lambda_2) \cdot \ldots \cdot (\lambda_{n} - \lambda_{n-1})}_{\prod_{j > i} (\lambda_j - \lambda_i)} \cdot q(\lambda_1, \ldots, \lambda_n)
+    \]
+    где $q(\lambda_1, \ldots, \lambda_n)$~---~какой-то другой многочлен от лямбд.
+    Что можно сказать про этот многочлен?
+    Произведение ``скобок'' $\prod_{j > i} (\lambda_j \hm- \lambda_i)$ уже даёт многочлен степени $n(n\hm-1) \hm/ 2$.
+    Поэтому многочлен $q$ не может быть ничем иным, кроме как константой $q(\lambda_1, \ldots, \lambda_n) \hm= C \hm\in \RR$.
+    Чему равна эта константа?
+    Чтобы это понять, можно либо посмотреть на определители $V_n$ при небольших $n$:
+    \[
+      \Delta_1 = \det V_1 = 1
+    \]
+    \[
+      \Delta_2 = \det V_2 = \begin{vmatrix}
+        1         & 1\\
+        \lambda_1 & \lambda_2
+      \end{vmatrix} = (\lambda_2 - \lambda_1) \cdot 1
+    \]
+    
+    (Уже ``создаётся впечатление'', что $C \hm= 1$.
+    Хотя, возможно, $C$ просто как-то не очевидно зависит от $n$...)
+    
+    Либо начать раскрывать скобки в выражении для $p(\lambda_1, \ldots, \lambda_n)$, и посмотреть на член, получающийся при перемножении всех уменьшаемых:
+    \[
+      p(\lambda_1, \ldots, \lambda_n) = C \cdot \lambda_n^{n-1} \cdot \ldots \cdot \lambda_3^2 \lambda_2 + \ldots
+    \]
+    Но ведь это произведение $\lambda_n^{n-1} \hm\cdot \ldots \hm\cdot \lambda_3^2 \lambda_2$~---~это ведь одно из слагаемых в формуле полного разложения~(\ref{eq:p14-24-7-full-expansion})!
+    Причём такое, в котором совсем нет беспорядков.
+    Значит, $C \hm= 1$.
+    Итого, определитель Вандермонда порядка~$n$:
+    \begin{equation}\label{eq:vander-de-mond}
+      \Delta_n = \det V_n = \prod_{j > i} (\lambda_j - \lambda_i)
+    \end{equation}
+    
+    \medskip
+    
+    \emph{Способ $2$: ``догадавшийся и преобразующий''}.
+    
+    Попробуем ``по-честному'' вычислить $\Delta_n$.
+    Но перед тем, как вычислять, надо как-то упростить...
+    Можно, например, попробовать занулить как можно больше элементов в первом столбце (чтоб потом по нему разложить).
+    Это можно сделать следующим образом.
+    Будем из каждой строчки, начиная с последней и вплоть до второй, вычитать предыдущую, умноженную на~$\lambda_1$.
+    Определитель не поменяется~(\ref{eq:add-rows-to-row-det-unchanged}), но первый столбец станет ``проще'':
+    \[
+      \Delta_n
+      = \begin{vmatrix}
+        1      & 1                                           & 1                                           & \ldots & 1\\
+        0      & \lambda_2 - \lambda_1                       & \lambda_3 - \lambda_1                       & \ldots & \lambda_n - \lambda_1\\
+        0      & \lambda_2^2 - \lambda_2 \lambda_1           & \lambda_3^2 - \lambda_3 \lambda_1           & \ldots & \lambda_n^2 - \lambda_n \lambda_1\\
+        \vdots & \vdots                                      & \vdots                                      & \ddots & \vdots\\
+        0      & \lambda_2^{n-1} - \lambda_2^{n-2} \lambda_1 & \lambda_3^{n-1} - \lambda_3^{n-2} \lambda_1 & \ldots & \lambda_n^{n-1} - \lambda_n^{n-2} \lambda_1\\
+      \end{vmatrix}
+    \]
+    
+    Теперь можно разложить по первому столбцу (упрощённому в результате преобразований) получившийся определитель, а потом вынести общий множитель из каждого столбца:
+    \[
+      \Delta_n = (\lambda_2 - \lambda_1) (\lambda_3 - \lambda_1) \cdot \ldots \cdot (\lambda_n - \lambda_1) \cdot \begin{vmatrix}
+        1               & 1               & \ldots & 1\\
+        \lambda_2       & \lambda_3       & \ldots & \lambda_n\\
+        \vdots          & \vdots          & \ddots & \vdots\\
+        \lambda_2^{n-2} & \lambda_3^{n-2} & \ldots & \lambda_n^{n-2}\\
+      \end{vmatrix}
+    \]
+    
+    Но ведь оставшийся определитель~---~он ``почти как исходный'', только без $\lambda_1$ (и порядок на единицу меньше).
+    Значит, его можно преобразовать точно так же, ``исключив'' в результате $\lambda_2$.
+    И так далее, до конца, пока не останется определитель два на два $\left|\begin{smallmatrix} 1 & 1 \\ \lambda_{n-1} & \lambda_n \end{smallmatrix}\right|$.
+    Очевидно, итоговая формула получается такая же, как раньше~(\ref{eq:vander-de-mond}).
+    
+    \medskip
+    
+    \emph{Способ $3$: ``взявший что-то от второго (некоторая догадка в начале) и от первого (рассуждения)''}.
+    
+    Считая все лямбды параметрами, заменим $\lambda_n$ на $\lambda$ (почему бы и нет).
+    И рассмотрим следующий \emph{многочлен от $\lambda$}:
+    \[
+      p(\lambda) = \begin{vmatrix}
+        1               & 1               & 1               & \ldots & 1\\
+        \lambda_1       & \lambda_2       & \lambda_3       & \ldots & \lambda\\
+        \lambda_1^2     & \lambda_2^2     & \lambda_3^2     & \ldots & \lambda^2\\
+        \vdots          & \vdots          & \vdots          & \ddots & \vdots\\
+        \lambda_1^{n-1} & \lambda_2^{n-1} & \lambda_3^{n-1} & \ldots & \lambda^{n-1}\\
+      \end{vmatrix}
+    \]
+    
+    Как и раньше, замечаем, что при $\lambda \hm= \lambda_1$ получается ноль, при $\lambda \hm= \lambda_2$~---~тоже, и т.д.
+    Значит, многочлен $p(\lambda)$ имеет корни в точках $\lambda_1, \ldots, \lambda_n$, то есть представим как
+    \[
+      p(\lambda) = (\lambda - \lambda_1) \cdot \ldots \cdot (\lambda - \lambda_{n-1}) \cdot q(\lambda)
+    \]
+    где $q(\lambda)$~---~какой-то другой многочлен.
+    Какой?
+    Мы ведь ещё точно знаем, что в точке $\lambda_n$ многочлен $p$ равен значению определителя $\Delta_n$:
+    \[
+      p(\lambda_n) = (\lambda_n - \lambda_1) \cdot \ldots \cdot (\lambda_n - \lambda_{n-1}) \cdot q(\lambda_n) = \Delta_n
+    \]
+    
+    Раскрывая скобки, получаем:
+    \[
+      \Delta_n = \lambda_n^{n-1} q(\lambda_n) + \ldots
+    \]
+    где выделено слагаемое с $\lambda_n$ в степени $n \hm- 1$.
+    На что оно умножается?
+    Вспоминая формулу полного разложения~(\ref{eq:p14-24-7-full-expansion}), понимаем, что если собрать все слагаемые со множителем $\lambda_n^{n-1}$ и вынести его за скобку, то в скобках останется ровно $D_{n-1}$!
+    То есть сумма всех возможных комбинаций произведений элементов по одному из каждой строчки и столбца, кроме последних строчки и столбца (где стоит как раз $\lambda_n^{n-1}$).
+    Итого, получаем рекуррентную формулу:
+    \[
+      \Delta_n = (\lambda_n - \lambda_1) \cdot \ldots \cdot (\lambda_n - \lambda_{n-1}) \cdot \Delta_{n-1}
+    \]
+    которая в результате ``раскручивания'' даёт то же, что получали ранее.
+  \end{solution}
+  
+  
+  \subsection{\# 15.11(7)}
+  
+  Вычислить матрицу в степени:
+  \[
+    \begin{pmatrix}
+      \cos \alpha & -\sin \alpha\\
+      \sin \alpha & \cos \alpha
+    \end{pmatrix}^n
+  \]
+  
+  \begin{solution}
+    \leavevmode
+    
+    \emph{Способ $1$: ``в лоб''.}
+    
+    Приведём лишь общий план вполне рабочего, но ``не очень интересного'' способа решения.
+    Можно найти ответ для $n \hm= 2$, $n \hm= 3$.
+    И увидеть некоторую ``закономерность''.
+    Которую далее по индукции можно будет строго обосновать.
+    
+    \medskip
+    
+    \emph{Способ $2$: ``поинтереснее''.}
+    
+    Матрица, которую просят возвести в степень~---~это матрица поворота.
+    То есть в некоторой прямоугольной системе координат она задаёт поворот вокруг начала на угол $\alpha$.
+    Но возведение этой матрицы в степень~$n$ есть матрица преобразования, являющегося композицией~$n$ последовательных поворотов~(\ref{eq:idea-behind-matrix-multiplication})!
+    Таким образом, можно сразу выписать ответ:
+    \[
+      \begin{pmatrix}
+        \cos \alpha & -\sin \alpha\\
+        \sin \alpha & \cos \alpha
+      \end{pmatrix}^n
+      = \begin{pmatrix}
+        \cos n\alpha & -\sin n\alpha\\
+        \sin n\alpha & \cos n\alpha
+      \end{pmatrix}
+    \]
+  \end{solution}
+  
+  
+  \subsection{\# 15.45(1)}
+  
+  Вычислить:
+  \[
+    \begin{pmatrix}
+      3 & 5\\
+      5 & 9
+    \end{pmatrix}^{-1}
+  \]
+  
+  \begin{solution}
+    Исходная матрица~$A$, очевидно, невырожденная.
+    И её определитель равен:
+    \[
+      \det A = 3 \cdot 9 - 5 \cdot 5 = 2
+    \]
+    Значит, обратная матрица~$B$ существует.
+    Её можно найти, просто пользуясь формулами~(\ref{eq:inverse-matrix}):
+    \[
+      \left\{
+        \begin{aligned}
+          &b_{11} = \frac{9}{2},\quad b_{12} = \frac{-5}{2}\\
+          &b_{21} = \frac{-5}{2},\quad b_{22} = \frac{3}{2}
+        \end{aligned}
+      \right.
+    \]
+    
+    Итого:
+    \[
+      B = \frac{1}{2} \begin{pmatrix}
+        9 & -5\\
+        -5 & 3
+      \end{pmatrix}
+    \]
+    
+    Проверяя, убеждаемся, что $B$~---~в самом деле обратная к $A$:
+    \[
+      AB = BA = E
+    \]
+  \end{solution}
+  
+  
+  \subsection{\# 15.48(1)}
+  
+  Проверить, справедливо ли тождество:
+  \[
+    (A^T)^{-1} = (A^{-1})^T
+  \]
+  
+  \begin{solution}
+    Можно, пользуясь формулами~(\ref{eq:inverse-matrix}), вычислить обратные и сравнить поэлементно матрицу слева и справа.
+    
+    А можно пойти от определения.
+    Что значит, что $(A^{-1})^T$~---~обратная для $A^T$?
+    (Ведь именно это по сути просят проверить.)
+    \[
+      \left\{
+        \begin{aligned}
+          &A^T \cdot (A^{-1})^T \overset{\?}{=} E\\
+          &(A^{-1})^T \cdot A^T \overset{\?}{=} E
+        \end{aligned}
+      \right.
+    \]
+    
+    Не сложно убедиться, что, да, так и есть.
+    Значит, $(A^{-1})^T$~---~обратная для $A^T$.
+  \end{solution}
+  
+  
+  \subsection{\# 15.48(6)}
+  
+  Проверить, справедливо ли тождество:
+  \[
+    (A + B)^{-1} = A^{-1} + B^{-1}
+  \]
+  
+  \begin{solution}
+    Кажется, что это просто не может быть верно.
+    (Иначе, скорее всего, это бы уже обсудили при разговоре об обратной матрице.)
+    Значит, стоит думать о том, какой бы контрпример привести.
+    Но такой придумать не очень сложно.
+    Например:
+    \[
+      A = \begin{pmatrix}
+        1 & 0\\
+        0 & 1
+      \end{pmatrix}, \quad B = \begin{pmatrix}
+        -1 & 0\\
+        0 & -1
+      \end{pmatrix}
+    \]
+    
+    Хорошо, если всё-таки считать, что на вход (тождеству!) надо обязательно подавать такие матрицы, чтоб левая и правая части как минимум существовали, то можно взять, например:
+    \[
+      A = \begin{pmatrix}
+        1/\sqrt{2} & 0\\
+        0 & 1/\sqrt{2}
+      \end{pmatrix}, \quad B = \begin{pmatrix}
+        0 & -1/\sqrt{2}\\
+        1/\sqrt{2} & 0
+      \end{pmatrix}
+    \]
+  \end{solution}
+  
+  
+  
+  \subsection{\# 15.65(1)}
+
+  Решить матричное уравнение:
+  \[
+    \begin{pmatrix}
+      2 & 5\\
+      1 & 3
+    \end{pmatrix} X = \begin{pmatrix}
+      2 & 1\\
+      1 & 1
+    \end{pmatrix}
+  \]
+  
+  \begin{solution}
+    Очевидно, матрица~$X$ состоит из $2$ строк и $2$ столбцов.
+    
+    Можно бы было ввести обозначения для элементов матрицы~$X$, переписать матричное уравнение в виде системы скалярных и решить (решить точно получится, причём единственным образом, потому что матрица системы невырождена).
+    А можно поступить иначе.
+    
+    Раз матрица~--~левый множитель невырождена, значит, для неё существует обратная.
+    Домножим на неё \emph{слева} обе части уравнения:
+    \[
+      \underbrace{\begin{pmatrix}
+        2 & 5\\
+        1 & 3
+      \end{pmatrix}^{-1}
+      \begin{pmatrix}
+        2 & 5\\
+        1 & 3
+      \end{pmatrix}}_{E} X = \begin{pmatrix}
+        2 & 5\\
+        1 & 3
+      \end{pmatrix}^{-1} \begin{pmatrix}
+        2 & 1\\
+        1 & 1
+      \end{pmatrix}
+    \]
+    
+    Таким образом:
+    \[
+      X = \begin{pmatrix}
+        2 & 5\\
+        1 & 3
+      \end{pmatrix}^{-1} \begin{pmatrix}
+        2 & 1\\
+        1 & 1
+      \end{pmatrix}
+      = \begin{pmatrix}
+        3 & -5\\
+        -1 & 2
+      \end{pmatrix} \begin{pmatrix}
+        2 & 1\\
+        1 & 1
+      \end{pmatrix}
+      = \begin{pmatrix}
+        1 & -2\\
+        0 & 1
+      \end{pmatrix}
+    \]
+    
+    \begin{exercise}
+      Что можно бы было сделать (и можно ли вообще было бы что-то сделать), чтоб найти $X$, если бы в уравнении матрица~--~известный множитель была вырожденной?
+      \[
+        A_{2 \times 2} X = B_{2 \times 2},\quad \det A = 0
+      \]
+    \end{exercise}
+  \end{solution}
+
+
+  \newpage
+  
+  \section{Дополнение}
+  
+  \subsection{``Время определить определитель ещё раз~---~Yes honey...''}
+  
+  Есть ещё пара способов ввести определитель, которые основаны на \emph{перечислении свойств, которыми должна обладать функция $\det$}.\footnote{Да, про это уже было в дополнении к \href{https://github.com/Alvant/GeomeSeminare/tree/master2022/seminars/geome/seminar01}{самому первому семинару}, но вспомним ещё раз в дополнении и здесь, раз снова тема определители.}
+  (Это всё даёт ``тот же самый'' определитель, что и рекурсивная формула~(\ref{eq:recursive-det}), и формула полного разложения~(\ref{eq:complete-expansion}).)
+  
+  \begin{definition}[Вариант $1$\footnote{Беклемишев~Д.~В. <<Курс аналитической геометрии и линейной алгебры>>.}]
+    Функция $f \colon \RR^{n \times n} \to \RR$ называется определителем (детерминантом) и обозначается $\det$, если
+    \begin{itemize}
+      \item Функция $f$ является линейным однородным многочленом от элементов любой строки:
+      \[
+        \left\{
+          \begin{aligned}
+            &f(A) = h_1 a_{i1} + \ldots + h_n a_{in}\\
+            &1 \leq i \leq n\\
+            &h_j = h_j(a_1, \ldots, a_{i-1}, a_{i+1}, \ldots, a_{n}),\ 1 \leq j \leq n
+          \end{aligned}
+        \right.
+      \]
+      то есть коэффициенты в разложении по элементам строки не зависят от этой самой строки.
+      
+      \item Значение $f$ на вырожденной матрице\footnote{Если определять вырожденную матрицу как такую, у которой строки линейно зависимы.} равно нулю $0$.
+      \item Значение $f$ на единичной матрице $E_{n \times n}$ равно единице $1$.
+    \end{itemize}
+  \end{definition}
+  
+  \begin{definition}[Вариант $2$\footnote{\href{https://en.wikipedia.org/wiki/Determinant\#Definition}{https://en.wikipedia.org/wiki/Determinant}.}]
+    Функция $f \colon \RR^{n \times n} \to \RR$ называется определителем (детерминантом) и обозначается $\det$, если
+    \begin{itemize}
+      \item Функция $f$ полилинейна по строкам матрицы $A \in \RR^{n \times n}$ (\ref{eq:poly-linearity}).
+      \item Функция $f$ кососимметрична по строкам матрицы $A$ (\ref{eq:row-swap}).
+      \item Значение $f$ на единичной матрице $E_{n \times n}$ равно единице $1$.
+    \end{itemize}
+  \end{definition}
+  
+  \begin{definition}[Вариант $3$\footnote{Hans Schneider, George Phillip Barker. <<Matrices and Linear Algebra>>.}]
+    Функция $f \colon \RR^{n \times n} \to \RR$ называется определителем (детерминантом) и обозначается $\det$, если
+    \begin{itemize}
+      \item Функция $f$ полилинейна по строкам матрицы $A \in \RR^{n \times n}$ (\ref{eq:poly-linearity}).
+      \item Значение $f$ на матрице с двумя одинаковыми строками равно нулю $0$ (\ref{eq:same-rows}).
+      \item Значение $f$ на единичной матрице $E_{n \times n}$ равно единице $1$.
+    \end{itemize}
+  \end{definition}
+  
+  
+  \newpage  % TODO: without newpage, the task splits on several pages, with only several words at tht bottom of the first page
+  
+  \subsection{\# 14.23(16) (``Решение, о котором никто не просил'')}
+  
+  Вычислить определитель порядка~$n$:
+  \[
+    \Delta_n = \det A_n
+  \]
+  \[
+    A_n = \begin{pmatrix}
+      2      & 1      & 0      & 0      & \ldots & 0      & 0\\
+      1      & 2      & 1      & 0      & \ldots & 0      & 0\\
+      0      & 1      & 2      & 1      & \ldots & 0      & 0\\
+      \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+      0      & 0      & 0      & 0      & \ldots & 2      & 1\\
+      0      & 0      & 0      & 0      & \ldots & 1      & 2
+    \end{pmatrix}
+  \]
+  
+  \begin{solution}
+    \leavevmode
+    
+    \emph{``Скетч'' способа $1$: ``не хватающего звёзд с неба, но честного; рабоче-крестьянского''}.
+    
+    Знаем, как считать определитель треугольной матрицы.
+    Но~$A_n$ не треугольная.
+    Однако до треугольной ей не хватает ``немного''.
+    Так, видно, что смежные строки матрицы отличаются ``не сильно'', и можно попытаться ``поправить'' матрицу, вычитая, например, с некоторым коэффициентом из данной строки предыдущую...
+    
+    \medskip
+    
+    \emph{Способ $2$: ``где вначале всё стандартно, а потом следует не самый очевидный выкрутас, и аналитическая геометрия отходит на второй план''}.
+    
+    В первой строчке всего два ненулевых элемента~---~попробуем же разложить по ней определитель:
+    \[
+      \Delta_n
+      = 2 \cdot \begin{vmatrix}
+        2      & 1      & 0      & \ldots & 0      & 0\\
+        1      & 2      & 1      & \ldots & 0      & 0\\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+        0      & 0      & 0      & \ldots & 2      & 1\\
+        0      & 0      & 0      & \ldots & 1      & 2
+      \end{vmatrix} - \begin{vmatrix}
+        1      & 1      & 0      & \ldots & 0      & 0\\
+        0      & 2      & 1      & \ldots & 0      & 0\\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+        0      & 0      & 0      & \ldots & 2      & 1\\
+        0      & 0      & 0      & \ldots & 1      & 2
+      \end{vmatrix}
+    \]
+    
+    Второй определитель справа можно разложить по первому столбцу (там всего одна единица и все нули):
+    \[
+      \Delta_n
+      = 2 \cdot \begin{vmatrix}
+        2      & 1      & 0      & \ldots & 0      & 0\\
+        1      & 2      & 1      & \ldots & 0      & 0\\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots\\
+        0      & 0      & 0      & \ldots & 2      & 1\\
+        0      & 0      & 0      & \ldots & 1      & 2
+      \end{vmatrix} - \begin{vmatrix}
+        2      & 1      & \ldots & 0      & 0\\
+        \vdots & \vdots & \ddots & \vdots & \vdots\\
+        0      & 0      & \ldots & 2      & 1\\
+        0      & 0      & \ldots & 1      & 2
+      \end{vmatrix}
+    \]
+    
+    Иными словами:
+    \begin{equation}\label{eq:p14-23-16-recurrent}
+      \Delta_n = 2 \Delta_{n - 1} - \Delta_{n - 2}
+    \end{equation}
+    
+    Получили некоторое рекуррентное соотношение.
+    Его решение \emph{можно искать в следующем виде}:
+    \[
+      \Delta_n = C \lambda^n
+    \]
+    где $C$~---~константа (ненулевая, иначе все $\Delta_n$ нули, что не так), а $\lambda$~---~\emph{корень характеристического уравнения}, которое можно получить, подставив выражение для $\Delta_n$ в соотношение~(\ref{eq:p14-23-16-recurrent}).
+    Получим:
+    \[
+      C \lambda^n = 2 C \lambda^{n - 1} - C \lambda^{n - 2}
+    \]
+    
+    Откуда характеристическое уравнение:
+    \[
+      \boxed{\lambda^2 = 2 \lambda - 1} \Leftrightarrow (\lambda - 1)^2 = 0 \Leftrightarrow \lambda_{1, 2} = 1
+    \]
+    
+    Два совпавших корня.
+    Значит, общее решение $\Delta_n$ надо искать в виде:
+    \[
+      \Delta_n = (C_1 n + C_2) \lambda^n \xrightarrow{\lambda = 1} C_1 n + C_2,\quad C_1,\, C_2 \in \RR
+    \]
+    (можно подставить в соотношение~(\ref{eq:p14-23-16-recurrent}) и убедиться, что ``работает''; но если бы корни характеристического уравнения были разные, то решение надо бы было искать в другом виде).
+    
+    Чтобы найти константы, можно выписать \emph{начальные условия}:
+    \[
+      \left\{
+        \begin{aligned}
+          &\Delta_1 = |2| = 2 = C_1 + C_2\\
+          &\Delta_2 = \left|\begin{smallmatrix}2 & 1 \\ 1 & 2\end{smallmatrix}\right| = 3 = 2 C_1 + C_2
+        \end{aligned}
+      \right. \Leftrightarrow \left\{
+        \begin{aligned}
+          &C_1 = 1\\
+          &C_2 = 1
+        \end{aligned}
+      \right.
+    \]
+    
+    Таким образом,
+    \[
+      \Delta_n = n + 1
+    \]
+  \end{solution}
+  
+  
+  \subsection{\# 15.45(2) (``Для всех, кроме потока И.~А.~Чубарова'')}
+  
+  Вычислить обратную для матрицы
+  \[
+    A = \begin{pmatrix}
+      2 & -1 & 0\\
+      0 & 2 & -1\\
+      -1 & -1 & 1
+    \end{pmatrix}
+  \]
+  
+  \begin{solution}
+    Найдём обратную с помощью метода Гаусса.
+    В основе метода лежит следующее понятие и связанные с ним ``наблюдения''.
+    
+    \begin{definition}
+      Элементарные преобразования строк матрицы $A \in \RR^{m\times n}$:
+      \begin{itemize}
+        \item умножение строки на число, отличное от нуля;
+        \item прибавление к строке другой строки.
+      \end{itemize}
+    \end{definition}
+    
+    \begin{proposition}
+      Каждое элементарное преобразование строк матрицы $A \hm\in \RR^{m\times n}$ можно задать в виде невырожденной матрицы $S \hm\in \RR^{m \times m}$, которую надо умножить слева на $A$, чтобы провести преобразование.
+      При этом матрица $S$ не зависит от $A$.
+    \end{proposition}
+    
+    \begin{proposition}
+      ``Более сложные'' преобразования, которые сводятся к последовательности элементарных:
+      \begin{itemize}
+        \item перестановка строк;
+        \item прибавление к строке другой строки, умноженной на число;
+        \item прибавление к строке линейной комбинации других строк.
+      \end{itemize}
+    \end{proposition}
+    
+    \begin{proposition}
+      Если строки матрицы были линейно зависимы (независимы), то после элементарного преобразования строк они останутся линейно зависимы (независимы).
+    \end{proposition}
+    
+    \begin{proposition}
+      Для любой невырожденной матрицы $A$ существует последовательность элементарных преобразований строк $\{S_i\}_{i = 1}^N$, такая что она переводит матрицу $A$ в единичную:
+      \[
+        S_N \ldots S_1 A = E
+      \]
+    \end{proposition}
+    
+    Вернёмся к решению задачи.
+    Далее \textcolor{violet}{фиолетовым} цветом будем выделять элемент в столбце, с помощью которого будем занулять другие элементы в том же столбце.
+    Те, которые зануляем на данном шаге, будем отмечать \textcolor{red}{красным} цветом.
+    Когда столбец ``готов'' (остался один ненулевой~---~фиолетовый), переходим к другому столбцу и снова выбираем ненулевой элемент для ``зачищения столбца'', но \emph{из строчек, откуда ещё не выбирали}.
+    Сначала можно занулять все элементы ниже главное диагонали (\emph{прямой ход} метода Гаусса), а потом~---~выше главной диагонали (\emph{обратный ход} метода Гаусса).
+    \begin{equation*}
+    \begin{split}
+      &\left(
+        \begin{matrix}
+          2 & -1 & 0\\
+          0 & 2 & -1\\
+          -1 & -1 & 1
+        \end{matrix}
+        \BigMiddleThree
+        \begin{matrix}
+          1 & 0 & 0\\
+          0 & 1 & 0\\
+          0 & 0 & 1
+        \end{matrix}
+        \right)\\
+      %
+      \widesim{(1) \leftrightarrow (3)}\quad &\left(
+        \begin{matrix}
+          \textcolor{violet}{\bds{-1}} & -1 & 1\\
+          \textcolor{red}{\bds 0} & 2 & -1\\
+          \textcolor{red}{\bds 2} & -1 & 0
+        \end{matrix}
+        \BigMiddleThree
+        \begin{matrix}
+          0 & 0 & 1\\
+          0 & 1 & 0\\
+          1 & 0 & 0
+        \end{matrix}
+        \right)\\
+      %
+      \widesim{(3) = (3) + 2 \cdot (1)}\quad &\left(
+        \begin{matrix}
+          -1 & -1 & 1\\
+          0 & 2 & -1\\
+          0 & -3 & 2
+        \end{matrix}
+        \BigMiddleThree
+        \begin{matrix}
+          0 & 0 & 1\\
+          0 & 1 & 0\\
+          1 & 0 & 2
+        \end{matrix}
+        \right)\\
+      %
+      \widesim{(2) = (2) / 2}\quad &\left(
+        \begin{matrix}
+          -1 & -1 & 1\\
+          0 & \textcolor{violet}{\bds 1} & -1/2\\
+          0 & \textcolor{red}{\bds{-3}} & 2
+        \end{matrix}
+        \BigMiddleThree
+        \begin{matrix}
+          1 & 0 & 0\\
+          0 & 1/2 & 0\\
+          1 & 0 & 2
+        \end{matrix}
+        \right)\\
+      %
+      \widesim{(3) = (3) + 3 \cdot (2)}\quad &\left(
+        \begin{matrix}
+          -1 & -1 & \textcolor{red}{\bds{1}}\\
+          0 & 1 & \textcolor{red}{\bds{-1/2}}\\
+          0 & 0 & \textcolor{violet}{\bds{1/2}}
+        \end{matrix}
+        \BigMiddleThree
+        \begin{matrix}
+          0 & 0 & 1\\
+          0 & 1/2 & 0\\
+          1 & 3/2 & 2
+        \end{matrix}
+        \right)\\
+      %
+      \widesim{\substack{(1) = (1) - 2 \cdot (3)\\(2) = (2) + (3)}}\quad &\left(
+        \begin{matrix}
+          -1 & \textcolor{red}{\bds{-1}} & 0\\
+          0 & \textcolor{violet}{\bds{1}} & 0\\
+          0 & 0 & 1/2
+        \end{matrix}
+        \BigMiddleThree
+        \begin{matrix}
+          -2 & -3 & -3\\
+          1 & 2 & 2\\
+          1 & 3/2 & 2
+        \end{matrix}
+        \right)\\
+      %
+      \widesim{\substack{(1) = (1) + (2)\\(3) = 2 \cdot (3)}}\quad &\left(
+        \begin{matrix}
+          -1 & 0 & 0\\
+          0 & 1 & 0\\
+          0 & 0 & 1
+        \end{matrix}
+        \BigMiddleThree
+        \begin{matrix}
+          -1 & -1 & -1\\
+          1 & 2 & 2\\
+          2 & 3 & 4
+        \end{matrix}
+        \right)\\
+      %
+      \widesim{(1) = -1 \cdot (1)}\quad &\left(
+        \begin{matrix}
+          1 & 0 & 0\\
+          0 & 1 & 0\\
+          0 & 0 & 1
+        \end{matrix}
+        \BigMiddleThree
+        \begin{matrix}
+          1 & 1 & 1\\
+          1 & 2 & 2\\
+          2 & 3 & 4
+        \end{matrix}
+        \right)
+    \end{split}
+    \end{equation*}
+    
+    Таким образом,
+    \[
+      A^{-1} = \begin{pmatrix}
+        1 & 1 & 1\\
+        1 & 2 & 2\\
+        2 & 3 & 4
+      \end{pmatrix}
+    \]
+    
+    Можно (стоит) проверить:
+    \[
+      AA^{-1} = \begin{pmatrix}
+        2 & -1 & 0\\
+        0 & 2 & -1\\
+        -1 & -1 & 1
+      \end{pmatrix}
+      \cdot \begin{pmatrix}
+        1 & 1 & 1\\
+        1 & 2 & 2\\
+        2 & 3 & 4
+      \end{pmatrix}
+      = \begin{pmatrix}
+        1 & 0 & 0\\
+        0 & 1 & 0\\
+        0 & 0 & 1
+      \end{pmatrix}
+    \]
+    
+    Почему преобразования строк у ``сдвоенной'' матрицы позволило найти $A^{-1}$?
+    Каждый шаг метода Гаусса можно рассматривать как умножение слева на некоторую невырожденную матрицу $S_i$, задающую соответствующее элементарное преобразование строк:
+    \[
+      \bigl(A \mid E\bigr) \to \bigl(S_1 A \mid S_1 E\bigr) \to \ldots
+      \to \bigl(\overbrace{S_N \ldots S_1 A}^{E} \mid \overbrace{S_N \ldots S_1 E}^{B}\bigr)
+    \]
+    где единичная матрица $E \hm= S_N \ldots S_1 A$~---~то, что стремимся получить слева, справа же получается матрица $B \hm= S_N \ldots S_1 E \hm= S_N \ldots S_1$.
+    Выходит, $E \hm= BA$, что равносильно\footnote{Можно показать, что при $BA \hm= E$ обязательно выполняется также и $AB \hm= E$.} тому, что $B \hm= A^{-1}$.
+    
+    \medskip
+    
+    Найдём ещё интереса ради какую-нибудь $S_i$.
+    Например, $S_1$, которая задаёт перестановку строк.
+    Правда, перестановка строк~---~не совсем элементарное преобразование.
+    Разложим его сначала на элементарные.
+    
+    Мы хотим задать преобразование перестановки строк (первой и третьей):
+    \[
+      \begin{pmatrix}
+        2 & -1 & 0\\
+        0 & 2 & -1\\
+        -1 & -1 & 1
+      \end{pmatrix}
+      \longrightarrow \begin{pmatrix}
+        -1 & -1 & 1\\
+        0 & 2 & -1\\
+        2 & -1 & 0
+      \end{pmatrix}
+    \]
+    
+    Это преобразование можно представить как композицию преобразований (над-под каждой стрелочкой обозначено элементарное преобразование и его матрица\footnote{Матрица, которую можно получить, например, из единичной, проведя над её строками аналогичное преобразование.}):
+    \begin{equation*}
+    \begin{split}
+      &\begin{pmatrix}
+        2 & -1 & 0\\
+        0 & 2 & -1\\
+        -1 & -1 & 1
+      \end{pmatrix}\\
+      \xrightarrow[(3) = (3) + (1)]{\left(\begin{smallmatrix}1 & 0 & 0\\0 & 1 & 0\\1 & 0 & 1\end{smallmatrix}\right)}\quad &\begin{pmatrix}
+          2 & -1 & 0\\
+          0 & 2 & -1\\
+          1 & -2 & 1
+        \end{pmatrix}\\
+      \xrightarrow[(1) = (1) - (3)]{\left(\begin{smallmatrix}1 & 0 & -1\\0 & 1 & 0\\0 & 0 & 1\end{smallmatrix}\right)}\quad &\begin{pmatrix}
+          1 & 1 & -1\\
+          0 & 2 & -1\\
+          1 & -2 & 1
+        \end{pmatrix}\\
+      \xrightarrow[(3) = (3) + (1)]{\left(\begin{smallmatrix}1 & 0 & 0\\0 & 1 & 0\\1 & 0 & 1\end{smallmatrix}\right)}\quad &\begin{pmatrix}
+          1 & 1 & -1\\
+          0 & 2 & -1\\
+          2 & -1 & 0
+        \end{pmatrix}\\
+      \xrightarrow[(1) = -1 \cdot (1)]{\left(\begin{smallmatrix}-1 & 0 & 0\\0 & 1 & 0\\0 & 0 & 1\end{smallmatrix}\right)}\quad &\begin{pmatrix}
+          -1 & -1 & 1\\
+          0 & 2 & -1\\
+          2 & -1 & 0
+        \end{pmatrix}
+    \end{split}
+    \end{equation*}
+    
+    И в итоге, $S_1$, задающая первую перестановку строк:
+    \[
+      S_1 = \begin{pmatrix}
+          -1 & 0 & 0\\
+          0 & 1 & 0\\
+          0 & 0 & 1
+        \end{pmatrix}
+      \cdot \begin{pmatrix}
+          1 & 0 & 0\\
+          0 & 1 & 0\\
+          1 & 0 & 1
+        \end{pmatrix}
+      \cdot \begin{pmatrix}
+          1 & 0 & -1\\
+          0 & 1 & 0\\
+          0 & 0 & 1
+        \end{pmatrix}
+      \cdot \begin{pmatrix}
+          1 & 0 & 0\\
+          0 & 1 & 0\\
+          1 & 0 & 1
+        \end{pmatrix}
+      = \ldots
+    \]
+  \end{solution}
+\end{document}
