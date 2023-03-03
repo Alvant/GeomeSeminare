@@ -1,1 +1,1 @@
-# GeomeSeminare2022
+# GeomeSeminare (2022 – 2023)
