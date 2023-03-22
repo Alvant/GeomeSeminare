@@ -1,0 +1,724 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{mystyle}
+\usepackage{gensymb}
+
+
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+\graphicspath{ {images/} }
+
+
+% https://tex.stackexchange.com/questions/5461/is-it-possible-to-change-the-size-of-an-arrowhead-in-tikz-pgf
+\usetikzlibrary{arrows.meta}
+
+
+\DeclareMathOperator{\Image}{Im}
+
+\definecolor{pink}{RGB}{218, 3, 174}
+\definecolor{violet}{RGB}{148, 0, 211}
+\definecolor{green}{RGB}{0, 153, 0}
+\definecolor{orange}{RGB}{255, 153, 0}
+\definecolor{blue}{RGB}{31, 117, 254}
+
+
+% https://tex.stackexchange.com/a/101138/135045
+
+\newcommand\widesim[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{-.1\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5150\wd0}}{.6\ht0}%
+  }{O}{c}{F}{T}{S}%
+}}
+
+\newcommand{\BigMiddleThree}{\;\left|\vphantom{\begin{pmatrix} 0\\0\\0 \end{pmatrix}}\right.\;}
+\newcommand{\BigMiddleFour}{\;\left|\vphantom{\begin{pmatrix} 0\\0\\0\\0 \end{pmatrix}}\right.\;}
+
+
+% https://tex.stackexchange.com/questions/63531/how-to-write-quotation-marks-in-math-environment
+\DeclareMathSymbol{\mlq}{\mathord}{operators}{``}
+\DeclareMathSymbol{\mrq}{\mathord}{operators}{`'}
+
+
+\DeclareMathOperator{\Imag}{Im}
+
+
+% https://tex.stackexchange.com/questions/544453/undefined-control-sequence-after-paragraph
+\renewcommand{\paragraph}[1]{\noindent\textbf{#1}\quad}
+
+
+
+
+\author{Алексеев Василий}
+
+
+\title{Семинар 6}
+\date{14 + 17 марта 2023}
+
+
+\begin{document}
+  \maketitle
+  
+  \tableofcontents
+
+  \thispagestyle{empty}
+  
+  \newpage
+  
+  \pagenumbering{arabic}
+
+
+  \section{Линейные отображения 2}
+  
+  \subsection{О размерности ядра и множества значений отображения}
+  
+  Линейное отображение $\phi\colon X \hm\to Y$ задано матрицей $A_{m\times n}$ в базисах $\bds e \hm= (\bds e_1, \ldots, \bds e_n)$ в $X$ и $\bds f \hm= (\bds f_1, \ldots, \bds f_m)$ в $Y$:
+  \[
+    A = \begin{pmatrix}
+      -2 & 1 & 3 & -2\\
+      8 & 4 & 12 & -8\\
+      4 & -2 & -6 & 4
+    \end{pmatrix}
+  \]
+  
+  Надо найти ядро, множество значений отображения.
+  Выяснить, является ли оно инъективным, сюръективным.
+  
+  \begin{solution}
+    Из размера матрицы $A$ видно, что $\dim X \hm= 4$ и $\dim Y \hm= 3$.
+    
+    Найдём \textbf{ядро} $\phi$:
+    \[
+      \bds x \in \Ker\phi \Leftrightarrow \phi(\bds x) = \bds 0 \Leftrightarrow A \xi = 0
+    \]
+    где $\xi \hm\in \RR^4$ есть координатный столбец вектора $\bds x \in X$
+    Получается, для нахождения ядра надо просто решить однородную систему.
+    Сделаем это, упростив матрицу~$A$:
+    \begin{equation}\label{p-23-29-gauss}
+    \begin{split}
+      \begin{pmatrix}
+        -2 & 1 & 3 & -2\\
+         8 & 4 & 12 & -8\\
+         4 & -2 & -6 & 4
+      \end{pmatrix}
+      \sim \begin{pmatrix}
+        \textcolor{pink}{\bds {-2}} &  1 &  3 & -2\\
+        2                           &  1 &  3 & -2\\
+        2                           & -1 & -3 & 2
+      \end{pmatrix}
+      \sim \begin{pmatrix}
+        -2 & 1                        & 3 & -2\\
+         0 & \textcolor{pink}{\bds 1} & 3 & -2\\
+         0 & 0                        & 0 & 0
+      \end{pmatrix}
+      \sim \begin{pmatrix}
+        \textcolor{pink}{\bds 1} & \textcolor{pink}{\bds 0} & 0 & 0\\
+        \textcolor{pink}{\bds 0} & \textcolor{pink}{\bds 1} & 3 & -2\\
+                              0  &                       0  & 0 & 0
+      \end{pmatrix}
+    \end{split}
+    \end{equation}
+    
+    Произвольный вектор из ядра представим как
+    \[
+      \xi = \begin{pmatrix}
+        0 \\ -3t_1 + 2t_2 \\ t_1 \\ t_2
+      \end{pmatrix} = t_1 \cdot \begin{pmatrix}
+        0 \\ -3 \\ 1 \\ 0
+      \end{pmatrix} + t_2 \cdot \begin{pmatrix}
+        0 \\ 2 \\ 0 \\ 1
+      \end{pmatrix},\quad t_1, t_2 \in \RR
+    \]
+    
+    Видно, что в базисе $\Ker\phi$ два вектора.
+    Ядро не нулевое, а потому отображение~$\phi$ не инъективно.
+    
+    \medskip
+    
+    Остаётся найти \textbf{множество значений} $\phi$:
+    \[
+      \bds y \in \Imag\phi \Leftrightarrow \exists \bds x \in X \colon \phi(\bds x) = \bds y \Leftrightarrow A \xi = \eta
+    \]
+    где $\xi \hm\in \RR^4$ и $\eta \hm\in \RR^3$ есть координатные столбцы векторов $\bds x$ и $\bds y$ соответственно.
+    Получается, можно взять расширенную матрицу $(A \hm\mid \eta)$, упростить её и выписать ограничения на $\eta$, так чтобы система была совместна.
+    Упрощение матрицы~$A$ уже проведено в (\ref{p-23-29-gauss}).
+    Остаётся проделать те же самые преобразования со столбцом $\eta$:
+    \[
+      \begin{pmatrix}
+        y_1 \\ y_2 \\ y_3
+      \end{pmatrix}
+      \sim \begin{pmatrix}
+         y_1 \\ y_2/4 \\ y_3/2
+      \end{pmatrix}
+      \sim \begin{pmatrix}
+         y_1 \\ y_2/4 + y_1 \\ y_3/2 + y_1
+      \end{pmatrix}
+      \sim \ldots
+      \sim \begin{pmatrix}
+         \ldots \\ \ldots \\ \boxed{y_3/2 + y_1}
+      \end{pmatrix}
+    \]
+    
+    Доводить по-честному до конца упрощение вектора~$\eta$ было не обязательно: чтобы решение $A \xi \hm= \eta$ существовало (то есть чтобы $\eta$ был во множестве значений), главное занулить те компоненты, которые будут соответствовать нулевым строкам упрошённой матрицы системы~$A$:
+    \[
+      y_3/2 + y_1 = 0
+      \Leftrightarrow y_3 = -2 y_1
+      \Leftrightarrow \eta = \begin{pmatrix}
+        t_1 \\ t_2 \\ -2 t_1
+      \end{pmatrix} = t_1 \cdot \begin{pmatrix}
+        1 \\ 0 \\ -2
+      \end{pmatrix} + t_2 \cdot \begin{pmatrix}
+        0 \\ 1 \\ 0
+      \end{pmatrix},\quad t_1, t_2 \in \RR
+    \]
+    
+    Базис в $\Imag\phi$ ``виден'', векторов в нём также два.
+    Так как $\dim Y \hm= 3 \hm{\not=} 2 \hm= \dim \Imag\phi$, то отображение не сюръективно.
+    
+    \medskip
+    
+    \emph{``Наблюдение''}.
+    
+    В упрощённой матрице~$A$~(\ref{p-23-29-gauss}) первые два столбца оказались базисными.
+    Так как элементарные преобразования строк не меняют линейной зависимости между столбцами, то и первые два столбца $a_1, a_2 \hm\in \RR^3$ в исходной матрице~$A \hm= (a_1, a_2, a_3, a_4)$ можно взять в качестве базисных.
+    Что вообще есть $A \xi$?
+    На это произведение можно смотреть как на \emph{линейную комбинацию столбцов~$A$ с коэффициентами, записанными в столбец~$\xi$}:
+    \[
+      A \xi = (a_1, a_2, a_3, a_4) \begin{pmatrix}
+        x_1 \\ x_2 \\ x_3 \\ x_4
+      \end{pmatrix}
+      = x_1 a_1 + x_2 a_2 + x_3 a_3 + x_4 a_4
+      \xrightarrow[\mbox{\footnotesize базисные}]{\mbox{\footnotesize $a_1, a_2$}} \alpha a_1 + \beta a_2,\quad \alpha, \beta \in \RR
+    \]
+    
+    Получается, что множество значений преобразования~---~это линейная оболочка базисных столбцов матрицы~$A$!
+    \[
+      \Imag\phi = \{\alpha a_1 + \beta a_2 \mid \alpha, \beta \in \RR\} = \mathcal L(a_1, a_2)
+    \]
+    
+    То есть эти базисные столбцы и можно было взять в качестве базиса в $\Imag\phi$.
+    С одной стороны, число базисных столбцов~---~это ранг~$A$.
+    С другой, получается, это же~---~и число базисных в $\Imag\phi$, то есть $\dim\Imag\phi$, или $\Rg \phi$.
+    Приходим к следующему соотношению:
+    \[
+      \boxed{\Rg \phi = \Rg A}
+    \]
+    
+    Из интересного тут: матрица отображения~$A$ зависит от выбора базисов в~$X$ и $Y$.
+    То есть разные базисы~---~разные матрицы одного и того же отображения.
+    Однако ранги всех этих матриц оказываются одинаковыми и равны рангу отображения.
+    Таким образом, ранг матрицы отображения~---~это \emph{инвариант} относительно выбора базисов.
+    
+    Посмотрим ещё раз на упрощённую матрицу~$A$~(\ref{p-23-29-gauss}).
+    Всего четыре столбца.
+    Первые два~---~базисные.
+    Их число, как только что поняли, определяет размерность множества значений.
+    Вторые два столбца соответствуют свободным переменным в системе $A \xi \hm= \eta$, а потому определяют размерность ядра отображения.
+    Иными словами, получаем:
+    \[
+      \boxed{\Rg\phi + \dim\Ker\phi = \dim X}
+    \]
+    
+    Единственное, про что стоит ещё, по-хорошему, сказать отдельно: $\mathcal L(a_1, a_2)$ формально вообще не является $\Imag\phi$, потому что $\Imag\phi \hm\subseteq Y$, а $\mathcal L(a_1, a_2) \hm\subseteq \RR^3$.
+    Однако соответствие между векторами и их координатными столбцами \emph{взаимно однозначное}.
+    Более того, и $\Imag\phi$, и $\mathcal L(a_1, a_2)$ оба являются линейными подпространствами, причём их размерности совпадают, потому что сумма векторов $\bds y_1$ и $\bds y_2$ из $\Imag \phi$ есть вектор, координатный столбец которого есть сумма координатных столбцов векторов $\bds y_1$ и $\bds y_2$.
+    Аналогично с умножением на число.
+    То есть \emph{линейные операции ``проходят одинаково''}: между векторами в $\Imag \phi$ и их координатными столбцами в $\RR^3$.
+    В таком случае говорят, что линейные пространства $\Imag\phi$ и $\mathcal L(a_1, a_2)$ \emph{изоморфны}.
+  \end{solution}
+  
+  
+  \subsection{Пространство отображений из пространства в пространство}
+  \label{sec:plot2}
+  
+  Рассмотрим множество всех линейных отображений из $X$ в $Y$:
+  \[
+    \mathcal F = \{\phi\colon X \to Y \mid \phi\mbox{~---~линейное}\}
+  \]
+  где линейность $\phi$ обозначает выполнение следующих двух свойств:
+  \begin{itemize}
+    \item $\phi(\bds x_1 + \bds x_2) = \phi(\bds x_1) + \phi(\bds x_2),\quad \bds x_1, \bds x_2 \in X$
+    \item $\phi(\alpha \bds x_1) = \alpha \phi(\bds x_1),\quad \alpha \in \RR,\ \bds x_1 \in X$
+  \end{itemize}
+  
+  Введём на $\mathcal F$ операции сложения отображений и умножения отображения на число.
+  За сумму $\phi_1 \hm+ \phi_2$ двух линейных отображений $\phi_1$ и $\phi_2$ будем считать отображение из $X$ в $Y$, которое действует на произвольный $\bds x \hm\in X$ как:
+  \[
+    (\phi_1 + \phi_2) (\bds x) \equiv \phi_1(\bds x) + \phi_2(\bds x)
+  \]
+  
+  За отображение $\alpha\phi$, где $\alpha \hm\in \RR$ и $\phi \hm\in \mathcal F$, будет считать отображение из $X$ в $Y$, действующее на произвольный $\bds x \hm\in X$ по правилу:
+  \[
+    (\alpha \phi) (\bds x) \equiv \alpha \phi(\bds x)
+  \]
+  
+  Проверим, что сумма линейных отображений~---~это тоже линейное отображение:
+  \begin{equation*}
+  \begin{split}
+    (\phi_1 + \phi_2) (\bds x_1 + \bds x_2)
+    &= \phi_1 (\bds x_1 + \bds x_2) + \phi_2 (\bds x_1 + \bds x_2)
+    = \phi_1 (\bds x_1) + \phi_1 (\bds x_2) + \phi_2 (\bds x_1) + \phi_2 (\bds x_2) \\
+    &= \bigl(\phi_1(\bds x_1) + \phi_2(\bds x_1)\bigr) + \bigl(\phi_1(\bds x_2) + \phi_2(\bds x_2)\bigr)
+    = (\phi_1 + \phi_2) (\bds x_1) + (\phi_1 + \phi_2) (\bds x_2)
+  \end{split}
+  \end{equation*}
+  
+  Аналогично можно показать, что $(\phi_1 \hm+ \phi_2) (\alpha \bds x) \hm= \alpha (\phi_1 \hm+ \phi_2) (\bds x)$.
+  Таким образом, линейные операции над линейными отображениями из $\mathcal F$ дают также линейные отображения из $\mathcal F$,
+  то есть $``{+}''\colon \mathcal F \hm\times \mathcal F \hm\to \mathcal F$ и $``{\cdot}'' \colon \RR \hm\times \mathcal F \hm\to \mathcal F$.
+  
+  Множество $\mathcal F$ с введёнными операциями $``{+}''$ и $``{\cdot}''$ образует линейное пространство.
+  Чтобы в этом убедиться, можно проверить выполнение ``$8$ свойств'', связанных с операциями сложения и умножения на число.
+  Например, коммутативность: $(\phi_1 \hm+ \phi_2)(\bds x) \hm= \phi_1(\bds x) \hm+ \phi_2(\bds x) \hm= \phi_2(\bds x) \hm+ \phi_1(\bds x) \hm= (\phi_2 \hm+ \phi_1)(\bds x)$ для произвольного $\bds x \hm\in X$.
+  Нулевым же, очевидно, будет отображение $\phi_0\colon \bds x \hm\mapsto \bds 0 \hm\in Y$.
+  
+  
+  \subsection{Изоморфизм между отображениями и матрицами}
+  \label{sec:iso}
+  
+  В выбранной паре базисов пространств $X$ и $Y$ устанавливается взаимно однозначное соответствие $h_{\mathcal F}$ между линейными отображениями $\mathcal F$ и матрицами $\RR^{m \times n}$.
+  Множество матриц $\RR^{m \times n}$~---~очевидно, линейное пространство (размерности $mn$).
+  Множество линейных отображений $\mathcal F$~---~также линейное пространство (см. Раздел~\ref{sec:plot2}).
+  При этом сумме отображений $\phi_1$ и $\phi_2$ из $\mathcal F$ с матрицами соответственно $A_1$ и $A_2$ соответствует отображение, матрица которого является суммой $A_1 \hm+ A_2$.
+  Умножению отображения $\phi$ с матрицей $A$ на число $\alpha$ соответствует отображение с матрицей $\alpha A$.
+  Таким образом, отображение $h_{\mathcal F}\colon \mathcal F \hm\to \RR^{m \times n}$ линейно, \emph{сохраняет линейные операции}.
+  Взаимно однозначное линейное отображение называется \emph{изоморфизмом}\footnote{В общем случае изоморфизм~---~биекция, \emph{сохраняющая структуру}. В случае отображений между линейными пространствами изоморфизм должен сохранять линейные зависимости между векторами: сумма прообразов~---~сумма образов, аналогично с умножением на число.}.
+  Про пространства $\mathcal F$ и $\RR^{m\times n}$ в таком случае говорят, что они \emph{изоморфны}.
+  Из изоморфности $\mathcal F$ и $\RR^{m\times n}$, в частности, следует, что размерность $\mathcal F$ равна также $mn$.
+  
+  
+  \subsection{Линейные функции~---~отображения на числовую прямую}
+  
+  Пусть $Y \hm\equiv \RR$.
+  То есть будем теперь рассматривать линейные отображения, действующие из $X$ в $\RR$:
+  \[
+    \mathcal F_1 = \{\phi\colon X \to \RR \mid \phi\mbox{~---~линейное}\}
+  \]
+  Такие отображения ещё называют \emph{линейными функциями}.
+  
+  С выбранным базисом в $X$\footnote{В $Y \hm= \RR$ тоже можно бы было ``выбрать'' базис, но обычно базисом в $\RR$ по умолчанию считают единицу.} каждой линейной функции из $\mathcal F_1$ ставится в соответствие матрица отображения $A$ размера $1 \hm\times n$, то есть матрица отображения в случае линейной функции~---~это одна строка.
+  Эта строка ещё называется \emph{координатной строкой} линейной функции.
+  
+  Пространство линейных функций $\mathcal F_1$ изоморфно пространству строк $\RR^n$ длины $n$ (см.~Раздел~\ref{sec:iso}).
+  В пространстве строк можно очевидным образом выбрать базис: $(1, 0, \ldots, 0, 0)$; ...; $(0, 0, \ldots, 0, 1)$.
+  Пусть базисной строчке из $\RR^n$ с единицей на $i$-ой позиции соотвествует функция $\phi_i \hm\in \mathcal F_1$:
+  \[
+    \RR^n \ni \left\{
+      \begin{aligned}
+        &(1, 0, \ldots, 0, 0)            & &\leftrightarrow & &\phi_{1\hphantom{-1}}\\
+        &(0, 1, \ldots, 0, 0)            & &\leftrightarrow & &\phi_{2\hphantom{-1}}\\
+        &\hphantom{(0, 1, \ldots, 0, 0)} & &\ldots  & &\hphantom{\phi_{2\hphantom{-1}}}\\
+        &(0, 0, \ldots, 1, 0)            & &\leftrightarrow & &\phi_{n-1}\\
+        &(0, 0, \ldots, 0, 1)            & &\leftrightarrow & &\phi_{n\hphantom{-1}}
+      \end{aligned}
+    \right\} \in \mathcal F_1
+  \]
+  В совокупности функции $(\phi_1, \phi_2, \ldots, \phi_n)$ дадут базис в $\mathcal F_1$.
+  Этот базис называется базисом, \emph{взаимным} к базису $e$ пространства $X$.
+  Само пространство линейных функций, действующих на пространстве $X$, называется пространством, \emph{сопряжённым} к $X$, и может обозначаться как $X^{*}$.
+  Таким образом, $\dim X^{*} \hm= \dim X$, а смысл \emph{координатной строки} функции $\phi$ также в том, что она~---~это коэффициенты разложения $\phi$ по взаимному базису.
+  
+  
+  \section{Задачи}
+  
+  \subsection{\# 23.69}
+  
+  Как изменится матрица~$A$ линейного отображения $\phi\colon X \hm\to Y$, заданная в паре базисов $e \hm= (\bds e_1, \ldots, \bds e_n)$ и $f \hm= (\bds f_1, \ldots, \bds f_m)$?
+  \begin{enumerate}
+    \item при смене мест $\bds e_i \leftrightarrow \bds e_j$
+    \item при смене мест $\bds f_k \leftrightarrow \bds f_l$
+    \item при замене $\bds e_i \to \lambda \bds e_i$ и $\bds f_k \to \mu \bds f_k$ ($\lambda, \mu \not{=} 0$)
+    \item при замене $\bds e_i \to \bds e_i + \bds e_j$ и $\bds f_k \to \bds f_k - \bds f_l$
+  \end{enumerate}
+  
+  \begin{solution}
+    Столбцы матрицы отображения~$A$~---~координаты векторов базиса $e$ в базисе $f$.
+    Поэтому если поменять местами два вектора в $e$, то в матрице поменяются местами соответствующие столбцы.
+    Если же поменять местами векторы в $f$, то аналогичная смена мест произойдёт для строк матрицы~$A$.
+    
+    Если новый $i$-ый базисный в $e$ будет равен $\lambda \bds e_i$, то $\phi(\lambda \bds e_i) \hm= \lambda \phi(\bds e_i)$, то есть $i$-ый столбец увеличится в $\lambda$ раз.
+    Если же новый $k$-ый базисный в $f$ станет $\mu \bds f_k$, то со всеми компонентами в разложении векторов $e$ по базису $f$ произойдёт следующее (на примере $\bds e_1$):
+    \[
+      \phi(\bds e_1) = \ldots + a_k \bds f_k + \ldots = \ldots + \frac{a_k}{\mu} \mu \bds f_k + \ldots
+    \]
+    где ``точками'' обозначены все слагаемые в разложении по базису $f$, кроме $\bds f_k$.
+    Видно, что компоненты по $\bds f_k$ уменьшаются в $\mu$ раз.
+    То есть $k$-ая строка матрица отображения станет меньше в $\mu$ раз.
+    
+    Если положить новый $i$-ый в $e$ равным $\bds e_i \hm+ \bds e_j$, то к $i$-му столбцу матрицы прибавится $j$-ый столбец.
+    Если же вместо $\bds f_k$ взять $\bds f_k \hm- \bds f_l$, то компоненты изменятся следующим образом (снова на примере $\bds e_1$):
+    \[
+      \phi(\bds e_1)
+      = \ldots + a_k \bds f_k + a_l \bds f_l
+      = \ldots + a_k \bds f_k - a_k \bds f_l + a_k \bds f_l +  a_l \bds f_l
+      = \ldots + a_k \underbrace{(\bds f_k - \bds f_l)}_{\bds f'_k} + \underbrace{(a_k + a_l)}_{a'_l} \bds f_l
+    \]
+    где ``точками'' снова скрыто всё ``неважное''.
+    Видно, что в матрице меняется \emph{$l$-ая строка}: к ней прибавляется $k$-ая.
+  \end{solution}
+  
+  
+  \subsection{\# 23.40(1в)}
+  
+  Пусть $\mathcal P^{(m)}$~---~линейное пространство линейных многочленов степени не выше $m$\footnote{Какая степень у нулевого многочлена?}.
+  Проверить, что дифференцирование, рассматриваемое как преобразование $D\colon \mathcal P^{(m)} \hm\to \mathcal P^{(m)}$, линейно.
+  Найти его ядро и множество значений.
+  Вычислить матрицу в базисе
+  \[
+    \left(1, \frac{t}{1!}, \ldots, \frac{t^m}{m!}\right)
+  \]
+  
+  \begin{solution}
+    \textbf{Линейность}. Пусть $p(t) \hm= a_0 \hm+ a_1 t \hm+ \ldots \hm+ a_m t^m$ и $q(t) \hm= b_0 \hm+ b_1 t \hm+ \ldots \hm+ b_m t^m$.
+    Тогда:
+    \begin{equation*}
+    \begin{split}
+      D\bigl(p(t) + q(t)\bigr) = &D\bigl((a_0 + a_1 t + \ldots + a_m t^m) + (b_0 + b_1 t + \ldots b_m t^m)\bigr)\\
+      = &a_1 + \ldots + a_m t^{m - 1} + b_1 + \ldots + b_m t^{m - 1}
+      = D\bigl(p(t)\bigr) + D\bigl(q(t)\bigr)
+    \end{split}
+    \end{equation*}
+    
+    Аналогично с $D\bigl(\alpha p(t)\bigr) \hm= \alpha D\bigl(p(t)\bigr)$.
+    
+    \medskip
+    
+    \textbf{Ядро преобразования}:
+    \[
+      p(t) \in \Ker D \Leftrightarrow D\bigl(p(t)\bigr) = a_1 + \ldots + a_m t^{m - 1} = 0 \Leftrightarrow a_1 = \ldots = a_m = 0
+    \]
+    
+    Поэтому $p(t) \in \Ker D \hm\Leftrightarrow p(t) \hm= a_0$.
+    То есть ядро дифференцирования~---~все константные многочлены.
+    Размерность ядра, очевидно, равно одному.
+    
+    \medskip
+    
+    \textbf{Множество значений}~---~это $\mathcal P^{(m - 1)}$.
+    Потому что, с одной стороны, при дифференцировании многочлена степени не выше $m$ получается многочлен степени не выше $m \hm- 1$.
+    С другой стороны, для многочлена $h(t)$ степени не выше $m \hm- 1$ можно подобрать многочлен $p(t)$ степени не выше $m$, дифференцирование которого даёт данный (например, $p(t) \hm= \int h(t)$).
+    
+    \medskip
+    
+    \textbf{Матрица преобразования.}
+    Столбцы матрицы~---~координаты образов векторов пространства $\mathcal P^{(m)}$ в том же базисе.
+    Так как
+    \[
+      \begin{aligned}
+        &D\left(1\right) = 0\\
+        &D\left(\frac{1}{1!} t\right) = \textcolor{green}{\bds 1} \cdot \frac{1}{1!}\\
+        &D\left(\frac{1}{2!} t^2\right) = \textcolor{pink}{\bds 1} \cdot \frac{1}{1!} t\\
+        &\ldots\\
+        &D\left(\frac{1}{m!} t^m\right) = \textcolor{blue}{\bds 1} \cdot \frac{1}{(m - 1)!} t^{m - 1}
+      \end{aligned}
+    \]
+    то матрица преобразования получается равной
+    \[
+      A = \begin{pmatrix}
+        0      & \textcolor{green}{\bds 1} & 0                        & \ldots & 0\\
+        0      & 0                         & \textcolor{pink}{\bds 1} & \ldots & 0\\
+        \vdots & \vdots                    & \vdots                   & \ddots & \vdots\\
+        0      & 0                         & 0                        & 0      & \textcolor{blue}{\bds 1}\\
+        0      & 0                         & 0                        & 0      & 0
+      \end{pmatrix}
+    \]
+    
+    Размер матрицы $A$ равен $(m \hm+ 1) \hm\times (m \hm+ 1)$.
+    
+    Если бы дифференцирование рассматривалось как отображение $D \colon \mathcal P^{(m)} \hm\to \mathcal P^{(m - 1)}$ (и в $\mathcal P^{(m - 1)}$ базис бы был такой же, как в $\mathcal P^{(m)}$, только без последнего вектора), то строк в матрице отображения стало бы меньше на одну (столбцов столько же, потому что базис исходного пространства такой же, строк же меньше, потому что меняется базис пространства, куда отображаем):
+    \[
+      A' = \begin{pmatrix}
+        0      & \textcolor{green}{\bds 1} & 0                        & \ldots & 0\\
+        0      & 0                         & \textcolor{pink}{\bds 1} & \ldots & 0\\
+        \vdots & \vdots                    & \vdots                   & \ddots & \vdots\\
+        0      & 0                         & 0                        & 0      & \textcolor{blue}{\bds 1}
+      \end{pmatrix}
+    \]
+    
+    И размер матрицы $A'$ равен $m \hm\times (m \hm+ 1)$.
+  \end{solution}
+  
+  
+  \subsection{\# 31.19(2)}
+
+  Показать, что сопоставление $f$ каждому многочлену степени не выше $3$ числа по правилу:
+  \[
+    f\colon \mathcal P^{(3)} \ni p(t) \mapsto \int_{0}^1 p(t^2) dt \in \RR
+  \]
+  есть линейная функция.
+  Вычислить координатную строку функции~$f$ в базисе $(1, t, t^2, t^3)$.
+  
+  \begin{solution}
+    Пусть $p(t) \hm= a_0 \hm+ a_1 t \hm+ a_2 y^2 \hm+ a_3 t^3$ и $q(t) \hm= b_0 \hm+ b_1 t \hm+ b_2 t^2 \hm+ b_3 t^3$.
+    Тогда их сумма:
+    \[
+      (p + q)(t) = (a_0 + b_0) + (a_1 + b_1) t + (a_2 + b_2) t^2 + (a_3 + b_3) t^3
+    \]
+    
+    Образ суммы:
+    \begin{equation*}
+    \begin{split}
+      f\bigl(p(t) + q(t)\bigr)
+      &= \int_{0}^1 (p + q)(t^2) dt\\
+      &= \int_{0}^1 \bigl((a_0 + b_0) + (a_1 + b_1) h + (a_2 + b_2) h^2 + (a_3 + b_3) h^3\bigr)\bigm|
+_{h = t^2} dt\\
+      &= \int_{0}^1 \bigl((a_0 + b_0) + (a_1 + b_1) t^2 + (a_2 + b_2) t^4 + (a_3 + b_3) t^6\bigr) dt\\
+      &= \int_{0}^1 \bigl((a_0 + a_1 t^2 + a_2 t^4 + a_3 t^6) + (b_0 + b_1 t^2 + b_2 t^4 + b_3 t^6)\bigr) dt\\
+      &= \int_{0}^1 (a_0 + a_1 t^2 + a_2 t^4 + a_3 t^6) dt + \int_{0}^1 (b_0 + b_1 t^2 + b_2 t^4 + b_3 t^6) dt
+      = f\bigl(p(t)\bigr) + f\bigl(q(t)\bigr)
+    \end{split}
+    \end{equation*}
+    
+    Аналогично и
+    \[
+      f\bigl(\alpha p(t)\bigr) = \alpha \int_{0}^1 (a_0 + a_1 t^2 + a_2 t^4 + a_3 t^6) dt = \alpha f\bigl(p(t)\bigr)
+    \]
+    
+    Координатная строка функции~---~как матрица отображения, только в случае с функцией $\phi\colon X \hm\to \RR$ она становится строкой.
+    И чтобы найти эту строку, можно воспользоваться тем, что образ многочлена должен быть равен произведению координатной строки функции на координатный столбец многочлена:
+    \begin{equation*}
+    \begin{split}
+      f\bigl(p(t)\bigr)
+      = \int_{0}^1 (a_0 + a_1 t^2 + a_2 t^4 + a_3 t^6) dt
+      = a_0 + \frac{a_1}{3} + \frac{a_2}{5} + \frac{a_3}{7}
+      = \left(1, \frac{1}{3}, \frac{1}{5}, \frac{1}{7}\right) \begin{pmatrix}
+        a_0 \\ a_1 \\ a_2 \\ a_3
+      \end{pmatrix}
+    \end{split}
+    \end{equation*}
+    
+    Таким образом, координатная строка функции:
+    \[
+      A = \left(1, \frac{1}{3}, \frac{1}{5}, \frac{1}{7}\right)
+    \]
+    
+    Можно было сделать по-другому: вычислить образы базисных векторов (это будут просто числа) и собрать их в строчку:
+    \[
+      A = \bigl(f(1), f(t), f(t^2), f(t^3)\bigr) = \left(1, \frac{1}{3}, \frac{1}{5}, \frac{1}{7}\right)
+    \]
+  \end{solution}
+  
+  
+  \subsection{\# 31.5}
+
+  Может ли для линейной функции $f\colon X \hm\to \RR$ при всех $\bds x \hm\in X$ выполняться условие?
+  \begin{enumerate}
+    \item $f(\bds x) > 0$
+    \item $f(\bds x) \geq 0$
+    \item $f(\bds x) = \alpha$
+  \end{enumerate}
+  
+  \begin{solution}
+    Очевидно, раз $X$ линейное пространство, то оно не пустое и содержит как минимум нулевой вектор.
+    Но тогда
+    \[
+      f(\bds 0) = f(0 \cdot \bds 0) = 0 \cdot f(\bds 0) = 0 \Rightarrow \mbox{\sout{пункт 1}}
+    \]
+    
+    Если же найдётся $\bds x^* \hm\in X$, такой что $f(\bds x^*) \hm> 0$, то
+    \[
+      f(-\bds x^*) = f(-1 \cdot \bds x^*) = -1 \cdot f(\bds x^*) < 0 \Rightarrow \mbox{\sout{пункт 2}, только если не $f(\bds x) \equiv 0$}
+    \]
+    
+    Поэтому и третий пункт верен только при $\alpha \hm= 0$.
+  \end{solution}
+  
+  
+  \section{Дополнение}
+  
+  \subsection{\# 23.82(1)}
+  
+  Преобразование $\phi$ переводит линейно независимые векторы $a_i$ в $b_i$.
+  Преобразование $\psi$ переводит линейно независимые векторы $b_i$ в $c_i$.
+  То есть
+  \[
+    \begin{aligned}
+      &(a_1, a_2, a_3) \xrightarrow{\phi} (b_1, b_2, b_3)\\
+      &(b_1, b_2, b_3) \xrightarrow{\psi} (c_1, c_2, c_3)
+    \end{aligned}
+  \]
+  
+  Надо найти матрицу $A_{\psi\phi}$ преобразования $\psi\phi$ в исходном базисе.
+  
+  \begin{solution}
+    Пусть матрицы $A_{\phi}$ и $A_{\psi}$~---~матрицы преобразований $\phi$ и $\psi$ соответсвенно.
+    Тогда условие задачи можно переписать в виде
+    \[
+      \left\{
+        \begin{aligned}
+          &A_{\phi} (a_1, a_2, a_3) = (b_1, b_2, b_3)\\
+          &A_{\psi} (b_1, b_2, b_3) = (c_1, c_2, c_3)\\
+          &A_{\psi\phi} (a_1, a_2, a_3) = (c_1, c_2, c_3)
+        \end{aligned}
+      \right.
+    \]
+    
+    Если положить $A \hm\equiv (a_1, a_2, a_3)$, $B \hm\equiv (b_1, b_2, b_3)$ и $C \hm\equiv (c_1, c_2, c_3)$, то условие можно переписать в ещё более сжатой форме:
+    \[
+      \left\{
+        \begin{aligned}
+          &A_{\phi} A = B\\
+          &A_{\psi} B = C\\
+          &A_{\psi\phi} A = C
+        \end{aligned}
+      \right.
+    \]
+    
+    Отсюда (так как по условию существуют $A^{-1}$ и $B^{-1}$):
+    \[
+      \left\{
+        \begin{aligned}
+          &A_{\phi} = B A^{-1}\\
+          &A_{\psi} = C B^{-1}\\
+          &A_{\psi \phi} = C A^{-1} = CB^{-1} \cdot B A^{-1} = A_{\psi} A_{\phi}
+        \end{aligned}
+      \right.
+    \]
+    
+    А как бы, например, выглядела матрица преобразования $\phi$ в базисе $(a_1, a_2, a_3)$?
+    На данном этапе известно, что
+    \[
+      A_{\psi\phi} \xi_{\bds e} = \nu_{\bds e}
+    \]
+    где индекс $\bds e$ показывает, в каком базисе даны компоненты.
+    При замене старого базиса $\bds e \hm= (e_1, e_2, e_3)$ на новый $\bds a \hm= (a_1, a_2, a_3)$ векторы базисов связаны соотношением (коэффициенты разложения векторов нового базиса $\bds a$ по старому $\bds e$ образуют столбцы матрицы перехода $S$):
+    \[
+      (a_1, a_2, a_3) = (e_1, e_2, e_3) S
+    \]
+    
+    Координатные же столбцы произвольного вектора $\bds x$ в старом $\xi_{\bds e}$ и новом $\xi_{\bds a}$ базисах связаны следующим образом:
+    \[
+      \left\{
+        \begin{aligned}
+          &\bds x = \bds e \xi_{\bds e}\\
+          &\bds x = \bds a \xi_{\bds a} = \bds e S \xi_{\bds a}\\
+        \end{aligned}
+        \Rightarrow \xi_{\bds e} = S \xi_{\bds a}
+      \right.
+    \]
+    
+    Итак, пока известно, что в базисе $\bds e$:
+    \begin{equation}\label{p-23-82-old-A}
+      A_{\psi \phi} \xi_{\bds e} = \nu_{\bds e}
+    \end{equation}
+    
+    Надо же найти матрицу $A'_{\psi\phi}$ преобразования в базисе $\bds a$:
+    \begin{equation}\label{p-23-82-new-A}
+      A'_{\psi\phi} \xi_{\bds a} = \nu_{\bds a}
+    \end{equation}
+    
+    Чтобы найти $A'_{\psi\phi}$, можно выразить в формуле (\ref{p-23-82-old-A}) координатные столбцы в старом базисе через столбцы соответствующих векторов в новом базисе (чтобы получить формулу, ``похожую'' на (\ref{p-23-82-new-A}), только с $A_{\psi\phi}$ вместо $A'_{\psi\phi}$):
+    \begin{equation}\label{p-23-82-new-A-like-old}
+      A_{\psi\phi} S \xi_{\bds a} = S \nu_{\bds a}
+      \Leftrightarrow S^{-1} A_{\psi\phi} S \xi_{\bds a} = \nu_{\bds a}
+    \end{equation}
+    
+    Подставляя вместо $\xi_{\bds a}$ базисные столбцы в последнюю формулу (\ref{p-23-82-new-A-like-old}) и в (\ref{p-23-82-new-A}) получаем, что
+    \[
+      S^{-1} A_{\psi\phi} S = A'_{\psi\phi}
+    \]
+    
+    Остаётся понять, чему равна матрица $S$ перехода от базиса $\bds e$ к базису $\bds a$.
+    Столбцы матрицы $A$~---~координаты новых базисных векторов $\bds a$ в старом базисе $\bds e$.
+    Поэтому $A$ и есть $S$, и матрица преобразования в новом базисе в итоге выглядит так:
+    \[
+      A'_{\psi\phi} = A^{-1} A_{\psi\phi} A
+    \]
+  \end{solution}
+  
+  
+  \subsection{\# 31.35(1)}
+  
+  Пусть базису $(\bds e_1, \bds e_2, \bds e_3)$ пространства $\mathcal L$ биортогонален базис $(f_1, f_2, f_3)$ сопряжённого пространства $\mathcal L^*$.
+  Надо найти базис, биортогональный базису
+  \[
+    \bds e_1' = \bds e_1 + \bds e_2,
+    \quad \bds e_2' = \bds e_2 + \bds e_3,
+    \quad \bds e_3' = \bds e_3
+  \]
+  
+  \begin{solution}
+    Биортогональный базис $f$~---~это такой базис в $\mathcal L^*$, функции $f_i$ которого обладают следующим свойством:
+    \[
+      f_i(\bds e_j) = \left\{
+        \begin{aligned}
+          &1, \quad \mbox{если $i = j$}\\
+          &0, \quad \mbox{если $ i\not= j$}
+        \end{aligned}
+      \right.
+    \]
+    
+    То есть для неизвестных пока линейных функций $f_1', f_2', f_3'$ нового биортогонального базиса уже известно, что, во-первых (выписываем соотношения для $f_1'$):
+    \[
+      \left\{
+        \begin{aligned}
+          &1 = f_1'(\bds e_1') = f_1'(\bds e_1 + \bds e_2) = f_1'(\bds e_1) + f_1'(\bds e_2)\\
+          &0 = f_1'(\bds e_2') = f_1'(\bds e_2 + \bds e_3) = f_1'(\bds e_2) + f_1'(\bds e_3)\\
+          &0 = f_1'(\bds e_3') = f_1'(\bds e_3)
+        \end{aligned}
+      \right.
+    \]
+    То есть $f_1'$ в точности такая же, как $f_1$ (ведь линейная функция из $\mathcal L^*$ однозначно определяется значениями на векторах базиса $\mathcal L$).
+    
+    Далее, аналогичные соотношения для $f_2'$:
+    \[
+      \left\{
+        \begin{aligned}
+          &0 = f_2'(\bds e_1') = f_2'(\bds e_1 + \bds e_2) = f_2'(\bds e_1) + f_2'(\bds e_2)\\
+          &1 = f_2'(\bds e_2') = f_2'(\bds e_2 + \bds e_3) = f_2'(\bds e_2) + f_2'(\bds e_3)\\
+          &0 = f_2'(\bds e_3') = f_2'(\bds e_3)
+        \end{aligned}
+      \right.
+      \Leftrightarrow
+      \left\{
+        \begin{aligned}
+          &f_2'(\bds e_1) = -1\\
+          &f_2'(\bds e_2) = 1\\
+          &f_2'(\bds e_3) = 0
+        \end{aligned}
+      \right.
+    \]
+    
+    И для $f_3'$:
+    \[
+      \left\{
+        \begin{aligned}
+          &0 = f_3'(\bds e_1') = f_3'(\bds e_1 + \bds e_2) = f_3'(\bds e_1) + f_3'(\bds e_2)\\
+          &0 = f_3'(\bds e_2') = f_3'(\bds e_2 + \bds e_3) = f_3'(\bds e_2) + f_3'(\bds e_3)\\
+          &1 = f_3'(\bds e_3') = f_3'(\bds e_3)
+        \end{aligned}
+      \right.
+      \Leftrightarrow
+      \left\{
+        \begin{aligned}
+          &f_3'(\bds e_1) = 1\\
+          &f_3'(\bds e_2) = -1\\
+          &f_3'(\bds e_3) = 1
+        \end{aligned}
+      \right.
+    \]
+    
+    Чему равны $f_2'$ и $f_3'$?
+    Линейные действия над функциями из $\mathcal L^*$ равносильны таким же линейным действиям над их координатными строками: пространство $\mathcal L^*$ изоморфно пространству строк размера $\dim\mathcal L$.
+    Функции $f_2'$, например, (при базисе $\bds e$ в $\mathcal L$) соответствует строка $(-1, 1, 0)$.
+    Можно разложить эту строку в линейную комбинацию базисных строк (соответствующих функциям, из которого состоит биортогональный базис $f$):
+    \[
+      (-1, 1, 0) = -1 \cdot (1, 0, 0) + 1 \cdot (0, 1, 0)
+    \]
+    Это значит, что с самой функцией $f_2'$ будет ``то же самое'':
+    \[
+      f_2' = -1 \cdot f_1 + 1 \cdot f_2
+    \]
+    
+    Аналогично с $f_3'$:
+    \[
+      f_3' = 1 \cdot f_1 - 1 \cdot f_2 + 1 \cdot f_3
+    \]
+    
+    Итого, новый биортогональный базис:
+    \[
+      f = (f_1, -f_1 + f_2, f_1 - f_2 + f_3)
+    \]
+  \end{solution}
+\end{document}
