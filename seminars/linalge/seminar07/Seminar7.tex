@@ -120,9 +120,9 @@
   \begin{figure}[h]
     \centering
   
-    \includegraphics[width=0.9\columnwidth]{map-x-y-diag-scheme}
+    \includegraphics[width=0.85\columnwidth]{map-x-y-diag-scheme}  % TODO: width adjusted so that all the text fits nicely on exactly 7 pages
   
-    \caption{Выбор очередного вектора $e_i$ для базиса $e$ в $X$ (и, возможно, также $f_i$ для базиса $f$ в $Y$), так чтобы матрица~$A$ отображения $\phi\colon X \hm\to Y$ была диагональной.}
+    \caption{Выбор очередного вектора $\bds e_i$ для базиса $e$ в $X$ (и, возможно, также $\bds f_i$ для базиса $f$ в $Y$), так чтобы матрица~$A$ отображения $\phi\colon X \hm\to Y$ была диагональной.}
     \label{fig:map-x-y-diag-scheme}
   \end{figure}
   
@@ -309,7 +309,7 @@
   
   Приходим к следующему положению.
   
-  \begin{theorem}[Достаточное условие диагонализуемости преобразования]
+  \begin{theorem}[Достаточное условие диагонализуемости преобразования]\label{theo:sufficient-condition-for-diag}
     \proofindent
     Если у линейного преобразования $\phi$ $n$-мерного пространства $X$ есть $n$ различных собственных значений, то найдётся базис из собственных векторов преобразования $\phi$.
     (В котором матрица преобразования будет иметь диагональный вид.)
@@ -319,6 +319,96 @@
     Можно будет найти $n$ собственных векторов, относящихся к различным собственным значениям.
     И по предложению~(\ref{theo:eigenvectors-independent}) они будут линейно независимы.
   \end{proof}
+  
+  \begin{example}
+    \emph{
+      Пусть есть преобразование $\phi\colon X \hm\to X$ двумерного пространства~$X$, заданное в некотором базисе матрицей $A \hm= \left(\begin{smallmatrix} 2 & 0 \\ 1 & -2 \end{smallmatrix}\right)$.
+      Надо найти собственные значения преобразования и максимальную по количеству линейно независимую систему из собственных векторов.
+      И, если из собственных векторов можно составить базис, надо выписать матрицу преобразования в этом базисе.
+    }
+    
+    \bigskip
+    
+    Характеристическое уравнение матрицы (для поиска собственных значений):
+    \[
+      \det(A - \lambda E) = 0
+      \leftrightarrow \begin{vmatrix}
+        2 - \lambda & 0\\
+        1 & -2 - \lambda
+      \end{vmatrix} = 0
+      \leftrightarrow \left\{
+        \begin{aligned}
+          &\lambda_1 = 2\\
+          &\lambda_2 = -2
+        \end{aligned}
+      \right.
+    \]
+    
+    Собственные векторы:
+    \[
+      (A - \lambda_1 E) \bds x = 0 \leftrightarrow \begin{pmatrix}
+        0 & 0\\
+        1 & -4
+      \end{pmatrix} \begin{pmatrix}
+        x_1\\
+        x_2
+      \end{pmatrix} \Rightarrow \bds x_1 = \begin{pmatrix}
+        4\\
+        1
+      \end{pmatrix}
+    \]
+    \[
+      (A - \lambda_2 E) \bds x = 0 \leftrightarrow \begin{pmatrix}
+        4 & 0\\
+        1 & 0
+      \end{pmatrix} \begin{pmatrix}
+        x_1\\
+        x_2
+      \end{pmatrix} \Rightarrow \bds x_2 = \begin{pmatrix}
+        0\\
+        1
+      \end{pmatrix}
+    \]
+    
+    Получилось найти базис из собственных векторов $e' \hm= (\bds x_1, \bds x_2)$.
+    Матрица преобразования в нём: $A' \hm= \left(\begin{smallmatrix} 2 & 0\\ 0 & -2 \end{smallmatrix}\right)$.
+  \end{example}
+  
+  \begin{example}
+    \emph{
+      Всё точно так же, как в прошлом примере, только теперь считаем, что матрица преобразования $A \hm= \left(\begin{smallmatrix} 2 & 0 \\ 1 & 2 \end{smallmatrix}\right)$.
+    }
+    
+    \bigskip
+    
+    Характеристическое уравнение матрицы:
+    \[
+      \det(A - \lambda E) = 0
+      \leftrightarrow \begin{vmatrix}
+        2 - \lambda & 0\\
+        1 & 2 - \lambda
+      \end{vmatrix} = 0
+      \leftrightarrow \lambda = 2,\quad \mbox{(кратность $2$)}
+    \]
+    
+    Собственные векторы:
+    \[
+      (A - \lambda E) \bds x = 0 \leftrightarrow \begin{pmatrix}
+        0 & 0\\
+        1 & 0
+      \end{pmatrix} \begin{pmatrix}
+        x_1\\
+        x_2
+      \end{pmatrix} \Rightarrow \bds x_1 = \begin{pmatrix}
+        0\\
+        -1
+      \end{pmatrix}
+    \]
+    
+    Достаточное условие для диагоналазируемости преобразования~(\ref{theo:sufficient-condition-for-diag}) не выполнялось: единственное собственное значение было кратным корнем характеристического уравнения.
+    Найти базис из собственных векторов не получилось.
+    Тем не менее, даже если есть кратные корни, это ещё \emph{не значит, что базиса из собственных векторов точно нет}...
+  \end{example}
   
   
   \section{Задачи}
