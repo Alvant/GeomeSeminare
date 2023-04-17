@@ -424,8 +424,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.70710678"
-     inkscape:cx="469.90444"
-     inkscape:cy="1184.1035"
+     inkscape:cx="381.9265"
+     inkscape:cy="789.25221"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -2043,11 +2043,11 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:start;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="27.267082"
+       x="3.5820584"
        y="192.02673"
        id="text4491-9-00-8"><tspan
          sodipodi:role="line"
-         x="27.267082"
+         x="3.5820584"
          y="192.02673"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:sans-serif;stroke-width:0.26458332"
          id="tspan6786">b(x,y)≡b(xy); b(e<tspan
@@ -2068,7 +2068,13 @@
    style="font-size:5.29166651px;baseline-shift:sub"
    id="tspan6686">l</tspan>)≡γ<tspan
    style="font-size:5.29166651px;baseline-shift:sub"
-   id="tspan6690">l</tspan> (k,l&gt;i); ε∈{0,1,-1}</tspan></text>
+   id="tspan6690">l</tspan> (k,l&gt;i); ε<tspan
+   style="font-size:5.29166651px;baseline-shift:sub"
+   id="tspan5044">1</tspan>,ε<tspan
+   style="font-size:5.29166651px;baseline-shift:sub"
+   id="tspan5048">2</tspan>∈{0,1,-1}, ε<tspan
+   style="font-size:5.29166651px;baseline-shift:sub"
+   id="tspan5056">i</tspan>∈{1,-1}</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.26499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow1Mstart-4)"
        d="m 193.65217,76.784 c -1.60456,7.136818 -3.20905,14.273335 -3.1288,20.987122 0.0803,6.713788 1.84527,13.005538 3.61015,19.296748"
