@@ -529,6 +529,7 @@
   
   \newtheorem{proposition}{Утверждение}[section]
 
+  \theoremstyle{definition}
   \newtheorem*{problem}{Задача}
 
   \theoremstyle{definition}
@@ -536,6 +537,10 @@
 
   \theoremstyle{remark}
   \newtheorem*{example}{Пример}
+  \AtEndEnvironment{example}{\qed}
+  
+  \theoremstyle{remark}
+  \newtheorem*{eqexample}{Пример}
 
   \theoremstyle{remark}
   \newtheorem*{remark}{Замечание}
