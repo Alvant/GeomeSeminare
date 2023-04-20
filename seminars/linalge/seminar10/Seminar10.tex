@@ -1,0 +1,362 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{mystyle}
+\usepackage{gensymb}
+
+
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+\graphicspath{ {images/} }
+
+
+% https://tex.stackexchange.com/questions/5461/is-it-possible-to-change-the-size-of-an-arrowhead-in-tikz-pgf
+\usetikzlibrary{arrows.meta}
+
+
+\DeclareMathOperator{\Image}{Im}
+
+\definecolor{pink}{RGB}{218, 3, 174}
+\definecolor{violet}{RGB}{148, 0, 211}
+\definecolor{green}{RGB}{0, 153, 0}
+\definecolor{orange}{RGB}{255, 153, 0}
+\definecolor{blue}{RGB}{5, 73, 255}
+
+
+% https://tex.stackexchange.com/a/101138/135045
+
+\newcommand\widesim[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{-.1\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5150\wd0}}{.6\ht0}%
+  }{O}{c}{F}{T}{S}%
+}}
+
+\newcommand{\BigMiddleThree}{\;\left|\vphantom{\begin{pmatrix} 0\\0\\0 \end{pmatrix}}\right.\;}
+\newcommand{\BigMiddleFour}{\;\left|\vphantom{\begin{pmatrix} 0\\0\\0\\0 \end{pmatrix}}\right.\;}
+
+
+% https://tex.stackexchange.com/questions/63531/how-to-write-quotation-marks-in-math-environment
+\DeclareMathSymbol{\mlq}{\mathord}{operators}{``}
+\DeclareMathSymbol{\mrq}{\mathord}{operators}{`'}
+
+
+\DeclareMathOperator{\Imag}{Im}
+
+
+% https://tex.stackexchange.com/questions/544453/undefined-control-sequence-after-paragraph
+\renewcommand{\paragraph}[1]{\noindent\textbf{#1}\quad}
+
+
+% https://tex.stackexchange.com/questions/36851/skipping-line-after-proof-in-proof-environment#comment73553_36851
+\newcommand{\proofindent}{\hspace*{\fill}\par\vspace{0.5em}\noindent}
+
+
+
+\author{Алексеев Василий}
+
+
+\title{Семинар 10}
+\date{14 + 18 апреля 2023}
+
+
+\begin{document}
+  \maketitle
+  
+  \tableofcontents
+
+  \thispagestyle{empty}
+  
+  \newpage
+  
+  \pagenumbering{arabic}
+
+
+  \section{Euclid}
+  
+  \subsection{Скалярное произведение}
+  
+  Вещественное линейное пространство~$\mathcal E$ называется \emph{евклидовым}, если на множестве пар его векторов введена функция $(\cdot, \cdot)\colon \mathcal E \hm\times \mathcal E \hm\to \RR$, называемая \emph{скалярным произведением}, которая обладает следующими свойствами.
+  \begin{itemize}
+    \item Линейность по первому аргументу:
+      \begin{equation}\label{eq:euclid-prop-linear}
+        \left\{
+          \begin{aligned}
+            &(\bds x_1 + \bds x_2, \bds y) = (\bds x_1, \bds y) + (\bds x_2, \bds y)\\
+            &(\alpha \bds x, \bds y) = \alpha (\bds x, \bds y)
+          \end{aligned}
+        \right.
+      \end{equation}
+    
+    \item Симметричность:
+      \begin{equation}\label{eq:euclid-prop-symmetric}
+        (\bds x, \bds y) = (\bds y, \bds x)
+      \end{equation}
+    
+    \item Положительная определённость\footnote{Представлены две немного разные, но равносильные формулировки.}:
+      \begin{equation}\label{eq:euclid-prop-positive}
+        \left\{
+          \begin{aligned}
+            &(\bds x, \bds x) \geq 0\\
+            &(\bds x, \bds x) = 0 \leftrightarrow \bds x = \bds 0
+          \end{aligned}
+        \right.
+        \quad\leftrightarrow\quad
+        (\bds x, \bds x) > 0\ \mbox{при}\ \bds x \not= \bds 0
+      \end{equation}
+  \end{itemize}
+  
+  (В первом и втором свойствах подразумевается, что они должны выполняться ``для всего, что можно подставить'', ``для любых'', то есть $\forall \bds x_1, \bds x_2, \bds x, \bds y \hm\in \mathcal E$, $\forall \alpha \hm\in \RR$.)
+  Скалярное произведение вида $(\bds x, \bds x)$ из свойства~(\ref{eq:euclid-prop-positive}) иногда называется \emph{скалярным квадратом} вектора~$\bds x$.
+  
+  \begin{example}
+    В аналитической геометрии уже работали со скалярным произведением, определённым для векторов геометрического пространства по формуле:
+    \[
+      (\bds x, \bds y) = |\bds x| |\bds y| \cos \alpha
+    \]
+    где $|\bds x|$ и $|\bds y|$ есть \emph{модули векторов} $\bds x$ и $\bds y$, а под $\alpha$ (ради краткости обозначений, и потому что ``и так понятно'') имеется в виду \emph{угол между векторами} $\bds x$ и $\bds y$.
+    Потом уже убедились, что такая операция обладает свойствами: симметричности (очевидно), положительной определённости (будет просто $|\bds x|^2$), и линейности по первому аргументу (следует из линейности проекции на направление: проекция суммы равна сумме проекций).
+    
+    А теперь (в линейной алгебре), оказывается, что \emph{любая функция, возвращающая по двум векторам число, если удовлетворяет свойствам~(\ref{eq:euclid-prop-linear}, \ref{eq:euclid-prop-symmetric}, \ref{eq:euclid-prop-positive}), может быть названа скалярным произведением}.
+    Возвращаясь к векторам геометрического пространства, несложно проверить, что и такая функция от двух векторов:
+    \[
+      (\bds x, \bds y) = 2023 |\bds x| |\bds y| \cos\alpha
+    \]
+    могла бы быть принята в качестве скалярного произведения.
+    Однако, например, вот такая функция:
+    \[
+      (\bds x, \bds y) = \bigl|[\bds x, \bds y]\bigr|
+    \]
+    (то есть модуль векторного произведения) уже скалярным произведением быть не может.
+    Потому что, например, не выполняется свойство~(\ref{eq:euclid-prop-positive}): скалярный квадрат любого вектора (в том числе ненулевого) будет нулём.
+  \end{example}
+  
+  \begin{example}[\# 25.1]
+    Пусть~$n$ есть фиксированный ненулевой вектор в геометрическом пространстве.
+    Можно ли принять за скалярное произведение функцию $(\bds x, \bds y)_1 \hm\equiv (\bds n, \bds x, \bds y)$?
+    Нет, потому что, опять, скалярный квадрат вектора в таком случае $(\bds x, \bds x)_1 \hm= (\bds n, \bds x, \bds x)$ равен нулю (объём параллелепипеда).
+    Симметричность также ``не работает''.
+    Однако линейность по первому аргументу есть.
+    
+    А можно ли определить скалярное произведение как $(\bds x, \bds y)_2 \hm\equiv (\bds x \hm+ \bds n, \bds y \hm+ \bds n)$?
+    Снова нет, потому что, например при $\bds x \hm= -{\bds n}$ получим $(\bds x, \bds x)_2 \hm= 0$.
+    То есть нет положительной определённости.
+    Линейности по первому аргументу также нет:
+    \[
+      \bigl((\bds x_1 + \bds x_2) + \bds n, \bds y + \bds n\bigr)
+      = (\bds x_1, \bds y + \bds n) + (\bds x_2 + \bds n, \bds y + \bds n)
+    \]
+    (``не хватает'' вектора $\bds n$ как слагаемого в первом аргументе у скобки справа, поэтому, ``очевидно'', в общем случае нелинейно~---~например, можно подставить $\bds x_1 \hm= \bds x_2 \hm= \bds y \hm= \bds n$ и получить $\bigl((\bds x_1 \hm+ \bds x_2), \bds y\bigr)_2 \hm= 6 \hm{\not=} 8 \hm= (\bds x_1, \bds y)_2 \hm+ (\bds x_2, \bds y)_2$.)
+    
+    Рассмотрим следующую функцию~--~``кандидат'' в скалярное: $(\bds x, \bds y)_3 \hm\equiv (\bds n, \bds x)(\bds n, \bds y)$.
+    Которая тоже не будет скалярным произведением, потому что при $\bds x \hm\perp n$ получается ноль: $(\bds x, \bds x)_3 \hm= (\bds n, \bds x) (\bds n, \bds x) \hm= 0$.
+    
+    Функция же $(\bds x, \bds y)_4 \hm\equiv |\bds n| (\bds x, \bds y)$ удовлетворяет всем свойствам скалярного.
+    
+    А вариант $(\bds x, \bds y)_5 \hm\equiv |\bds x| |\bds y|$, отличающийся от ``обычного скалярного'' для векторов ``всего лишь'' тем, что нет косинуса угла, на самом деле вместе с этим ``лишается'' и свойства линейности.
+    Например (при некоторых ненулевых $\bds x$ и $\bds y$):
+    \[
+      (\bds x - \bds x, \bds y)_5 = |\bds x - \bds x| |\bds y| = 0
+      \not= |\bds x| |\bds y| + |{-}{\bds x}| |\bds y| = (\bds x, \bds y)_5 + ({-}{\bds x}, \bds y)_5
+    \]
+  \end{example}
+  
+  
+  \subsection{Матрица Грама}
+  
+  Линейность по первому аргументу и симметричность~(\ref{eq:euclid-prop-linear}, \ref{eq:euclid-prop-symmetric}) по сути говорят о том, что \emph{скалярное произведение~---~это симметричная билинейная функция}.
+  Положительная же определённость~(\ref{eq:euclid-prop-positive}) означает, что \emph{соответствующая квадратичная функция положительно определена}.
+  Поэтому все результаты, полученные для симметричных билинейных функций, переносятся и на скалярное произведение.
+  
+  Так, скалярное тоже можно вычислять с помощью матрицы.
+  Пусть в пространстве~$\mathcal E$ выбран базис $e \hm= (\bds e_1, \ldots, \bds e_n)$.
+  Тогда любой вектор~$\bds x \hm\in \mathcal E$ можно разложить по базису, а коэффициенты разложения собрать в столбец~$x \hm\in \RR$ (координатный столбец):
+  \[
+    \bds x = x_1 \bds e_1 + \ldots + x_n \bds e_n = (\bds e_1, \ldots, \bds e_n) \begin{pmatrix}
+      x_1\\
+      \vdots\\
+      x_n
+    \end{pmatrix} = e x
+  \]
+  
+  Тогда, если при вычислении скалярного~$(\bds x, \bds y)$ подставить вместо векторов их разложения по базису:
+  \[
+    (\bds x, \bds y) = (x_1 \bds e_1 + \ldots + x_n \bds e_n, y_1 \bds e_1 + \ldots + y_n \bds e_n)
+    = \sum_{i, j = 1}^n x_i (\bds e_i, \bds e_j) y_j
+    = x^T \Gamma y
+  \]
+  
+  Матрица~$\Gamma$ билинейной функции $(\cdot, \cdot)$ также может быть названа как \emph{матрица Грама системы векторов $(\bds e_1, \ldots, \bds e_n)$}:
+  \[
+    \Gamma = \begin{pmatrix}
+      (\bds e_1, \bds e_1) & \ldots & (\bds e_1, \bds e_n)\\
+      \vdots               & \ddots & \vdots\\
+      (\bds e_n, \bds e_1) & \ldots & (\bds e_n, \bds e_n)
+    \end{pmatrix}
+  \]
+  
+  Как матрица симметричной билинейной функции, матрица~$\Gamma$, очевидно, симметрична: $\Gamma \hm= \Gamma^T$.
+  Помимо этого, так как~$\Gamma$ есть матрица положительно определённой квадратичной формы, то $\det \Gamma \hm> 0$.
+  Более того, все главные миноры $\Delta_i \hm> 0$.
+  
+  
+  \subsection{Модуль вектора}
+  
+  \begin{definition}
+    Модулем (длиной) $|\bds x|$ вектора $\bds x$ называется число:
+    \begin{equation}\label{eq:vec-modulus}
+      |\bds x| = \sqrt{(\bds x, \bds x)}
+    \end{equation}
+  \end{definition}
+  
+  Так как $(\bds x, \bds x) \hm\geq 0$, то правая часть~(\ref{eq:vec-modulus}) определена при любом~$\bds x$.
+  Наличие корня также ``оправдывает'' название ``длина'' в том смысле, что если, например, длины базисных векторов~$(\bds e_i, \bds e_i)$ измеряются в сантиметрах, то выражение~$(\bds x, \bds x)$ будет иметь размерность сантиметров в квадрате, и после извлечения из этого корня как раз получится ``длина''.
+  
+  С одной стороны, очевидно, но, тем не менее, в то же время ``неожиданно'' и даже, может, ``контринтуитивно'', и поэтому отметим тот факт, что \emph{длина вектора зависит от скалярного произведения}.
+  В линейном пространстве может быть много способов выбрать скалярное произведение.
+  Однако евклидовым оно становится тогда, когда этот \emph{выбор} каким-то образом сделан.
+  Только после этого у каждого вектора ``появляется'' длина.
+  При другом выборе скалярного и длина вектора могла бы оказаться другой.
+  
+  Пока ничего ``неожиданного'' в определении вектора больше не видно.
+  Но мы ещё вернёмся в этому понятию...
+  
+  
+  \subsection{Угол между векторами}
+  
+  \begin{definition}
+    Углом $\alpha$ между ненулевыми векторами $\bds x$ и $\bds y$ называется угол (от $0$ до $\pi$), такой что:
+    \begin{equation}\label{eq:vec-angle}
+      \cos\alpha = \frac{(\bds x, \bds y)}{|\bds x| |\bds y|}
+    \end{equation}
+  \end{definition}
+  
+  Почему правая часть~\ref{eq:vec-angle} в самом деле может быть принята за косинус угла?
+  То есть почему верно, что:
+  \[
+    -1 \leq \frac{(\bds x, \bds y)}{|\bds x| |\bds y|} \leq 1
+  \]
+  
+  Если $\bds x \hm\parallel \bds y$, то $\bds y \hm= \alpha \bds x$, $\alpha \hm\in \RR$.
+  И поэтому
+  \[
+    \frac{(\bds x, \bds y)}{|\bds x| |\bds y|} = \frac{\alpha}{|\alpha|} \in \{-1, 1\}
+  \]
+  
+  Если же $\bds x \hm{\not\parallel} \bds y$, то систему векторов $\{\bds x, \bds y\}$ можно принять в качестве базиса на плоскости $\mathcal L(\bds x, \bds y)$ (плоскость, как раз таки натянутая на пару векторов $\bds x$ и $\bds y$).
+  Матрица Грама $\Gamma_{(\bds x, \bds y)}$ этого базиса:
+  \[
+    \Gamma_{(\bds x, \bds y)} = \begin{pmatrix}
+      (\bds x, \bds x) & (\bds x, \bds y)\\
+      (\bds y, \bds x) & (\bds y, \bds y)
+    \end{pmatrix}
+  \]
+  как и матрица Грама любого базиса, положительно определена.
+  И поэтому, в частности:
+  \[
+    0 < \det \Gamma_{(\bds x, \bds y)} = (\bds x, \bds x) (\bds y, \bds y) - (\bds x, \bds y) (\bds y, \bds x)
+    = |\bds x|^2 |\bds y|^2 - (\bds x, \bds y)^2
+  \]
+  
+  Перенося одно из двух слагаемых ``налево'' и извлекая квадрат, получаем:
+  \[
+    |(\bds x, \bds y)| < |\bds x| |\bds y|
+  \]
+  
+  Поэтому формула~\ref{eq:vec-angle} в самом деле может служить определением косинуса угла.
+  
+  
+  \subsection{Унитарное пространство}
+  
+  Этому в конспектах (почти) никогда не уделяли особого внимания, но линейные пространства на самом деле могут быть не только \emph{вещественными} (те, с которыми всегда работали), но и \emph{комплексными}.
+  (И ещё разными, кроме вещественных и комплексных.)
+  Разница между ними в операции умножения вектора на число (одна из двух операций, помимо сложения, которая лежит в основе определения понятия \emph{линейное пространство}): что такое эти ``числа'', на которые можно умножать векторы.
+  Так вот, если разрешается умножать векторы на комплексные числа, то пространство и называется комплексным
+  \footnote{Вообще в качестве ``чисел'' может выступать произвольное \emph{поле}. Множество элементов с двумя операциями: сложения и умножения~---~каждая из которых удовлетворяет ряду аксиом: ассоциативность, коммутативность, существование \emph{нейтрального} элемента (ноль для сложения и единица для умножения) и существование для каждого элемента \emph{обратного} (для сложения такой ещё называется \emph{противоположным}, а по умножению наличие обратного на самом деле требуется не для всех вообще элементов пространства, а для всех кроме нуля). Помимо перечисленных аксиом, операции ещё должны обладать свойством дистрибутивности (``раскрытие скобок''~---~``связь'' между сложением и умножением).}.
+  
+  Приведём определение скалярного произведения для случая комплексного линейного пространства.
+  (Далее идёт почти ``Ctrl-C''~--~``Ctrl-V'' определения скалярного произведения из самого начала конспекта.
+  Чтоб не играть в ``найди 10 отличий'', ключевые места ``подсвечены''.)
+  
+  \textcolor{pink}{Комплексное} линейное пространство~$\mathcal U$ называется \textcolor{pink}{\emph{унитарным}}, если на множестве пар его векторов введена функция $(\cdot, \cdot)\colon \mathcal U \hm\times \mathcal U \hm\to \textcolor{pink}{\CC}$, называемая \emph{скалярным произведением}, которая обладает следующими свойствами.
+  \begin{itemize}
+    \item Линейность по первому аргументу:
+      \begin{equation}\label{eq:unitary-prop-linear}
+        \left\{
+          \begin{aligned}
+            &(\bds x_1 + \bds x_2, \bds y) = (\bds x_1, \bds y) + (\bds x_2, \bds y)\\
+            &(\alpha \bds x, \bds y) = \alpha (\bds x, \bds y)
+          \end{aligned}
+        \right.
+      \end{equation}
+    
+    \item \textcolor{pink}{``Симметричность'' (Эрмитовость)}:
+      \begin{equation}\label{eq:unitary-prop-symmetric}
+        \textcolor{pink}{(\bds x, \bds y) = \overline{(\bds y, \bds x)}}
+      \end{equation}
+    
+    \item Положительная определённость\footnote{Представлены две немного разные, но равносильные формулировки.}:
+      \begin{equation}\label{eq:unitary-prop-positive}
+        \left\{
+          \begin{aligned}
+            &(\bds x, \bds x) \geq 0\\
+            &(\bds x, \bds x) = 0 \leftrightarrow \bds x = \bds 0
+          \end{aligned}
+        \right.
+        \quad\leftrightarrow\quad
+        (\bds x, \bds x) > 0\ \mbox{при}\ \bds x \not= \bds 0
+      \end{equation}
+  \end{itemize}
+  
+  (В первом и втором свойствах подразумевается, что они должны выполняться ``для всего, что можно подставить'', ``для любых'', то есть $\forall \bds x_1, \bds x_2, \bds x, \bds y \hm\in \mathcal U$, $\textcolor{pink}{\forall \alpha \hm\in \CC}$.)
+  
+  В свойстве про положительную определённость~(\ref{eq:unitary-prop-positive}), хоть ничего по сравнению с~(\ref{eq:euclid-prop-positive}) как бы и не поменялось, но эта неизменность как раз и примечательна.
+  То есть по сути свойство~(\ref{eq:unitary-prop-positive}) неявно утверждает, что \emph{скалярный квадрат вектора комплексного пространства всегда вещественен} (и при этом, да, ещё больше нуля).
+  
+  
+  \section{Задачи}
+  
+  \subsection{\# 25.7}
+  
+  В линейном пространстве функций, непрерывных на отрезке $C[-1, 1]$, паре функций сопоставлено число:
+  \[
+    (f, g) = \int_{-1}^{1} f(t) g(t) dt
+  \]
+  Надо доказать, что этим определено скалярное произведение.
+  
+  \begin{solution}
+    Фактически надо просто проверить все свойства~(\ref{eq:euclid-prop-linear}, \ref{eq:euclid-prop-symmetric}, \ref{eq:euclid-prop-positive}).
+    Так, линейность:
+    \begin{equation}
+    \begin{split}
+      (f_1 + f_2, g) &= \int_{-1}^{1} (f_1 + f_2)(t) g(t) dt\\
+      &= \int_{-1}^{1} \bigl(f_1(t) + f_2(t)\bigr) g(t) dt
+      = \int_{-1}^{1} f_1(t) g(t) dt + \int_{-1}^{1} f_2(t) g(t) dt
+      = (f_1, g) + (f_2, g)
+    \end{split}
+    \end{equation}
+    
+    Аналогично можно показать, что $(\alpha f, g) \hm= \alpha (f, g)$, где $\alpha \hm\in \RR$.
+    Далее, симметричность:
+    \[
+      (f, g) = \int_{-1}^{1} f(t) g(t) dt
+      = \int_{-1}^{1} g(t) f(t) dt
+      = (g, f)
+    \]
+    
+    Осталось последнее~---~положительная определённость:
+    \[
+      (f, f) = \int_{-1}^{1} f^2(t) dt \geq 0
+    \]
+    но почему $(f, f)$ обязательно больше нуля при $f \hm{\not\equiv} 0$?
+    Ноль в пространстве $C[-1, 1]$ есть, очевидно, функция~--~константный ноль.
+    Раз $f \hm{\not\equiv} 0$, то найдётся \emph{хотя бы одна} точка $x_0 \hm\in [-1, 1]$, такая что $f(x_0) \hm{\not=} 0$.
+    Пусть, для определённости, $f(x_0) \hm> 0$.
+    (Но пока всё ещё не понятно, почему $(f, f) \hm> 0$.)
+    Но так как функция~$f$ непрерывна, то вместе с $x_0$ функция $f$ будет отлична от нуля и \emph{в некоторой окрестности}\footnote{Если уж быть совсем аккуратным, то надо бы было ещё сказать, что при $x_0 \hm= 1$ или $x_0 \hm= -1$ (граничные точки отрезка), окрестность знакопостоянства функции около точки $x_0$ была бы односторонней.} точки~$x_0$ (отлична от нуля и того же знака, что и в~$x_0$): $\exists \eps \hm> 0 \colon f(x) \hm> 0$ при $x \hm\in (x_0 \hm- \eps, x_0 \hm+ \eps)$.
+    За счёт этой окрестности интеграл в выражении~$(f, f)$ и будет больше нуля:
+    \[
+      (f, f) = \int_{-1}^{1} f^2(t) dt \geq \int_{x_0 - \eps}^{x_0 + \eps} f^2(t) dt > 0
+    \]
+  \end{solution}
+\end{document}
