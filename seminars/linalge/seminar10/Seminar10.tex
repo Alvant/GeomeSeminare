@@ -1,0 +1,586 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{mystyle}
+
+\usepackage{gensymb}
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+\graphicspath{ {images/} }
+
+
+% https://tex.stackexchange.com/questions/5461/is-it-possible-to-change-the-size-of-an-arrowhead-in-tikz-pgf
+\usetikzlibrary{arrows.meta}
+
+
+\DeclareMathOperator{\Image}{Im}
+
+\definecolor{pink}{RGB}{218, 3, 174}
+\definecolor{violet}{RGB}{148, 0, 211}
+\definecolor{green}{RGB}{0, 153, 0}
+\definecolor{orange}{RGB}{255, 153, 0}
+\definecolor{blue}{RGB}{5, 73, 255}
+
+
+% https://tex.stackexchange.com/a/101138/135045
+
+\newcommand\widesim[1]{\ThisStyle{%
+  \setbox0=\hbox{$\SavedStyle#1$}%
+  \stackengine{-.1\LMpt}{$\SavedStyle#1$}{%
+    \stretchto{\scaleto{\SavedStyle\mkern.2mu\sim}{.5150\wd0}}{.6\ht0}%
+  }{O}{c}{F}{T}{S}%
+}}
+
+
+\newcommand{\BigMiddleThree}{\;\left|\vphantom{\begin{pmatrix} 0\\0\\0 \end{pmatrix}}\right.\;}
+\newcommand{\BigMiddleFour}{\;\left|\vphantom{\begin{pmatrix} 0\\0\\0\\0 \end{pmatrix}}\right.\;}
+
+
+% https://tex.stackexchange.com/questions/63531/how-to-write-quotation-marks-in-math-environment
+\DeclareMathSymbol{\mlq}{\mathord}{operators}{``}
+\DeclareMathSymbol{\mrq}{\mathord}{operators}{`'}
+
+
+\DeclareMathOperator{\Imag}{Im}
+
+
+% https://tex.stackexchange.com/questions/544453/undefined-control-sequence-after-paragraph
+\renewcommand{\paragraph}[1]{\noindent\textbf{#1}\quad}
+
+
+% https://tex.stackexchange.com/questions/36851/skipping-line-after-proof-in-proof-environment#comment73553_36851
+\newcommand{\proofindent}{\hspace*{\fill}\par\vspace{0.5em}\noindent}
+
+
+
+\author{Алексеев Василий}
+
+
+\title{Семинар 10}
+\date{14 + 18 апреля 2023}
+
+
+\begin{document}
+  \maketitle
+  
+  \tableofcontents
+
+  \thispagestyle{empty}
+  
+  \newpage
+  
+  \pagenumbering{arabic}
+
+
+  \section{Euclid}
+  
+  \subsection{Скалярное произведение}
+  
+  Вещественное линейное пространство~$\mathcal E$ называется \emph{евклидовым}, если на множестве пар его векторов введена функция $(\cdot, \cdot)\colon \mathcal E \hm\times \mathcal E \hm\to \RR$, называемая \emph{скалярным произведением}, которая обладает следующими свойствами:
+  \begin{itemize}
+    \item Линейность по первому аргументу:
+      \begin{equation}\label{eq:euclid-prop-linear}
+        \left\{
+          \begin{aligned}
+            &(\bds x_1 + \bds x_2, \bds y) = (\bds x_1, \bds y) + (\bds x_2, \bds y)\\
+            &(\alpha \bds x, \bds y) = \alpha (\bds x, \bds y)
+          \end{aligned}
+        \right.
+      \end{equation}
+    
+    \item Симметричность:
+      \begin{equation}\label{eq:euclid-prop-symmetric}
+        (\bds x, \bds y) = (\bds y, \bds x)
+      \end{equation}
+    
+    \item Положительная определённость\footnote{Представлены две немного разные, но равносильные формулировки.}:
+      \begin{equation}\label{eq:euclid-prop-positive}
+        \left\{
+          \begin{aligned}
+            &(\bds x, \bds x) \geq 0\\
+            &(\bds x, \bds x) = 0 \leftrightarrow \bds x = \bds 0
+          \end{aligned}
+        \right.
+        \quad\leftrightarrow\quad
+        (\bds x, \bds x) > 0\ \mbox{при}\ \bds x \not= \bds 0
+      \end{equation}
+  \end{itemize}
+  
+  (В первом и втором свойствах подразумевается, что они должны выполняться ``для всего, что можно подставить'', ``для любых'', то есть $\forall \bds x_1, \bds x_2, \bds x, \bds y \hm\in \mathcal E$, $\forall \alpha \hm\in \RR$.)
+  Скалярное произведение вида $(\bds x, \bds x)$ из свойства~(\ref{eq:euclid-prop-positive}) иногда называется \emph{скалярным квадратом} вектора~$\bds x$.
+  
+  \begin{example}
+    В аналитической геометрии уже работали со скалярным произведением, определённым для векторов геометрического пространства по формуле:
+    \[
+      (\bds x, \bds y) = |\bds x| |\bds y| \cos \alpha
+    \]
+    где $|\bds x|$ и $|\bds y|$ есть \emph{модули векторов} $\bds x$ и $\bds y$, а $\alpha$ означает \emph{угол между векторами} $\bds x$ и $\bds y$.
+    Потом уже убедились, что такая операция обладает свойствами: симметричности (очевидно), положительной определённости (будет просто $|\bds x|^2$), и линейности по первому аргументу (следует из линейности ортогональной проекции на направление: проекция суммы равна сумме проекций).
+    
+    А теперь (в линейной алгебре), оказывается, что \emph{любая функция, возвращающая по двум векторам число, если удовлетворяет свойствам~(\ref{eq:euclid-prop-linear}, \ref{eq:euclid-prop-symmetric}, \ref{eq:euclid-prop-positive}), может быть названа скалярным произведением}.
+    Возвращаясь к векторам геометрического пространства, несложно проверить, что и такая функция от двух векторов:
+    \[
+      (\bds x, \bds y) = 2023 |\bds x| |\bds y| \cos\alpha
+    \]
+    могла бы быть принята в качестве скалярного произведения.
+    Однако, например, вот такая функция:
+    \[
+      (\bds x, \bds y) = \bigl|[\bds x, \bds y]\bigr|
+    \]
+    (то есть модуль векторного произведения) уже скалярным произведением быть не может.
+    Потому что, например, не выполняется свойство~(\ref{eq:euclid-prop-positive}): скалярный квадрат любого вектора будет нулём.
+  \end{example}
+  
+  \begin{example}[\# 25.1]
+    Пусть~$\bds n$ есть фиксированный ненулевой вектор в геометрическом пространстве.
+    Можно ли принять за скалярное произведение функцию $(\bds x, \bds y)_1 \hm\equiv (\bds n, \bds x, \bds y)$?
+    Нет, потому что, опять, скалярный квадрат вектора в таком случае $(\bds x, \bds x)_1 \hm= (\bds n, \bds x, \bds x)$ равен нулю (объём параллелепипеда).
+    Симметричность также ``не работает''.
+    Однако линейность по первому аргументу есть.
+    
+    А можно ли определить скалярное произведение как $(\bds x, \bds y)_2 \hm\equiv (\bds x \hm+ \bds n, \bds y \hm+ \bds n)$?
+    Снова нет, потому что, например при $\bds x \hm= -{\bds n}$ получим $(\bds x, \bds x)_2 \hm= 0$.
+    То есть нет положительной определённости.
+    Линейности по первому аргументу также нет:
+    \[
+      (\bds x_1 + \bds x_2, \bds y)_2
+      = \bigl((\bds x_1 + \bds x_2) + \bds n, \bds y + \bds n\bigr)
+      = (\bds x_1, \bds y + \bds n) + (\bds x_2 + \bds n, \bds y + \bds n)
+    \]
+    (``не хватает'' вектора $\bds n$ как слагаемого в первом аргументе у скобки справа, поэтому, ``очевидно'', в общем случае нелинейно~---~например, можно подставить $\bds x_1 \hm= \bds x_2 \hm= \bds y \hm= \bds n$ и получить $\bigl((\bds x_1 \hm+ \bds x_2), \bds y\bigr)_2 \hm= 6 |\bds n|^2 \hm{\not=} 8 |\bds n|^2 \hm= (\bds x_1, \bds y)_2 \hm+ (\bds x_2, \bds y)_2$.)
+    
+    Рассмотрим следующую функцию~--~``кандидат'' в скалярное: $(\bds x, \bds y)_3 \hm\equiv (\bds n, \bds x)(\bds n, \bds y)$.
+    Которая тоже не будет скалярным произведением, потому что при $\bds x \hm\perp \bds n$ получается ноль: $(\bds x, \bds x)_3 \hm= (\bds n, \bds x) (\bds n, \bds x) \hm= 0$.
+    
+    Функция же $(\bds x, \bds y)_4 \hm\equiv |\bds n| (\bds x, \bds y)$ удовлетворяет всем свойствам скалярного.
+    
+    А вариант $(\bds x, \bds y)_5 \hm\equiv |\bds x| |\bds y|$, отличающийся от ``обычного скалярного'' для векторов~--~направленных отрезков ``всего лишь'' тем, что нет косинуса угла, на самом деле вместе с этим ``лишается'' и свойства линейности.
+    Например (при некоторых ненулевых $\bds x$ и $\bds y$):
+    \[
+      (\bds x - \bds x, \bds y)_5 = |\bds x - \bds x| |\bds y| = 0
+      \not= |\bds x| |\bds y| + |{-}{\bds x}| |\bds y| = (\bds x, \bds y)_5 + ({-}{\bds x}, \bds y)_5
+    \]
+  \end{example}
+  
+  
+  \subsection{Матрица Грама}
+  
+  Линейность по первому аргументу и симметричность~(\ref{eq:euclid-prop-linear}, \ref{eq:euclid-prop-symmetric}) по сути говорят о том, что \emph{скалярное произведение~---~это симметричная билинейная функция}.
+  Положительная же определённость~(\ref{eq:euclid-prop-positive}) означает, что \emph{соответствующая квадратичная функция положительно определена}.
+  Поэтому все результаты, полученные ранее для симметричных билинейных и квадратичных функций переносятся и на скалярное произведение.
+  
+  Так, скалярное тоже можно вычислять с помощью матрицы.
+  Пусть в пространстве~$\mathcal E$ выбран базис $e \hm= (\bds e_1, \ldots, \bds e_n)$.
+  Тогда любой вектор~$\bds x \hm\in \mathcal E$ можно разложить по базису, а коэффициенты разложения собрать в столбец~$x \hm\in \RR$ (координатный столбец):
+  \[
+    \bds x = x_1 \bds e_1 + \ldots + x_n \bds e_n = (\bds e_1, \ldots, \bds e_n) \begin{pmatrix}
+      x_1\\
+      \vdots\\
+      x_n
+    \end{pmatrix} = e x
+  \]
+  
+  Тогда, если при вычислении скалярного~$(\bds x, \bds y)$ подставить вместо векторов их разложения по базису:
+  \[
+    (\bds x, \bds y) = (x_1 \bds e_1 + \ldots + x_n \bds e_n, y_1 \bds e_1 + \ldots + y_n \bds e_n)
+    = \sum_{i, j = 1}^n x_i (\bds e_i, \bds e_j) y_j
+    = x^T \Gamma y
+  \]
+  
+  Матрица~$\Gamma$ билинейной функции $(\cdot, \cdot)$ также может быть названа \emph{матрицей Грама системы векторов $(\bds e_1, \ldots, \bds e_n)$}:
+  \[
+    \Gamma = \begin{pmatrix}
+      (\bds e_1, \bds e_1) & \ldots & (\bds e_1, \bds e_n)\\
+      \vdots               & \ddots & \vdots\\
+      (\bds e_n, \bds e_1) & \ldots & (\bds e_n, \bds e_n)
+    \end{pmatrix}
+  \]
+  
+  Как матрица симметричной билинейной функции, матрица~$\Gamma$, очевидно, симметрична: $\Gamma \hm= \Gamma^T$.
+  Помимо этого, так как~$\Gamma$ есть матрица положительно определённой квадратичной формы, то её определитель положителен $\det \Gamma \hm> 0$.
+  Более того, положительны все главные миноры: $\Delta_i \hm> 0$, $i \hm= 1, \ldots, n$ (критерий Сильвестра).
+  
+  
+  \subsection{Модуль вектора}
+  
+  \begin{definition}
+    Модулем (длиной) $|\bds x|$ вектора $\bds x$ называется число:
+    \begin{equation}\label{eq:vec-modulus}
+      |\bds x| = \sqrt{(\bds x, \bds x)}
+    \end{equation}
+  \end{definition}
+  
+  Так как $(\bds x, \bds x) \hm\geq 0$, то правая часть~(\ref{eq:vec-modulus}) определена при любом~$\bds x$.
+  Наличие корня также ``оправдывает'' название ``длина'' в том смысле, что если, например, длины базисных векторов~$|\bds e_i|$ измеряются в сантиметрах, то выражение~$(\bds x, \bds x)$ будет иметь размерность сантиметров в квадрате, и после извлечения из этого корня как раз получится ``длина''.
+  
+  С одной стороны, это очевидно, но, с другой, ``неожиданно'' и даже, может, ``контринтуитивно'', поэтому явно отметим, что \emph{длина вектора зависит от скалярного произведения}.
+  В линейном пространстве может быть много способов выбрать скалярное произведение.
+  Однако евклидовым оно становится тогда, когда этот \emph{выбор} каким-то образом сделан.
+  Только после этого у каждого вектора ``появляется'' длина.
+  При разных выборах скалярного и длина одного и того же вектора может быть разной.
+  
+  Пока ничего ``неожиданного'' в определении вектора больше не видно.
+  Но мы ещё вернёмся к этому понятию...
+  
+  
+  \subsection{Угол между векторами}
+  
+  \begin{definition}
+    Углом между ненулевыми векторами $\bds x$ и $\bds y$ называется угол~$\alpha$ (лежащий в пределах от $0$ до $\pi$), такой что:
+    \begin{equation}\label{eq:vec-angle}
+      \cos\alpha = \frac{(\bds x, \bds y)}{|\bds x| |\bds y|}
+    \end{equation}
+  \end{definition}
+  
+  Почему правая часть~(\ref{eq:vec-angle}) в самом деле может быть принята за косинус угла?
+  То есть почему верно, что:
+  \[
+    -1 \leq \frac{(\bds x, \bds y)}{|\bds x| |\bds y|} \leq 1
+    \quad\leftrightarrow\quad \left|\frac{(\bds x, \bds y)}{|\bds x| |\bds y|}\right| \leq 1
+  \]
+  
+  Если $\bds x \hm\parallel \bds y$, то $\bds y \hm= \alpha \bds x$, $\alpha \hm\in \RR$.
+  И поэтому
+  \[
+    \frac{(\bds x, \bds y)}{|\bds x| |\bds y|} = \frac{\alpha}{|\alpha|} \in \{-1, 1\}
+  \]
+  
+  Если же $\bds x \hm{\not\parallel} \bds y$, то систему векторов $\{\bds x, \bds y\}$ можно принять в качестве базиса на плоскости $\mathcal L(\bds x, \bds y)$ (плоскость, как раз таки натянутая на пару векторов $\bds x$ и $\bds y$).
+  Матрица Грама $\Gamma_{\{\bds x, \bds y\}}$ этого базиса:
+  \[
+    \Gamma_{\{\bds x, \bds y\}} = \begin{pmatrix}
+      (\bds x, \bds x) & (\bds x, \bds y)\\
+      (\bds y, \bds x) & (\bds y, \bds y)
+    \end{pmatrix}
+  \]
+  как и матрица Грама любого базиса, положительно определена.
+  И поэтому, в частности:
+  \[
+    0 < \det \Gamma_{\{\bds x, \bds y\}} = (\bds x, \bds x) (\bds y, \bds y) - (\bds x, \bds y) (\bds y, \bds x)
+    = |\bds x|^2 |\bds y|^2 - (\bds x, \bds y)^2
+  \]
+  
+  Перенося одно из двух слагаемых ``налево'' и извлекая квадрат, получаем:
+  \[
+    |(\bds x, \bds y)| < |\bds x| |\bds y|
+    \rightarrow \left|\frac{(\bds x, \bds y)}{|\bds x| |\bds y|}\right| < 1
+  \]
+  
+  Поэтому формула~(\ref{eq:vec-angle}) в самом деле может служить определением косинуса угла.
+  
+  
+  \subsection{Унитарное пространство}
+  
+  Этому в конспектах (почти) никогда не уделяли особого внимания, но линейные пространства на самом деле могут быть не только \emph{вещественными} (те, с которыми всегда работали), но и \emph{комплексными}.
+  (И ещё разными, кроме вещественных и комплексных.)
+  Разница между ними в операции умножения вектора на число (одна из двух операций, помимо сложения, которая лежит в основе определения понятия \emph{линейное пространство}): что такое эти ``числа'', на которые можно умножать векторы.
+  Так вот, если разрешается умножать векторы на комплексные числа, то пространство и называется комплексным\footnote{Вообще в качестве ``чисел'' может выступать произвольное \emph{поле}. Множество элементов с двумя операциями: сложения и умножения~---~каждая из которых удовлетворяет ряду аксиом: ассоциативность, коммутативность, существование \emph{нейтрального} элемента (``ноль'' для сложения и ``единица'' для умножения) и существование для каждого элемента \emph{обратного} (для сложения такой ещё называется \emph{противоположным}, а по умножению наличие обратного на самом деле требуется не для всех вообще элементов пространства, а для всех кроме нуля). Помимо перечисленных аксиом, операции ещё должны обладать свойством \emph{дистрибутивности} (``раскрытие скобок''~---~``связь'' между сложением и умножением).}.
+  
+  Приведём же определение скалярного произведения для случая \emph{комплексного линейного пространства}.
+  (Далее идёт почти ``Ctrl-C''~--~``Ctrl-V'' определения скалярного произведения из самого начала конспекта.
+  Чтоб не играть в ``найди 10 отличий'', ключевые места ``подсвечены''.)
+  
+  \textcolor{pink}{Комплексное} линейное пространство~$\mathcal U$ называется \textcolor{pink}{\emph{унитарным}}, если на множестве пар его векторов введена функция $(\cdot, \cdot)\colon \mathcal U \hm\times \mathcal U \hm\to \textcolor{pink}{\CC}$, называемая \emph{скалярным произведением}, которая обладает следующими свойствами:
+  \begin{itemize}
+    \item Линейность по первому аргументу:
+      \begin{equation}\label{eq:unitary-prop-linear}
+        \left\{
+          \begin{aligned}
+            &(\bds x_1 + \bds x_2, \bds y) = (\bds x_1, \bds y) + (\bds x_2, \bds y)\\
+            &(\beta \bds x, \bds y) = \beta (\bds x, \bds y)
+          \end{aligned}
+        \right.
+      \end{equation}
+    
+    \item \textcolor{pink}{``Симметричность'' (Эрмитовость):}
+      \begin{equation}\label{eq:unitary-prop-symmetric}
+        \textcolor{pink}{(\bds x, \bds y) = \overline{(\bds y, \bds x)}}
+      \end{equation}
+    
+    \item Положительная определённость:
+      \begin{equation}\label{eq:unitary-prop-positive}
+        \left\{
+          \begin{aligned}
+            &(\bds x, \bds x) \geq 0\\
+            &(\bds x, \bds x) = 0 \leftrightarrow \bds x = \bds 0
+          \end{aligned}
+        \right.
+        \quad\leftrightarrow\quad
+        (\bds x, \bds x) > 0\ \mbox{при}\ \bds x \not= \bds 0
+      \end{equation}
+  \end{itemize}
+  
+  (В первом и втором свойствах подразумевается, что они должны выполняться ``для всего, что можно подставить'', ``для любых'', то есть $\forall \bds x_1, \bds x_2, \bds x, \bds y \hm\in \mathcal U$, $\textcolor{pink}{\forall \beta \hm\in \CC}$.)
+  
+  В свойстве про положительную определённость~(\ref{eq:unitary-prop-positive}), хоть ничего по сравнению с~(\ref{eq:euclid-prop-positive}) как бы и не поменялось, но эта неизменность как раз и примечательна.
+  То есть по сути свойство~(\ref{eq:unitary-prop-positive}) неявно утверждает, что \emph{скалярный квадрат вектора комплексного пространства всегда вещественен} (и при этом, да, ещё больше нуля).
+  
+  Основное же, что явно поменялось~---~это свойство~(\ref{eq:unitary-prop-symmetric}) про ``симметричность''.
+  Почему ``понадобилось'' комплексное сопряжение при перестановке аргументов?
+  
+  \begin{example}
+    Пусть есть вектор $\bds x \hm\in \mathcal U$, $|\bds x| \hm> 0$.
+    Рассмотрим вектор $\beta \bds x$, $\beta \hm\equiv (1 \hm+ i)$.
+    Чему равна длина $|\beta \bds x|$ вектора~$\beta \bds x$?
+    
+    Посчитаем её ``по-старому'', пользуясь свойством~(\ref{eq:euclid-prop-symmetric}):
+    \[
+      |\beta \bds x|^2 = (\beta \bds x, \beta \bds x)
+      \overset{(\ref{eq:euclid-prop-linear})}{=} \beta (\bds x, \beta \bds x)
+      \overset{(\ref{eq:euclid-prop-symmetric})}{=} \beta (\beta \bds x, \bds x)
+      \overset{(\ref{eq:euclid-prop-linear})}{=} \beta^2 (\bds x, \bds x)
+    \]
+    
+    Но $\beta^2 \hm= (1 \hm+ i)^2 \hm= 2i$~---~мнимое число!
+    А длина вектора не может быть мнимой (на то она и ``длина'').
+    Теперь при вычислении $|\beta \bds x|$ применим правило~(\ref{eq:unitary-prop-symmetric}):
+    \[
+      |\beta \bds x|^2 = (\beta \bds x, \beta \bds x)
+      \overset{(\ref{eq:unitary-prop-linear})}{=} \beta (\bds x, \beta \bds x)
+      \overset{(\ref{eq:unitary-prop-symmetric})}{=} \beta \overline{(\beta \bds x, \bds x)}
+      \overset{(\ref{eq:unitary-prop-linear})}{=} \beta \overline{\beta (\bds x, \bds x)}
+      = \beta \overline{\beta} \cdot \overline{(\bds x, \bds x)}
+      \overset{(\ref{eq:unitary-prop-symmetric})}{=} \beta \overline{\beta} (\bds x, \bds x)
+    \]
+    
+    И теперь с длиной уже ``всё в порядке'': $\beta \overline{\beta} \hm\in \RR$.
+  \end{example}
+  
+  \begin{exercise}
+    Будет ли скалярное произведение в комплексном линейном пространстве линейным \emph{по второму аргументу}?
+  \end{exercise}
+  
+  
+  \subsection{Ортогональное дополнение}
+  
+  \begin{definition}
+    Пусть есть подпространство $L$ евклидова пространства $\mathcal E$.
+    \emph{Ортогональным дополнением}~$L$ называется множество векторов~$L^{\perp}$, перпендикулярных всем векторам~$L$:
+    \[
+      L^{\perp} = \{\bds x \in \mathcal E \mid (\bds x, \bds y) = 0,\ \forall \bds y \in L\}
+    \]
+  \end{definition}
+  
+  Несложно убедиться, что \emph{ортогональное дополнение является линейным подпространством}.
+  В чём убедиться сложнее, так это в том, что...
+  
+  \begin{proposition}
+    Пусть есть подпространство $L$ евклидова пространства $\mathcal E$.
+    Тогда
+    \[
+      L \oplus L^{\perp} = \mathcal E
+    \]
+  \end{proposition}
+  
+  То есть сумма подпространства и его ортогонального дополнения, во-первых, прямая и, во-вторых, даёт всё пространство.
+  Почему?
+  
+  Выберем базис в~$L$.
+  Пусть это система векторов~$p \hm= \{\bds p_1, \ldots, \bds p_l\}$, $l \hm\equiv \dim L$, $1 \hm\leq l \hm< \dim \mathcal E$.
+  (С нулевым~$L$ ``всё и так понятно'': для такого ортогональным дополнением будет всё~$\mathcal E$.
+  Если же $L \hm= \mathcal E$, то его ортогональным дополнением будет нулевое подпространство.)
+  Ортогонализируем её~---~получим векторы $p' \hm= \{\bds p_1', \ldots, \bds p_l'\}$, которые попарно ортогональны и по длине единичные.
+  То есть соответствующая матрица Грама:
+  \[
+    \Gamma_{p'} = \begin{pmatrix}
+      1      & 0      & \ldots & 0\\
+      0      & 1      & \ldots & 0\\
+      \vdots & \vdots & \ddots & \vdots\\
+      0      & 0      & \ldots & 1
+    \end{pmatrix} \in \RR^{l \times l}
+  \]
+  
+  Достроим $p'$ до базиса в $\mathcal E$: выберем ``как-нибудь'' оставшиеся $\dim \mathcal E \hm- l \hm\equiv r \hm\geq 1$ векторов $q \hm= \{\bds q_1, \ldots, \bds q_r\}$, так чтобы система $p' \hm\cup q$ была бы базисом в $\mathcal E$ (должно быть очевидно, но отметим, что нумерация векторов в базисе такая: сначала векторы из $p'$ по порядку, за ними векторы из $q$ по порядку).
+  Матрица Грама такого базиса:
+  \[
+    \Gamma_{p' \cup q} = \begin{pmatrix}
+      1      & 0      & \ldots & 0      & \cdot  & \cdot\\
+      0      & 1      & \ldots & 0      & \cdot  & \cdot\\
+      \vdots & \vdots & \ddots & \vdots & \vdots & \vdots\\
+      0      & 0      & \ldots & 1      & \cdot  & \cdot\\
+      \cdot  & \cdot  & \ldots & \cdot  & \cdot  & \cdot\\
+      \cdot  & \cdot  & \ldots & \cdot  & \cdot  & \cdot
+    \end{pmatrix} \in \RR^{(l + r) \times (l + r)}
+  \]
+  то есть пока про неё вообще сложно сказать что-то кроме того, что первые~$l$ векторов (которые $p'$) ортонормированы.
+  Ортонормируем также и векторы~$q$: сначала вычтем ортогональные проекции на векторы~$p'$, а потом ещё и ``друг с другом'' их повычитаем и отнормируем (``стандартная ортогонализация'' системы векторов~$q$).
+  Получим векторы $q' \hm= \{\bds q_1', \ldots, \bds q_r'\}$, и базис в $\mathcal E$ тогда будет $p' \hm\cup q'$, матрица Грама которого:
+  \[
+    \Gamma_{p' \cup q'} = \begin{pmatrix}
+      1      & 0      & \ldots & 0      & 0      & 0\\
+      0      & 1      & \ldots & 0      & 0      & 0\\
+      \vdots & \vdots & \ddots & \vdots & \vdots & \vdots\\
+      0      & 0      & \ldots & 1      & 0      & 0\\
+      0      & 0      & \ldots & 0      & 1      & 0\\
+      0      & 0      & \ldots & 0      & 0      & 1
+    \end{pmatrix} \in \RR^{(l + r) \times (l + r)}
+  \]
+  
+  ``Где же'' $L^{\perp}$?
+  Убедимся, что $L^{\perp} \hm= \mathcal L(\bds q_1', \ldots, \bds q_r')$.
+  С одной стороны, очевидно включение: $\mathcal L(\bds q_1', \ldots, \bds q_r') \hm\subseteq L^{\perp}$ (любой вектор из линейной оболочки векторов~$q'$ ортогонален всем векторам~$L$, потому что ортогонален базисным~$p'$).
+  С другой стороны...
+  Пусть вектор $\bds x \hm\in L^{\perp}$.
+  Разложим его по базису~$p' \hm\cup q'$:
+  \[
+    \bds x = \alpha_1 \bds p_1' + \ldots \alpha_l \bds p_l' + \beta_1 \bds q_1' + \ldots + \beta_r \bds q_r'
+  \]
+  
+  Что значит, что $\bds x \hm\in L^{\perp}$?
+  Это, в частности, значит, что:
+  \[
+    (\bds x, \bds p_1') = 0 \Rightarrow \alpha_1 = 0
+  \]
+  
+  Аналогично можно показать и $\alpha_2 \hm= \ldots \hm= \alpha_l \hm= 0$.
+  А это означает, что $\bds x \hm\in \mathcal L(\bds q_1', \ldots, \bds q_r')$,
+  то есть выполнено включение $L^{\perp} \hm\subseteq \mathcal L(\bds q_1', \ldots, \bds q_r')$.
+  
+  Итого, $L^{\perp} \hm= \mathcal L(\bds q_1', \ldots, \bds q_r')$.
+  
+  А по построению базисов~$p'$ и $q'$ очевидно, что сумма
+  \[
+    \mathcal L(\bds p_1', \ldots, \bds p_l') \hm+ \mathcal L(\bds q_1', \ldots, \bds q_r') \hm= L \hm+ L^{\perp}
+  \]
+  прямая и даёт всё пространство~$\mathcal E$ (объединение базисов $p' \hm\cup q'$ есть базис в~$\mathcal E$).
+  
+  \begin{definition}
+    Пусть есть подпространство $L$ евклидова пространства $\mathcal E$.
+    Тогда $L \hm\oplus L^{\perp} \hm= \mathcal E$.
+    Поэтому любой вектор $\bds x \hm\in \mathcal E$ может быть представлен как сумма:
+    \[
+      \bds x = \bds x' + \bds x'',\quad \bds x' \in L,\ \bds x'' \in L^{\perp}
+    \]
+    
+    Слагаемое $\bds x'$ называется \emph{ортогональной проекцией вектора $\bds x$ на подпространство~$L$}.
+  \end{definition}
+  
+  
+  \newpage
+  
+  \section{Задачи}
+  
+  \subsection{\# 25.7}
+  
+  В линейном пространстве функций, непрерывных на отрезке $C[-1, 1]$, произвольной паре функций $f$ и $g$ сопоставлено число по правилу:
+  \[
+    (f, g) = \int_{-1}^{1} f(t) g(t) dt
+  \]
+  Надо доказать, что этим определено скалярное произведение.
+  
+  \begin{solution}
+    Фактически надо просто проверить все свойства~(\ref{eq:euclid-prop-linear}, \ref{eq:euclid-prop-symmetric}, \ref{eq:euclid-prop-positive}).
+    Так, линейность:
+    \begin{equation}
+    \begin{split}
+      (f_1 + f_2, g) &= \int_{-1}^{1} (f_1 + f_2)(t) g(t) dt\\
+      &= \int_{-1}^{1} \bigl(f_1(t) + f_2(t)\bigr) g(t) dt
+      = \int_{-1}^{1} f_1(t) g(t) dt + \int_{-1}^{1} f_2(t) g(t) dt
+      = (f_1, g) + (f_2, g)
+    \end{split}
+    \end{equation}
+    
+    Аналогично можно показать, что $(\alpha f, g) \hm= \alpha (f, g)$, где $\alpha \hm\in \RR$.
+    Далее, симметричность:
+    \[
+      (f, g) = \int_{-1}^{1} f(t) g(t) dt
+      = \int_{-1}^{1} g(t) f(t) dt
+      = (g, f)
+    \]
+    
+    Осталось последнее~---~положительная определённость:
+    \[
+      (f, f) = \int_{-1}^{1} f^2(t) dt \geq 0
+    \]
+    но почему $(f, f)$ обязательно больше нуля при $f \hm{\not\equiv} 0$?
+    Ноль в пространстве $C[-1, 1]$ есть, очевидно, функция~--~константный ноль.
+    Раз $f \hm{\not\equiv} 0$, то найдётся \emph{хотя бы одна} точка $x_0 \hm\in [-1, 1]$, такая что $f(x_0) \hm{\not=} 0$.
+    Пусть, для определённости, $f(x_0) \hm> 0$.
+    (Но пока всё ещё не понятно, почему $(f, f) \hm> 0$.)
+    Так как функция~$f$ непрерывна, то вместе с $x_0$ функция~$f$ будет отлична от нуля и \emph{в некоторой окрестности}\footnote{Если уж быть совсем аккуратным, то надо бы было ещё сказать, что при $x_0 \hm= 1$ или $x_0 \hm= -1$ (граничные точки отрезка), окрестность знакопостоянства функции около точки $x_0$ была бы односторонней.} точки~$x_0$ (отлична от нуля и того же знака, что и в~$x_0$), то есть $\exists \eps \hm> 0 \colon f(x) \hm> 0$ при $x \hm\in (x_0 \hm- \eps, x_0 \hm+ \eps)$~(\ref{fig:x0-neighbourhood}).
+    За счёт этой окрестности интеграл в выражении~$(f, f)$ и будет больше нуля:
+    \[
+      (f, f) = \int_{-1}^{1} f^2(t) dt \geq \int_{x_0 - \eps}^{x_0 + \eps} f^2(t) dt > 0
+    \]
+    
+    \begin{figure}[h!]
+      \centering
+    
+      \includegraphics[width=0.6\columnwidth]{x0-neighbourhood}
+    
+      \caption{Если непрерывная функция~$f$ больше нуля в точке~$x_0$, то она больше нуля и в некоторой её окрестности.}
+      \label{fig:x0-neighbourhood}
+    \end{figure}
+  \end{solution}
+  
+  
+  \subsection{\# 26.13(4)}
+  
+  Подпространство $L$ евклидова пространства~$\mathcal E$ есть линейная оболочка векторов:
+  \[
+    L = \mathcal L(\bds a_1, \bds a_2, \bds a_3),
+    \quad\left\{
+      \begin{aligned}
+        &a_1 = (4, 3, -3, 2)^T\\
+        &a_2 = (-1, 3, 2, -3)^T\\
+        &a_3 = (2, 9, 1, -4)^T
+      \end{aligned}
+    \right.
+  \]
+  где координаты~$a_1, a_2, a_3 \hm\in \RR^4$ векторов~$\bds a_1, \bds a_2, \bds a_3 \hm\in \mathcal E$ даны в некотором ортонормированном базисе.
+  
+  Надо найти ортогональное дополнение~$L^{\perp}$.
+  
+  \begin{solution}
+    ``Заметим'', что $\bds a_3 \hm= \bds a_1 \hm+ 2 \bds a_2$ (и при этом $\bds a_1$ и $\bds a_2$ очевидно линейно независимы), поэтому в качестве базиса в $L$ можно выбрать систему векторов $\{\bds a_1, \bds a_2\}$.
+    
+    Далее, найти ортогональное дополнение~$L^{\perp}$~---~значит найти все вектора $\bds x$, такие что
+    \[
+      \left\{
+        \begin{aligned}
+          &(\bds x, \bds a_1) = 0\\
+          &(\bds x, \bds a_2) = 0
+        \end{aligned}
+      \right.
+      \overset{\mbox{\scriptsize ОНБ}}{\leftrightarrow}
+      \left\{
+        \begin{aligned}
+          &a_1^T x = 0\\
+          &a_2^T x = 0
+        \end{aligned}
+      \right.
+      \leftrightarrow \begin{pmatrix}
+        4 & 3 & -3 & 2\\
+        -1 & 3 & 2 & -3
+      \end{pmatrix} \begin{pmatrix}
+        x_1\\
+        x_2\\
+        x_3\\
+        x_4
+      \end{pmatrix} = \begin{pmatrix}
+        0\\
+        0\\
+        0\\
+        0
+      \end{pmatrix}
+    \]
+    
+    Решая однородную систему, можем получить общее решение в виде:
+    \[
+      x_{\mbox{\scriptsize общ}} = \begin{pmatrix}
+        1\\
+        0\\
+        2\\
+        1
+      \end{pmatrix} t_1 + \begin{pmatrix}
+        3\\
+        -1\\
+        3\\
+        0
+      \end{pmatrix} t_2,\quad t_1, t_2 \in \RR
+    \]
+    где векторы $b_1 \hm= (1, 0, 2, 1)^T$ и $b_2 \hm= (3, -1, 3, 0)^T$ задают базис в пространстве решений.
+    
+    И тогда ортогональное дополнение можно представить как $L^{\perp} \hm= \mathcal L(\bds b_1, \bds b_2)$.
+  \end{solution}
+\end{document}
